@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hamara Market - Login</title>
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:linear-gradient(145deg,#eef3ff,#ffffff);
+  color:#17213b;
+  min-height:100vh;
+}
+.header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px 24px;background:#fff;border-bottom:1px solid #e4e8f0;
+}
+.brand{display:flex;align-items:center;gap:12px;font-weight:800;font-size:25px;color:#173b9e}
+.logo{
+  width:52px;height:52px;border-radius:16px;
+  background:linear-gradient(145deg,#2463df,#1847b5);
+  color:#fff;display:flex;align-items:center;justify-content:center;
+  font-size:30px;font-weight:800;box-shadow:0 8px 20px #245ed933;
+}
+.signup{
+  text-decoration:none;background:#2463df;color:white;
+  padding:13px 20px;border-radius:12px;font-weight:700;
+}
+.wrap{max-width:470px;margin:45px auto;padding:0 20px}
+.card{
+  background:#fff;border-radius:25px;padding:30px 25px;
+  box-shadow:0 18px 55px #1d35651c;border:1px solid #e9edf5;
+}
+.title{text-align:center;font-size:30px;margin:4px 0 8px}
+.sub{text-align:center;color:#69748b;margin:0 0 28px}
+label{display:block;font-weight:700;margin:17px 0 8px}
+input{
+  width:100%;padding:16px;border:1px solid #d9deea;border-radius:13px;
+  font-size:16px;outline:none;background:#fafbfe;
+}
+input:focus{border-color:#2463df;box-shadow:0 0 0 3px #2463df18}
+.password{position:relative}
+.password input{padding-right:55px}
+.eye{
+  position:absolute;right:12px;top:50%;transform:translateY(-50%);
+  border:0;background:transparent;font-size:20px;cursor:pointer;
+}
+.row{display:flex;justify-content:space-between;align-items:center;margin:17px 0}
+.remember{display:flex;align-items:center;gap:8px;color:#606b80}
+.remember input{width:18px;height:18px}
+.forgot{color:#2463df;text-decoration:none;font-weight:700}
+.login{
+  width:100%;border:0;border-radius:14px;padding:16px;
+  background:linear-gradient(90deg,#245fe0,#3d48df);
+  color:white;font-size:18px;font-weight:800;cursor:pointer;
+}
+.or{display:flex;align-items:center;gap:12px;color:#929aaa;margin:24px 0}
+.or:before,.or:after{content:"";height:1px;background:#e3e6ed;flex:1}
+.create{
+  display:block;text-align:center;text-decoration:none;
+  border:1px solid #d9e0ed;color:#2456b8;border-radius:14px;
+  padding:15px;font-weight:800;
+}
+.note{text-align:center;color:#8a93a4;font-size:12px;margin-top:22px;line-height:1.5}
+.footer{text-align:center;color:#8b93a2;font-size:12px;margin:22px}
+@media(max-width:520px){
+  .header{padding:15px 16px}.brand{font-size:22px}.logo{width:48px;height:48px}
+  .signup{padding:11px 15px}.wrap{margin:28px auto}.card{padding:27px 20px}
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="brand"><div class="logo">HM</div><span>Hamara Market</span></div>
+  <a class="signup" href="registration.html">Sign Up</a>
+</header>
+
+<main class="wrap">
+  <section class="card">
+    <h1 class="title">Welcome Back</h1>
+    <p class="sub">Login to your Hamara Market account</p>
+
+    <form onsubmit="loginDemo(event)">
+      <label for="mobile">Mobile Number</label>
+      <input id="mobile" type="tel" inputmode="numeric" maxlength="10"
+             placeholder="Enter Mobile no." required>
+
+      <label for="password">Password</label>
+      <div class="password">
+        <input id="password" type="password" placeholder="Password" required>
+        <button class="eye" type="button" onclick="togglePassword()" aria-label="Show password">👁</button>
+      </div>
+
+      <div class="row">
+        <label class="remember"><input type="checkbox"> Remember me</label>
+        <a class="forgot" href="#" onclick="alert('Password recovery will be connected with the live account system.')">Forgot Password?</a>
+      </div>
+
+      <button class="login" type="submit">Login</button>
+    </form>
+
+    <div class="or">OR</div>
+    <a class="create" href="registration.html">Create New Account</a>
+
+    <p class="note">
+      Hamara Market • Digital Rewards Platform<br>
+      Demo front-end version hosted on GitHub Pages
+    </p>
+  </section>
+</main>
+
+<div class="footer">© 2026 Hamara Market. All rights reserved.</div>
+
+<script>
+function togglePassword(){
+  const p=document.getElementById('password');
+  p.type=p.type==='password'?'text':'password';
+}
+function loginDemo(e){
+  e.preventDefault();
+  alert('Login interface is ready. A real account/login system needs a secure backend before handling real user passwords or money.');
+}
+</script>
+</body>
+</html>
