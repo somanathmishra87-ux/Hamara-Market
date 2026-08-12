@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Hamara Market - Dashboard</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f5f7fb;color:#202538;padding-bottom:78px}
+.top{background:linear-gradient(135deg,#4637d8,#5b45ed);color:#fff;padding:20px 18px 28px;border-radius:0 0 30px 30px}
+.topbar{display:flex;justify-content:space-between;align-items:center}
+.brand{display:flex;align-items:center;gap:10px;font-size:22px;font-weight:800}
+.hm{width:45px;height:45px;border-radius:13px;background:#fff;color:#493bd8;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:18px}
+.menu{font-size:27px}
+.member{margin-top:18px;font-size:15px;line-height:1.8}
+.member strong{font-size:20px}
+.card{background:#fff;margin:-13px 14px 14px;border-radius:22px;padding:19px;box-shadow:0 8px 28px #26376b14}
+.balance{display:grid;grid-template-columns:1fr 1fr;text-align:center}
+.balance>div+div{border-left:1px solid #e5e7ef}
+.label{color:#737b8e;font-size:14px}.amount{font-size:24px;font-weight:800;margin-top:7px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}
+.stat{background:#f7f8fc;border-radius:14px;padding:13px 8px;text-align:center}
+.stat b{display:block;font-size:17px;margin-top:5px}
+.progress{height:10px;background:#e7e9f1;border-radius:20px;overflow:hidden;margin:13px 0 8px}
+.bar{height:100%;width:30%;background:linear-gradient(90deg,#4637d8,#6b57ef)}
+.section{padding:4px 14px}
+.title{font-size:19px;font-weight:800;margin:14px 0}
+.video{background:#fff;border-radius:18px;padding:14px;margin-bottom:10px;display:flex;align-items:center;gap:13px;box-shadow:0 5px 18px #26376b0b}
+.play{width:48px;height:48px;border-radius:14px;background:#eeeafe;color:#4b3bd8;display:flex;align-items:center;justify-content:center;font-size:21px}
+.vtext{flex:1}.vtext b{display:block;margin-bottom:5px}.vtext small{color:#7a8292}
+.watch{border:0;background:#493bd8;color:#fff;border-radius:11px;padding:10px 13px;font-weight:700}
+.actions{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.action{background:#fff;border:0;border-radius:16px;padding:16px 8px;text-align:center;font-weight:700;box-shadow:0 5px 18px #26376b0b}
+.icon{font-size:24px;display:block;margin-bottom:7px}
+.nav{position:fixed;bottom:0;left:0;right:0;height:70px;background:#fff;border-top:1px solid #e4e6ed;display:grid;grid-template-columns:repeat(4,1fr);z-index:5}
+.nav a{text-decoration:none;color:#6d7484;text-align:center;padding-top:10px;font-size:12px}.nav a.active{color:#493bd8;font-weight:800}
+.nav span{display:block;font-size:22px;margin-bottom:3px}
+.notice{font-size:12px;color:#7c8495;text-align:center;padding:8px 20px}
+@media(min-width:700px){body{max-width:520px;margin:auto}.nav{max-width:520px;margin:auto}.top{border-radius:0 0 30px 30px}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="topbar">
+    <div class="brand"><div class="hm">HM</div> Hamara Market</div>
+    <div class="menu">⋮</div>
+  </div>
+  <div class="member">
+    Member ID: <strong id="memberId">HM000240</strong><br>
+    Welcome, <strong id="userName">User</strong>
+  </div>
+</header>
+
+<section class="card">
+  <div class="balance">
+    <div><div class="label">Total Income</div><div class="amount" id="total">₹0.00</div></div>
+    <div><div class="label">Wallet Balance</div><div class="amount" id="wallet">₹0.00</div></div>
+  </div>
+  <div class="stats">
+    <div class="stat"><span class="label">Today's Videos</span><b id="watched">0 / 10</b></div>
+    <div class="stat"><span class="label">Per Video</span><b>₹5</b></div>
+    <div class="stat"><span class="label">Today's Income</span><b id="today">₹0.00</b></div>
+  </div>
+  <div class="progress"><div class="bar" id="bar"></div></div>
+  <div class="label" id="progressText">0 of 10 eligible videos completed today</div>
+</section>
+
+<div class="section">
+  <div class="title">Today's Sponsored Videos</div>
+  <div id="videos"></div>
+</div>
+
+<div class="section">
+  <div class="title">Quick Actions</div>
+  <div class="actions">
+    <button class="action" onclick="alert('Withdrawal section will be connected to a secure payment system.')"><span class="icon">💰</span>Withdrawal</button>
+    <button class="action" onclick="alert('Income report will be available here.')"><span class="icon">☆</span>Report</button>
+    <button class="action" onclick="alert('Profile section will be available here.')"><span class="icon">◯</span>Profile</button>
+  </div>
+</div>
+
+<p class="notice">Daily viewing window: 12:00 AM – 11:59 PM. Reward figures shown here are demo values until a secure backend and verified payment system are connected.</p>
+
+<nav class="nav">
+  <a class="active" href="dashboard.html"><span>⌂</span>Home</a>
+  <a href="#" onclick="scrollToVideos();return false"><span>◷</span>Videos</a>
+  <a href="#" onclick="alert('Withdrawal section will be connected later.');return false"><span>₹</span>Withdraw</a>
+  <a href="#" onclick="alert('Profile section will be connected later.');return false"><span>♙</span>Profile</a>
+</nav>
+
+<script>
+const videos=document.getElementById('videos');
+let watched=0;
+const videoNames=[
+ 'Sponsored Video 01','Sponsored Video 02','Sponsored Video 03','Sponsored Video 04','Sponsored Video 05',
+ 'Sponsored Video 06','Sponsored Video 07','Sponsored Video 08','Sponsored Video 09','Sponsored Video 10'
+];
+
+videoNames.forEach((name,i)=>{
+  const el=document.createElement('div');el.className='video';
+  el.innerHTML=`<div class="play">▶</div><div class="vtext"><b>${name}</b><small>Eligible reward: ₹5</small></div><button class="watch" id="w${i}">Watch</button>`;
+  videos.appendChild(el);
+  document.getElementById('w'+i).onclick=()=>{
+    if(el.dataset.done)return;
+    el.dataset.done='1';watched++;
+    document.getElementById('w'+i).textContent='Completed';
+    document.getElementById('w'+i).style.background='#168b5a';
+    update();
+  };
+});
+function update(){
+  const income=watched*5;
+  document.getElementById('watched').textContent=watched+' / 10';
+  document.getElementById('today').textContent='₹'+income.toFixed(2);
+  document.getElementById('wallet').textContent='₹'+income.toFixed(2);
+  document.getElementById('total').textContent='₹'+income.toFixed(2);
+  document.getElementById('bar').style.width=(watched*10)+'%';
+  document.getElementById('progressText').textContent=watched+' of 10 eligible videos completed today';
+}
+function scrollToVideos(){window.scrollTo({top:360,behavior:'smooth'})}
+</script>
+</body>
+</html>
