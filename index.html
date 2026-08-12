@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Hamara Market - Sponsored Video Rewards Platform">
+<title>Hamara Market | hamaramarket.world</title>
+<style>
+:root{--blue:#1457d9;--dark:#0b1730;--muted:#657189;--bg:#f5f8fd;--line:#e5ebf4}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--dark)}
+a{text-decoration:none;color:inherit}.container{max-width:1160px;margin:auto;padding:0 22px}
+header{height:76px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;position:sticky;top:0;z-index:20}
+.nav{display:flex;align-items:center;justify-content:space-between;width:100%}.logo{display:flex;align-items:center;gap:10px;font-size:21px;font-weight:850}
+.logoMark{width:40px;height:40px;border-radius:11px;background:linear-gradient(135deg,#1457d9,#3b82f6);display:grid;place-items:center;color:#fff;font-weight:900;font-size:21px}
+.links{display:flex;align-items:center;gap:22px;font-size:14px;font-weight:650;color:#40506a}.links a:hover{color:var(--blue)}
+.btn{display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:9px;background:var(--blue);color:#fff;padding:12px 19px;font-weight:750;cursor:pointer}.btn.light{background:#edf3ff;color:var(--blue);box-shadow:none}
+.hero{padding:85px 0 75px;background:linear-gradient(#fff,#f5f8fd);border-bottom:1px solid var(--line)}
+.heroGrid{display:grid;grid-template-columns:1.08fr .92fr;gap:55px;align-items:center}.badge{display:inline-flex;background:#edf3ff;color:var(--blue);padding:8px 12px;border-radius:30px;font-size:11px;font-weight:850;letter-spacing:1px}
+h1{font-size:55px;line-height:1.06;letter-spacing:-2px;margin:18px 0}h1 span{color:var(--blue)}
+.lead{font-size:18px;line-height:1.7;color:var(--muted);max-width:650px}.actions{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap}
+.domain{margin-top:22px;font-size:13px;color:#78849a}.domain b{color:var(--blue)}
+.panel{background:#0e1c37;border-radius:22px;padding:23px;color:#fff;box-shadow:0 25px 60px #0b173033}.panelTop{display:flex;justify-content:space-between}.status{font-size:11px;color:#6de0b3;background:#123b35;padding:6px 9px;border-radius:20px}
+.balance{margin:35px 0 20px}.balance small{color:#a5b1c4}.balance strong{display:block;font-size:36px;margin-top:7px}.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px}.stat{background:#172642;border:1px solid #fff1;padding:15px;border-radius:13px}.stat small{color:#9aa8bf}.stat b{display:block;margin-top:6px;font-size:18px}
+.section{padding:75px 0}.head{text-align:center;max-width:720px;margin:0 auto 38px}.eyebrow{color:var(--blue);font-size:11px;font-weight:900;letter-spacing:1.4px}.head h2{font-size:35px;margin:9px 0}.head p{color:var(--muted);line-height:1.7}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.card{background:#fff;border:1px solid var(--line);border-radius:17px;padding:26px;box-shadow:0 8px 28px #0b173008}.icon{width:48px;height:48px;border-radius:13px;background:#edf3ff;color:var(--blue);display:grid;place-items:center;font-size:21px}.card h3{margin:19px 0 8px}.card p{color:var(--muted);line-height:1.65;font-size:14px}
+.earning{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.earn{background:#fff;border:1px solid var(--line);border-radius:14px;text-align:center;padding:20px}.earn b{display:block;font-size:27px;color:var(--blue);margin-top:6px}
+.cta{padding:45px 0 75px}.ctaBox{background:linear-gradient(135deg,#104dc5,#1769e8);border-radius:22px;padding:45px;color:#fff;display:flex;justify-content:space-between;align-items:center;gap:25px}.ctaBox h2{margin:0 0 8px;font-size:30px}.ctaBox p{margin:0;color:#dce8ff}.ctaBox .btn{background:#fff;color:var(--blue)}
+footer{background:#0b1730;color:#aab5c7;padding:45px 0 22px}.foot{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap}.foot strong{color:#fff;font-size:18px}.foot p{font-size:13px;line-height:1.7;max-width:500px}.copyright{border-top:1px solid #ffffff12;margin-top:25px;padding-top:18px;font-size:11px}
+.modal{display:none;position:fixed;inset:0;background:#06112799;z-index:50;align-items:center;justify-content:center;padding:20px}.modal.show{display:flex}.box{background:#fff;width:min(430px,100%);border-radius:18px;padding:27px}.box h2{margin-top:0}.close{float:right;border:0;background:none;font-size:25px;cursor:pointer}.input{width:100%;padding:12px;margin:6px 0;border:1px solid #d5dce8;border-radius:8px}.note{font-size:11px;color:#78849a;line-height:1.5}
+@media(max-width:800px){.links a:not(.btn){display:none}.heroGrid{grid-template-columns:1fr}.hero{padding:60px 0}h1{font-size:42px}.cards{grid-template-columns:1fr}.earning{grid-template-columns:1fr 1fr}.ctaBox{display:block}}
+@media(max-width:480px){h1{font-size:36px}.earning{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><div class="container nav">
+<a class="logo" href="#home"><span class="logoMark">H</span> Hamara Market</a>
+<nav class="links">
+<a href="#platform">Platform</a><a href="#earning">Earning</a><a href="#how">How It Works</a><a href="#about">About</a>
+<a class="btn light" href="#login" onclick="openM('loginM');return false">Login</a>
+<a class="btn" href="#signup" onclick="openM('signupM');return false">Sign Up</a>
+</nav>
+</div></header>
+
+<section class="hero" id="home"><div class="container heroGrid">
+<div>
+<div class="badge">DIGITAL REWARDS PLATFORM</div>
+<h1>Watch sponsored videos.<br><span>Earn rewards.</span></h1>
+<p class="lead">Hamara Market is a digital rewards platform concept designed to connect sponsored video campaigns with registered users through a simple and transparent reward experience.</p>
+<div class="actions"><a class="btn" href="#signup" onclick="openM('signupM');return false">Create Account</a><a class="btn light" href="#platform">Explore Platform</a></div>
+<div class="domain">Official website address: <b>hamaramarket.world</b></div>
+</div>
+<div class="panel">
+<div class="panelTop"><b>Hamara Market</b><span class="status">● Platform</span></div>
+<div class="balance"><small>Maximum Daily Reward</small><strong>₹50.00</strong></div>
+<div class="stats"><div class="stat"><small>Daily Videos</small><b>10</b></div><div class="stat"><small>Per Video</small><b>₹5</b></div></div>
+</div>
+</div></section>
+
+<section class="section" id="platform"><div class="container">
+<div class="head"><div class="eyebrow">OUR PLATFORM</div><h2>Professional. Simple. Transparent.</h2><p>A clean digital experience for users and campaign partners.</p></div>
+<div class="cards">
+<div class="card"><div class="icon">▶</div><h3>Sponsored Videos</h3><p>Eligible users can view sponsored videos and complete the required viewing conditions.</p></div>
+<div class="card"><div class="icon">₹</div><h3>Reward Wallet</h3><p>Track completed videos and verified rewards in one place.</p></div>
+<div class="card"><div class="icon">↗</div><h3>Referral Program</h3><p>Invite eligible users through a structured referral program with published rules.</p></div>
+</div></div></section>
+
+<section class="section" id="earning"><div class="container">
+<div class="head"><div class="eyebrow">DAILY EARNING MODEL</div><h2>Earn according to completed videos</h2><p>Daily viewing window: <b>12:00 AM to 11:59 PM IST</b>. Only eligible videos successfully completed and verified count toward the daily reward.</p></div>
+<div class="earning">
+<div class="earn"><small>1 VIDEO</small><b>₹5</b></div><div class="earn"><small>5 VIDEOS</small><b>₹25</b></div><div class="earn"><small>8 VIDEOS</small><b>₹40</b></div><div class="earn"><small>10 VIDEOS</small><b>₹50</b></div>
+</div>
+</div></section>
+
+<section class="section" id="how"><div class="container">
+<div class="head"><div class="eyebrow">HOW IT WORKS</div><h2>Four simple steps</h2></div>
+<div class="cards">
+<div class="card"><div class="icon">01</div><h3>Register</h3><p>Create your account on Hamara Market.</p></div>
+<div class="card"><div class="icon">02</div><h3>Watch</h3><p>Choose eligible videos available for your account.</p></div>
+<div class="card"><div class="icon">03</div><h3>Complete</h3><p>Watch the required video duration and satisfy campaign conditions.</p></div>
+</div>
+</div></section>
+
+<section class="section" id="about"><div class="container"><div class="head"><div class="eyebrow">ABOUT HAMARA MARKET</div><h2>Building a trusted digital reward experience</h2><p>Hamara Market aims to provide a straightforward platform where campaign participation, reward tracking and user activity can be managed through a professional digital interface.</p></div></div></section>
+
+<section class="cta"><div class="container"><div class="ctaBox"><div><h2>Start with Hamara Market</h2><p>Register and explore the platform experience.</p></div><a class="btn" href="#signup" onclick="openM('signupM');return false">Create Account</a></div></div></section>
+
+<footer><div class="container"><div class="foot"><div><strong>Hamara Market</strong><p>Sponsored video rewards platform concept.<br>Website: hamaramarket.world</p></div><div><p>Platform · Earning · How It Works · About</p></div></div><div class="copyright">© 2026 Hamara Market. All rights reserved.</div></div></footer>
+
+<div class="modal" id="signupM"><div class="box"><button class="close" onclick="closeM('signupM')">×</button><h2>Create Account</h2><input class="input" id="name" placeholder="Full Name"><input class="input" id="mobile" maxlength="10" placeholder="10-digit Mobile Number"><input class="input" id="pass" type="password" placeholder="Password (8+ characters)"><button class="btn" style="width:100%;margin-top:8px" onclick="signup()">Create Account</button><p id="sm" class="note"></p></div></div>
+<div class="modal" id="loginM"><div class="box"><button class="close" onclick="closeM('loginM')">×</button><h2>Login</h2><input class="input" id="lm" maxlength="10" placeholder="Mobile Number"><input class="input" id="lp" type="password" placeholder="Password"><button class="btn" style="width:100%;margin-top:8px" onclick="login()">Login</button><p id="lmmsg" class="note"></p></div></div>
+
+<script>
+function openM(id){document.getElementById(id).classList.add('show')}
+function closeM(id){document.getElementById(id).classList.remove('show')}
+window.onclick=e=>{if(e.target.classList.contains('modal'))e.target.classList.remove('show')}
+function signup(){let n=name.value.trim(),m=mobile.value.trim(),p=pass.value;if(!n||!/^\d{10}$/.test(m)||p.length<8){sm.textContent='Enter a valid name, 10-digit mobile and 8+ character password.';return}localStorage.setItem('hm_user',JSON.stringify({name:n,mobile:m,password:p,balance:0}));sm.textContent='Demo account created successfully.'}
+function login(){let u=JSON.parse(localStorage.getItem('hm_user')||'null');lmmsg.textContent=(u&&u.mobile===lm.value.trim()&&u.password===lp.value)?'Login successful in demo mode.':'Invalid login details.'}
+</script>
+</body>
+</html>
