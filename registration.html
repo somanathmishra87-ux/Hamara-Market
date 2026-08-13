@@ -270,82 +270,94 @@ button:disabled{
 
     <form id="registrationForm">
 
-      <div class="field">
-        <label for="name">Full Name</label>
+    <div class="field">
+        <label for="sponsor">Sponsor ID</label>
         <input
-          id="name"
-          type="text"
-          placeholder="Enter Full Name"
-          required>
-      </div>
+            id="sponsor"
+            type="text"
+            placeholder="Enter Sponsor ID"
+            required>
+    </div>
 
-      <div class="field">
+    <div class="field">
+        <label for="sponsorName">Sponsor Name</label>
+        <input
+            id="sponsorName"
+            type="text"
+            placeholder="Sponsor Name"
+            readonly>
+    </div>
+
+    <div class="field">
+        <label for="name">Name</label>
+        <input
+            id="name"
+            type="text"
+            placeholder="Full Name as per bank record"
+            required>
+    </div>
+
+    <div class="field">
         <label for="address">Address</label>
         <input
-          id="address"
-          type="text"
-          placeholder="Enter Address"
-          required>
-      </div>
+            id="address"
+            type="text"
+            placeholder="Address"
+            required>
+    </div>
 
-      <div class="field">
+    <div class="field">
         <label for="mobile">Mobile Number</label>
         <input
-          id="mobile"
-          type="tel"
-          inputmode="numeric"
-          maxlength="10"
-          pattern="[0-9]{10}"
-          placeholder="Enter 10 digit Mobile Number"
-          required>
-      </div>
+            id="mobile"
+            type="tel"
+            inputmode="numeric"
+            maxlength="10"
+            pattern="[0-9]{10}"
+            placeholder="Enter Mobile Number"
+            required>
+    </div>
 
-      <div class="field">
-        <label for="email">Email ID</label>
+    <div class="field">
+        <label for="email">Email</label>
         <input
-          id="email"
-          type="email"
-          placeholder="Enter Email ID"
-          required>
-      </div>
+            id="email"
+            type="email"
+            placeholder="Email ID"
+            required>
+    </div>
 
-      <div class="field">
-        <label for="sponsor">Sponsor ID</label>
-<input
-    id="sponsor"
-    type="text"
-    placeholder="Enter Sponsor ID">
-      </div>
-
-      <div class="field">
+    <div class="field">
         <label for="password">Password</label>
 
         <div class="password-box">
-          <input
-            id="password"
-            type="password"
-            minlength="8"
-            placeholder="Minimum 8 characters"
-            required>
+            <input
+                id="password"
+                type="password"
+                minlength="8"
+                placeholder="Password"
+                required>
 
-          <span
-            class="show-password"
-            id="showPassword">
-            👁️
-          </span>
+            <span
+                class="show-password"
+                id="showPassword">👁️</span>
         </div>
-      </div>
+    </div>
 
-      <label class="terms">
+    <label class="terms">
         <input id="terms" type="checkbox" required>
-        <span>I agree to the Terms and Conditions.</span>
-      </label>
+        <span>I agree to Terms and condition</span>
+    </label>
 
-      <button type="submit" id="registerBtn">
-        Create Account
-      </button>
+    <button type="submit" id="registerBtn">
+        Sign Up
+    </button>
 
-    </form>
+    <button type="button" class="login-btn" onclick="goToLogin()">
+        Already Have Acc.
+    </button>
+
+</form>
 
     <div class="message error" id="errorMessage"></div>
     <div class="message success" id="successMessage"></div>
