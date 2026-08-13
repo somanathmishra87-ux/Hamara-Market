@@ -3,98 +3,1282 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Hamara Market - Sponsored Video Rewards Platform">
-<title>Hamara Market | hamaramarket.world</title>
+
+<title>Hamara Market</title>
+
+<meta name="description"
+content="Hamara Market - Digital Rewards Platform">
+
 <style>
-:root{--blue:#1457d9;--dark:#0b1730;--muted:#657189;--bg:#f5f8fd;--line:#e5ebf4}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--dark)}
-a{text-decoration:none;color:inherit}.container{max-width:1160px;margin:auto;padding:0 22px}
-header{height:76px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;position:sticky;top:0;z-index:20}
-.nav{display:flex;align-items:center;justify-content:space-between;width:100%}.logo{display:flex;align-items:center;gap:10px;font-size:21px;font-weight:850}
-.logoMark{width:40px;height:40px;border-radius:11px;background:linear-gradient(135deg,#1457d9,#3b82f6);display:grid;place-items:center;color:#fff;font-weight:900;font-size:21px}
-.links{display:flex;align-items:center;gap:22px;font-size:14px;font-weight:650;color:#40506a}.links a:hover{color:var(--blue)}
-.btn{display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:9px;background:var(--blue);color:#fff;padding:12px 19px;font-weight:750;cursor:pointer}.btn.light{background:#edf3ff;color:var(--blue);box-shadow:none}
-.hero{padding:85px 0 75px;background:linear-gradient(#fff,#f5f8fd);border-bottom:1px solid var(--line)}
-.heroGrid{display:grid;grid-template-columns:1.08fr .92fr;gap:55px;align-items:center}.badge{display:inline-flex;background:#edf3ff;color:var(--blue);padding:8px 12px;border-radius:30px;font-size:11px;font-weight:850;letter-spacing:1px}
-h1{font-size:55px;line-height:1.06;letter-spacing:-2px;margin:18px 0}h1 span{color:var(--blue)}
-.lead{font-size:18px;line-height:1.7;color:var(--muted);max-width:650px}.actions{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap}
-.domain{margin-top:22px;font-size:13px;color:#78849a}.domain b{color:var(--blue)}
-.panel{background:#0e1c37;border-radius:22px;padding:23px;color:#fff;box-shadow:0 25px 60px #0b173033}.panelTop{display:flex;justify-content:space-between}.status{font-size:11px;color:#6de0b3;background:#123b35;padding:6px 9px;border-radius:20px}
-.balance{margin:35px 0 20px}.balance small{color:#a5b1c4}.balance strong{display:block;font-size:36px;margin-top:7px}.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px}.stat{background:#172642;border:1px solid #fff1;padding:15px;border-radius:13px}.stat small{color:#9aa8bf}.stat b{display:block;margin-top:6px;font-size:18px}
-.section{padding:75px 0}.head{text-align:center;max-width:720px;margin:0 auto 38px}.eyebrow{color:var(--blue);font-size:11px;font-weight:900;letter-spacing:1.4px}.head h2{font-size:35px;margin:9px 0}.head p{color:var(--muted);line-height:1.7}
-.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.card{background:#fff;border:1px solid var(--line);border-radius:17px;padding:26px;box-shadow:0 8px 28px #0b173008}.icon{width:48px;height:48px;border-radius:13px;background:#edf3ff;color:var(--blue);display:grid;place-items:center;font-size:21px}.card h3{margin:19px 0 8px}.card p{color:var(--muted);line-height:1.65;font-size:14px}
-.earning{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.earn{background:#fff;border:1px solid var(--line);border-radius:14px;text-align:center;padding:20px}.earn b{display:block;font-size:27px;color:var(--blue);margin-top:6px}
-.cta{padding:45px 0 75px}.ctaBox{background:linear-gradient(135deg,#104dc5,#1769e8);border-radius:22px;padding:45px;color:#fff;display:flex;justify-content:space-between;align-items:center;gap:25px}.ctaBox h2{margin:0 0 8px;font-size:30px}.ctaBox p{margin:0;color:#dce8ff}.ctaBox .btn{background:#fff;color:var(--blue)}
-footer{background:#0b1730;color:#aab5c7;padding:45px 0 22px}.foot{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap}.foot strong{color:#fff;font-size:18px}.foot p{font-size:13px;line-height:1.7;max-width:500px}.copyright{border-top:1px solid #ffffff12;margin-top:25px;padding-top:18px;font-size:11px}
-.modal{display:none;position:fixed;inset:0;background:#06112799;z-index:50;align-items:center;justify-content:center;padding:20px}.modal.show{display:flex}.box{background:#fff;width:min(430px,100%);border-radius:18px;padding:27px}.box h2{margin-top:0}.close{float:right;border:0;background:none;font-size:25px;cursor:pointer}.input{width:100%;padding:12px;margin:6px 0;border:1px solid #d5dce8;border-radius:8px}.note{font-size:11px;color:#78849a;line-height:1.5}
-@media(max-width:800px){.links a:not(.btn){display:none}.heroGrid{grid-template-columns:1fr}.hero{padding:60px 0}h1{font-size:42px}.cards{grid-template-columns:1fr}.earning{grid-template-columns:1fr 1fr}.ctaBox{display:block}}
-@media(max-width:480px){h1{font-size:36px}.earning{grid-template-columns:1fr}}
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f5f7fb;
+    color:#172554;
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+/* HEADER */
+
+header{
+    background:#ffffff;
+    border-bottom:1px solid #e5e7eb;
+    position:sticky;
+    top:0;
+    z-index:100;
+}
+
+.nav{
+    max-width:1180px;
+    margin:auto;
+    min-height:76px;
+    padding:12px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    font-size:25px;
+    font-weight:800;
+    color:#123b91;
+}
+
+.logo-mark{
+    width:45px;
+    height:45px;
+    border-radius:12px;
+    background:#1457d9;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:25px;
+    font-weight:bold;
+}
+
+.nav-buttons{
+    display:flex;
+    gap:10px;
+}
+
+.btn{
+    border:none;
+    border-radius:12px;
+    padding:13px 22px;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.btn-login{
+    background:#eef3ff;
+    color:#1457d9;
+}
+
+.btn-signup{
+    background:#1457d9;
+    color:white;
+}
+
+/* HERO */
+
+.hero{
+    padding:70px 20px 55px;
+    background:linear-gradient(135deg,#ffffff,#eef4ff);
+}
+
+.hero-inner{
+    max-width:1180px;
+    margin:auto;
+    display:grid;
+    grid-template-columns:1.1fr .9fr;
+    gap:45px;
+    align-items:center;
+}
+
+.badge{
+    display:inline-block;
+    padding:10px 18px;
+    border-radius:30px;
+    background:#e8efff;
+    color:#1457d9;
+    font-weight:bold;
+    letter-spacing:1px;
+    margin-bottom:20px;
+}
+
+.hero h1{
+    font-size:54px;
+    line-height:1.05;
+    margin-bottom:20px;
+    color:#0b1f4d;
+}
+
+.hero h1 span{
+    color:#1457d9;
+}
+
+.hero p{
+    font-size:19px;
+    line-height:1.7;
+    color:#657189;
+    margin-bottom:28px;
+}
+
+.hero-actions{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+}
+
+.primary{
+    background:#1457d9;
+    color:white;
+}
+
+.secondary{
+    background:white;
+    color:#1457d9;
+    border:1px solid #d5def3;
+}
+
+/* REWARD CARD */
+
+.reward-card{
+    background:#0b1730;
+    color:white;
+    border-radius:25px;
+    padding:30px;
+    box-shadow:0 15px 40px rgba(0,0,0,.15);
+}
+
+.reward-card h2{
+    font-size:27px;
+    margin-bottom:8px;
+}
+
+.platform{
+    display:inline-block;
+    background:#123c29;
+    color:#8ee6b0;
+    padding:7px 13px;
+    border-radius:20px;
+    font-size:13px;
+    margin-bottom:28px;
+}
+
+.reward-title{
+    color:#aab5ca;
+    margin-bottom:8px;
+}
+
+.reward{
+    font-size:52px;
+    font-weight:bold;
+    margin-bottom:25px;
+}
+
+.reward-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+}
+
+.reward-box{
+    background:#111f3d;
+    border-radius:15px;
+    padding:18px;
+}
+
+.reward-box small{
+    display:block;
+    color:#aab5ca;
+    margin-bottom:7px;
+}
+
+.reward-box strong{
+    font-size:22px;
+}
+
+/* SECTIONS */
+
+.section{
+    padding:65px 20px;
+}
+
+.section-inner{
+    max-width:1180px;
+    margin:auto;
+}
+
+.section-title{
+    text-align:center;
+    font-size:34px;
+    margin-bottom:40px;
+    color:#0b1f4d;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+}
+
+.card{
+    background:white;
+    padding:28px;
+    border-radius:20px;
+    box-shadow:0 8px 25px rgba(0,0,0,.06);
+}
+
+.card-icon{
+    width:50px;
+    height:50px;
+    border-radius:14px;
+    background:#e8efff;
+    color:#1457d9;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:24px;
+    margin-bottom:18px;
+}
+
+.card h3{
+    margin-bottom:10px;
+    color:#173b84;
+}
+
+.card p{
+    color:#657189;
+    line-height:1.6;
+}
+
+/* CTA */
+
+.cta{
+    padding:65px 20px;
+}
+
+.cta-box{
+    max-width:1000px;
+    margin:auto;
+    padding:45px 25px;
+    text-align:center;
+    border-radius:25px;
+    background:linear-gradient(135deg,#1457d9,#4030b9);
+    color:white;
+}
+
+.cta-box h2{
+    font-size:35px;
+    margin-bottom:12px;
+}
+
+.cta-box p{
+    font-size:17px;
+    margin-bottom:25px;
+    opacity:.95;
+}
+
+.cta-button{
+    background:white;
+    color:#1457d9;
+}
+
+/* FOOTER */
+
+footer{
+    background:#0b1730;
+    color:#aab5ca;
+    text-align:center;
+    padding:35px 20px;
+}
+
+footer strong{
+    color:white;
+    font-size:20px;
+}
+
+footer p{
+    margin-top:8px;
+}
+
+/* MODAL */
+
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(5,15,35,.70);
+    z-index:1000;
+    padding:20px;
+    overflow-y:auto;
+}
+
+.modal.show{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.modal-box{
+    width:100%;
+    max-width:570px;
+    background:white;
+    border-radius:24px;
+    padding:30px;
+    position:relative;
+    box-shadow:0 20px 60px rgba(0,0,0,.25);
+    max-height:92vh;
+    overflow-y:auto;
+}
+
+.close{
+    position:absolute;
+    right:20px;
+    top:16px;
+    border:none;
+    background:none;
+    font-size:30px;
+    cursor:pointer;
+    color:#111827;
+}
+
+.modal-title{
+    font-size:30px;
+    color:#0b1f4d;
+    margin-bottom:8px;
+}
+
+.modal-subtitle{
+    color:#657189;
+    margin-bottom:25px;
+}
+
+.field{
+    margin-bottom:17px;
+}
+
+.field label{
+    display:block;
+    font-size:15px;
+    font-weight:bold;
+    color:#374151;
+    margin-bottom:7px;
+}
+
+.field input{
+    width:100%;
+    height:54px;
+    border:1.5px solid #d5dbe7;
+    border-radius:12px;
+    padding:0 15px;
+    font-size:16px;
+    outline:none;
+    background:white;
+}
+
+.field input:focus{
+    border-color:#1457d9;
+    box-shadow:0 0 0 3px rgba(20,87,217,.10);
+}
+
+/* SPONSOR NAME */
+
+.sponsor-name{
+    background:#f1f5ff !important;
+    border-color:#b9c9ef !important;
+    color:#1457d9;
+    font-weight:bold;
+}
+
+/* PASSWORD */
+
+.password-box{
+    position:relative;
+}
+
+.password-box input{
+    padding-right:60px;
+}
+
+.show-password{
+    position:absolute;
+    right:15px;
+    top:15px;
+    border:none;
+    background:none;
+    cursor:pointer;
+    font-size:20px;
+}
+
+/* TERMS */
+
+.terms{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    margin:18px 0 22px;
+    color:#4b5563;
+    font-size:14px;
+    line-height:1.4;
+}
+
+.terms input{
+    width:19px;
+    height:19px;
+    margin-top:1px;
+    accent-color:#1457d9;
+}
+
+/* SIGNUP */
+
+.signup-button{
+    width:100%;
+    height:56px;
+    border:none;
+    border-radius:13px;
+    background:#1457d9;
+    color:white;
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.signup-button:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+}
+
+.login-link{
+    width:100%;
+    height:52px;
+    margin-top:12px;
+    border:1px solid #d5def3;
+    border-radius:13px;
+    background:#eef3ff;
+    color:#1457d9;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.message{
+    display:none;
+    padding:12px;
+    border-radius:10px;
+    margin-bottom:15px;
+    font-size:14px;
+}
+
+.error{
+    background:#fff0f0;
+    color:#b42318;
+}
+
+.success{
+    background:#ecfdf3;
+    color:#087443;
+}
+
+/* MOBILE */
+
+@media(max-width:800px){
+
+    .hero-inner{
+        grid-template-columns:1fr;
+    }
+
+    .hero h1{
+        font-size:42px;
+    }
+
+    .cards{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:520px){
+
+    .nav{
+        padding:10px 12px;
+    }
+
+    .logo{
+        font-size:20px;
+    }
+
+    .logo-mark{
+        width:40px;
+        height:40px;
+    }
+
+    .btn{
+        padding:11px 14px;
+        font-size:14px;
+    }
+
+    .hero{
+        padding:45px 15px;
+    }
+
+    .hero h1{
+        font-size:38px;
+    }
+
+    .hero p{
+        font-size:17px;
+    }
+
+    .reward{
+        font-size:43px;
+    }
+
+    .section{
+        padding:50px 15px;
+    }
+
+    .modal{
+        padding:10px;
+    }
+
+    .modal-box{
+        padding:24px 18px;
+        border-radius:20px;
+    }
+
+    .modal-title{
+        font-size:27px;
+    }
+
+}
+
 </style>
 </head>
+
 <body>
-<header><div class="container nav">
-<a class="logo" href="#home"><span class="logoMark">H</span> Hamara Market</a>
-<nav class="links">
-<a href="#platform">Platform</a><a href="#earning">Earning</a><a href="#how">How It Works</a><a href="#about">About</a>
-<a class="btn light" href="#login" onclick="openM('loginM');return false">Login</a>
-<a class="btn" href="#signup" onclick="openM('signupM');return false">Sign Up</a>
-</nav>
-</div></header>
 
-<section class="hero" id="home"><div class="container heroGrid">
+<!-- HEADER -->
+
+<header>
+
+<div class="nav">
+
+<a href="#" class="logo">
+    <span class="logo-mark">H</span>
+    <span>Hamara Market</span>
+</a>
+
+<div class="nav-buttons">
+
+<button class="btn btn-login"
+onclick="window.location.href='login.html'">
+Login
+</button>
+
+<button class="btn btn-signup"
+onclick="openSignup()">
+Sign Up
+</button>
+
+</div>
+
+</div>
+
+</header>
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+<div class="hero-inner">
+
 <div>
-<div class="badge">DIGITAL REWARDS PLATFORM</div>
-<h1>Watch sponsored videos.<br><span>Earn rewards.</span></h1>
-<p class="lead">Hamara Market is a digital rewards platform concept designed to connect sponsored video campaigns with registered users through a simple and transparent reward experience.</p>
-<div class="actions"><a class="btn" href="#signup" onclick="openM('signupM');return false">Create Account</a><a class="btn light" href="#platform">Explore Platform</a></div>
-<div class="domain">Official website address: <b>hamaramarket.world</b></div>
-</div>
-<div class="panel">
-<div class="panelTop"><b>Hamara Market</b><span class="status">● Platform</span></div>
-<div class="balance"><small>Maximum Daily Reward</small><strong>₹50.00</strong></div>
-<div class="stats"><div class="stat"><small>Daily Videos</small><b>10</b></div><div class="stat"><small>Per Video</small><b>₹5</b></div></div>
-</div>
-</div></section>
 
-<section class="section" id="platform"><div class="container">
-<div class="head"><div class="eyebrow">OUR PLATFORM</div><h2>Professional. Simple. Transparent.</h2><p>A clean digital experience for users and campaign partners.</p></div>
+<div class="badge">
+DIGITAL REWARDS PLATFORM
+</div>
+
+<h1>
+Watch sponsored videos.
+<span>Earn rewards.</span>
+</h1>
+
+<p>
+Hamara Market is a digital rewards platform concept
+designed to connect members with sponsored video
+campaigns and reward-based activities.
+</p>
+
+<div class="hero-actions">
+
+<button class="btn primary"
+onclick="openSignup()">
+Create Account
+</button>
+
+<button class="btn secondary"
+onclick="window.location.href='login.html'">
+Already Have Account?
+</button>
+
+</div>
+
+</div>
+
+
+<div class="reward-card">
+
+<h2>Hamara Market</h2>
+
+<span class="platform">
+● Platform
+</span>
+
+<div class="reward-title">
+Maximum Daily Reward
+</div>
+
+<div class="reward">
+₹50.00
+</div>
+
+<div class="reward-grid">
+
+<div class="reward-box">
+<small>Daily Videos</small>
+<strong>10</strong>
+</div>
+
+<div class="reward-box">
+<small>Per Video</small>
+<strong>₹5</strong>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- FEATURES -->
+
+<section class="section">
+
+<div class="section-inner">
+
+<h2 class="section-title">
+How Hamara Market Works
+</h2>
+
 <div class="cards">
-<div class="card"><div class="icon">▶</div><h3>Sponsored Videos</h3><p>Eligible users can view sponsored videos and complete the required viewing conditions.</p></div>
-<div class="card"><div class="icon">₹</div><h3>Reward Wallet</h3><p>Track completed videos and verified rewards in one place.</p></div>
-<div class="card"><div class="icon">↗</div><h3>Referral Program</h3><p>Invite eligible users through a structured referral program with published rules.</p></div>
-</div></div></section>
 
-<section class="section" id="earning"><div class="container">
-<div class="head"><div class="eyebrow">DAILY EARNING MODEL</div><h2>Earn according to completed videos</h2><p>Daily viewing window: <b>12:00 AM to 11:59 PM IST</b>. Only eligible videos successfully completed and verified count toward the daily reward.</p></div>
-<div class="earning">
-<div class="earn"><small>1 VIDEO</small><b>₹5</b></div><div class="earn"><small>5 VIDEOS</small><b>₹25</b></div><div class="earn"><small>8 VIDEOS</small><b>₹40</b></div><div class="earn"><small>10 VIDEOS</small><b>₹50</b></div>
+<div class="card">
+
+<div class="card-icon">1</div>
+
+<h3>Create Account</h3>
+
+<p>
+Register your Hamara Market member account
+with your Sponsor ID and personal details.
+</p>
+
 </div>
-</div></section>
 
-<section class="section" id="how"><div class="container">
-<div class="head"><div class="eyebrow">HOW IT WORKS</div><h2>Four simple steps</h2></div>
-<div class="cards">
-<div class="card"><div class="icon">01</div><h3>Register</h3><p>Create your account on Hamara Market.</p></div>
-<div class="card"><div class="icon">02</div><h3>Watch</h3><p>Choose eligible videos available for your account.</p></div>
-<div class="card"><div class="icon">03</div><h3>Complete</h3><p>Watch the required video duration and satisfy campaign conditions.</p></div>
+
+<div class="card">
+
+<div class="card-icon">2</div>
+
+<h3>Watch Sponsored Videos</h3>
+
+<p>
+Participate in available sponsored video
+campaigns through your member account.
+</p>
+
 </div>
-</div></section>
 
-<section class="section" id="about"><div class="container"><div class="head"><div class="eyebrow">ABOUT HAMARA MARKET</div><h2>Building a trusted digital reward experience</h2><p>Hamara Market aims to provide a straightforward platform where campaign participation, reward tracking and user activity can be managed through a professional digital interface.</p></div></div></section>
 
-<section class="cta"><div class="container"><div class="ctaBox"><div><h2>Start with Hamara Market</h2><p>Register and explore the platform experience.</p></div><a class="btn" href="#signup" onclick="openM('signupM');return false">Create Account</a></div></div></section>
+<div class="card">
 
-<footer><div class="container"><div class="foot"><div><strong>Hamara Market</strong><p>Sponsored video rewards platform concept.<br>Website: hamaramarket.world</p></div><div><p>Platform · Earning · How It Works · About</p></div></div><div class="copyright">© 2026 Hamara Market. All rights reserved.</div></div></footer>
+<div class="card-icon">3</div>
 
-<div class="modal" id="signupM"><div class="box"><button class="close" onclick="closeM('signupM')">×</button><h2>Create Account</h2><input class="input" id="name" placeholder="Full Name"><input class="input" id="mobile" maxlength="10" placeholder="10-digit Mobile Number"><input class="input" id="pass" type="password" placeholder="Password (8+ characters)"><button class="btn" style="width:100%;margin-top:8px" onclick="signup()">Create Account</button><p id="sm" class="note"></p></div></div>
-<div class="modal" id="loginM"><div class="box"><button class="close" onclick="closeM('loginM')">×</button><h2>Login</h2><input class="input" id="lm" maxlength="10" placeholder="Mobile Number"><input class="input" id="lp" type="password" placeholder="Password"><button class="btn" style="width:100%;margin-top:8px" onclick="login()">Login</button><p id="lmmsg" class="note"></p></div></div>
+<h3>Track Rewards</h3>
+
+<p>
+Track your activities and rewards through
+your member dashboard.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- CTA -->
+
+<section class="cta">
+
+<div class="cta-box">
+
+<h2>Ready to Join Hamara Market?</h2>
+
+<p>
+Create your member account and get started.
+</p>
+
+<button class="btn cta-button"
+onclick="openSignup()">
+Create Your Account
+</button>
+
+</div>
+
+</section>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+<strong>Hamara Market</strong>
+
+<p>
+Digital Rewards Platform
+</p>
+
+<p>
+© 2026 Hamara Market. All rights reserved.
+</p>
+
+</footer>
+
+
+<!-- SIGNUP MODAL -->
+
+<div class="modal" id="signupModal">
+
+<div class="modal-box">
+
+<button class="close"
+onclick="closeSignup()">
+×
+</button>
+
+<h2 class="modal-title">
+Create Account
+</h2>
+
+<p class="modal-subtitle">
+Register your Hamara Market member account
+</p>
+
+
+<div id="errorMessage"
+class="message error">
+</div>
+
+
+<!-- SPONSOR ID -->
+
+<div class="field">
+
+<label for="sponsorId">
+Sponsor ID
+</label>
+
+<input
+type="text"
+id="sponsorId"
+placeholder="Enter Sponsor ID"
+autocomplete="off"
+required>
+
+</div>
+
+
+<!-- SPONSOR NAME -->
+
+<div class="field">
+
+<label for="sponsorName">
+Sponsor Name
+</label>
+
+<input
+type="text"
+id="sponsorName"
+class="sponsor-name"
+placeholder="Sponsor Name"
+required>
+
+</div>
+
+
+<!-- FULL NAME -->
+
+<div class="field">
+
+<label for="fullName">
+Name
+</label>
+
+<input
+type="text"
+id="fullName"
+placeholder="Full Name"
+required>
+
+</div>
+
+
+<!-- ADDRESS -->
+
+<div class="field">
+
+<label for="address">
+Address
+</label>
+
+<input
+type="text"
+id="address"
+placeholder="Enter Address"
+required>
+
+</div>
+
+
+<!-- MOBILE -->
+
+<div class="field">
+
+<label for="mobile">
+Mobile Number
+</label>
+
+<input
+type="tel"
+id="mobile"
+inputmode="numeric"
+maxlength="10"
+pattern="[0-9]{10}"
+placeholder="Enter 10 digit Mobile Number"
+required>
+
+</div>
+
+
+<!-- EMAIL -->
+
+<div class="field">
+
+<label for="email">
+Email ID
+</label>
+
+<input
+type="email"
+id="email"
+placeholder="Enter Email ID"
+required>
+
+</div>
+
+
+<!-- PASSWORD -->
+
+<div class="field">
+
+<label for="password">
+Password
+</label>
+
+<div class="password-box">
+
+<input
+type="password"
+id="password"
+minlength="8"
+placeholder="Minimum 8 characters"
+required>
+
+<button
+type="button"
+class="show-password"
+onclick="togglePassword()"
+id="passwordButton">
+👁
+</button>
+
+</div>
+
+</div>
+
+
+<!-- TERMS -->
+
+<label class="terms">
+
+<input
+type="checkbox"
+id="terms">
+
+<span>
+I agree to Terms and condition
+</span>
+
+</label>
+
+
+<!-- MESSAGE -->
+
+<div id="successMessage"
+class="message success">
+Registration details accepted. Opening registration page...
+</div>
+
+
+<!-- SIGN UP -->
+
+<button
+class="signup-button"
+id="signupButton"
+onclick="continueRegistration()">
+
+Sign Up
+
+</button>
+
+
+<!-- LOGIN -->
+
+<button
+class="login-link"
+onclick="window.location.href='login.html'">
+
+Already Have Acc.
+
+</button>
+
+</div>
+
+</div>
+
 
 <script>
-function openM(id){document.getElementById(id).classList.add('show')}
-function closeM(id){document.getElementById(id).classList.remove('show')}
-window.onclick=e=>{if(e.target.classList.contains('modal'))e.target.classList.remove('show')}
-function signup(){let n=name.value.trim(),m=mobile.value.trim(),p=pass.value;if(!n||!/^\d{10}$/.test(m)||p.length<8){sm.textContent='Enter a valid name, 10-digit mobile and 8+ character password.';return}localStorage.setItem('hm_user',JSON.stringify({name:n,mobile:m,password:p,balance:0}));sm.textContent='Demo account created successfully.'}
-function login(){let u=JSON.parse(localStorage.getItem('hm_user')||'null');lmmsg.textContent=(u&&u.mobile===lm.value.trim()&&u.password===lp.value)?'Login successful in demo mode.':'Invalid login details.'}
+
+/* OPEN SIGNUP */
+
+function openSignup(){
+
+    document.getElementById("signupModal")
+    .classList.add("show");
+
+    document.body.style.overflow="hidden";
+}
+
+
+/* CLOSE SIGNUP */
+
+function closeSignup(){
+
+    document.getElementById("signupModal")
+    .classList.remove("show");
+
+    document.body.style.overflow="auto";
+}
+
+
+/* CLICK OUTSIDE MODAL */
+
+document.getElementById("signupModal")
+.addEventListener("click",function(e){
+
+    if(e.target === this){
+        closeSignup();
+    }
+
+});
+
+
+/* PASSWORD SHOW/HIDE */
+
+function togglePassword(){
+
+    const password =
+    document.getElementById("password");
+
+    const button =
+    document.getElementById("passwordButton");
+
+    if(password.type === "password"){
+
+        password.type="text";
+        button.textContent="🙈";
+
+    }else{
+
+        password.type="password";
+        button.textContent="👁";
+
+    }
+
+}
+
+
+/* MOBILE ONLY NUMBERS */
+
+document.getElementById("mobile")
+.addEventListener("input",function(){
+
+    this.value =
+    this.value.replace(/[^0-9]/g,"");
+
+});
+
+
+/* CONTINUE REGISTRATION */
+
+function continueRegistration(){
+
+    const sponsorId =
+    document.getElementById("sponsorId").value.trim();
+
+    const sponsorName =
+    document.getElementById("sponsorName").value.trim();
+
+    const fullName =
+    document.getElementById("fullName").value.trim();
+
+    const address =
+    document.getElementById("address").value.trim();
+
+    const mobile =
+    document.getElementById("mobile").value.trim();
+
+    const email =
+    document.getElementById("email").value.trim();
+
+    const password =
+    document.getElementById("password").value;
+
+    const terms =
+    document.getElementById("terms").checked;
+
+    const error =
+    document.getElementById("errorMessage");
+
+    const success =
+    document.getElementById("successMessage");
+
+
+    error.style.display="none";
+    success.style.display="none";
+
+
+    /* SPONSOR ID */
+
+    if(sponsorId === ""){
+
+        showError("Please enter Sponsor ID.");
+        return;
+
+    }
+
+
+    /* SPONSOR NAME */
+
+    if(sponsorName === ""){
+
+        showError("Please enter Sponsor Name.");
+        return;
+
+    }
+
+
+    /* FULL NAME */
+
+    if(fullName === ""){
+
+        showError("Please enter your full name.");
+        return;
+
+    }
+
+
+    /* ADDRESS */
+
+    if(address === ""){
+
+        showError("Please enter your address.");
+        return;
+
+    }
+
+
+    /* MOBILE */
+
+    if(!/^[0-9]{10}$/.test(mobile)){
+
+        showError(
+        "Please enter a valid 10 digit mobile number."
+        );
+
+        return;
+
+    }
+
+
+    /* EMAIL */
+
+    if(!email.includes("@")){
+
+        showError("Please enter a valid Email ID.");
+        return;
+
+    }
+
+
+    /* PASSWORD */
+
+    if(password.length < 8){
+
+        showError(
+        "Password must contain at least 8 characters."
+        );
+
+        return;
+
+    }
+
+
+    /* TERMS */
+
+    if(!terms){
+
+        showError(
+        "Please agree to Terms and condition."
+        );
+
+        return;
+
+    }
+
+
+    /*
+       SAVE TEMPORARY DETAILS
+       FOR REGISTRATION PAGE
+    */
+
+    sessionStorage.setItem(
+        "sponsorId",
+        sponsorId
+    );
+
+    sessionStorage.setItem(
+        "sponsorName",
+        sponsorName
+    );
+
+    sessionStorage.setItem(
+        "fullName",
+        fullName
+    );
+
+    sessionStorage.setItem(
+        "address",
+        address
+    );
+
+    sessionStorage.setItem(
+        "mobile",
+        mobile
+    );
+
+    sessionStorage.setItem(
+        "email",
+        email
+    );
+
+    sessionStorage.setItem(
+        "password",
+        password
+    );
+
+
+    success.style.display="block";
+
+
+    /*
+       OPEN ACTUAL REGISTRATION PAGE
+    */
+
+    setTimeout(function(){
+
+        window.location.href =
+        "registration.html";
+
+    },800);
+
+}
+
+
+/* ERROR MESSAGE */
+
+function showError(message){
+
+    const error =
+    document.getElementById("errorMessage");
+
+    error.textContent=message;
+    error.style.display="block";
+
+}
+
+
+/* ESC KEY */
+
+document.addEventListener("keydown",function(e){
+
+    if(e.key === "Escape"){
+        closeSignup();
+    }
+
+});
+
 </script>
+
 </body>
 </html>
