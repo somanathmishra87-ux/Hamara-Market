@@ -1,22 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Hamara Market - Member Registration</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-
-*{
-    box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 body{
     margin:0;
@@ -27,7 +20,7 @@ body{
 }
 
 .header{
-    background:#ffffff;
+    background:#fff;
     border-bottom:1px solid #e4e9f0;
     padding:16px 20px;
     display:flex;
@@ -46,13 +39,12 @@ body{
     height:48px;
     border-radius:14px;
     background:linear-gradient(135deg,#2463df,#1847b5);
-    color:#ffffff;
+    color:#fff;
     display:flex;
     align-items:center;
     justify-content:center;
     font-size:25px;
     font-weight:800;
-    box-shadow:0 8px 20px #245ed933;
 }
 
 .brand-name{
@@ -64,7 +56,7 @@ body{
 .login-btn{
     text-decoration:none;
     background:#2463df;
-    color:#ffffff;
+    color:#fff;
     padding:11px 17px;
     border-radius:10px;
     font-weight:700;
@@ -72,12 +64,12 @@ body{
 
 .wrap{
     max-width:520px;
-    margin:30px auto;
-    padding:18px;
+    margin:25px auto;
+    padding:15px;
 }
 
 .card{
-    background:#ffffff;
+    background:#fff;
     border-radius:22px;
     padding:28px 25px;
     box-shadow:0 12px 40px rgba(20,50,100,.12);
@@ -96,70 +88,6 @@ body{
     color:#68738a;
     margin-bottom:25px;
 }
-
-/* =========================
-   SPONSOR BOX
-   ========================= */
-
-.sponsor-box{
-    background:#f4f8ff;
-    border:1px solid #cfe0ff;
-    padding:16px;
-    border-radius:13px;
-    margin-bottom:22px;
-}
-
-.sponsor-heading{
-    font-size:17px;
-    font-weight:800;
-    color:#173b9e;
-    margin-bottom:14px;
-}
-
-.sponsor-row{
-    display:flex;
-    gap:9px;
-}
-
-.sponsor-row input{
-    flex:1;
-}
-
-.verify-btn{
-    width:auto;
-    margin:0;
-    padding:0 17px;
-    background:#173b9e;
-    font-size:14px;
-    white-space:nowrap;
-}
-
-.verify-btn:disabled{
-    opacity:.6;
-}
-
-.sponsor-status{
-    min-height:20px;
-    margin-top:8px;
-    font-size:13px;
-    font-weight:700;
-}
-
-.sponsor-success{
-    color:#13753c;
-}
-
-.sponsor-error{
-    color:#c62828;
-}
-
-.sponsor-loading{
-    color:#765b12;
-}
-
-/* =========================
-   FORM
-   ========================= */
 
 label{
     display:block;
@@ -184,15 +112,22 @@ input:focus{
     box-shadow:0 0 0 3px #2463df18;
 }
 
-input[readonly]{
-    background:#eef3fa;
-    color:#4f5d73;
-    cursor:not-allowed;
+.sponsor-name{
+    background:#eef5ff !important;
+    color:#173b9e;
+    font-weight:700;
 }
 
-/* =========================
-   PASSWORD
-   ========================= */
+.sponsor-status{
+    min-height:20px;
+    margin-top:7px;
+    font-size:13px;
+    font-weight:700;
+}
+
+.valid{color:#13753c}
+.invalid{color:#c62828}
+.checking{color:#765b12}
 
 .password-wrap{
     position:relative;
@@ -211,15 +146,11 @@ input[readonly]{
     font-size:20px;
 }
 
-/* =========================
-   REGISTER BUTTON
-   ========================= */
-
 .register-btn{
     width:100%;
     border:0;
     background:linear-gradient(90deg,#245fe0,#3d48df);
-    color:#ffffff;
+    color:#fff;
     padding:16px;
     margin-top:25px;
     border-radius:12px;
@@ -232,10 +163,6 @@ input[readonly]{
     opacity:.6;
     cursor:not-allowed;
 }
-
-/* =========================
-   MESSAGE
-   ========================= */
 
 .message{
     display:none;
@@ -261,36 +188,6 @@ input[readonly]{
     color:#c62828;
 }
 
-/* =========================
-   SUCCESS BOX
-   ========================= */
-
-.success-box{
-    display:none;
-    margin-top:20px;
-    padding:18px;
-    border-radius:13px;
-    background:#eef9f2;
-    border:1px solid #a9dfbb;
-    text-align:center;
-}
-
-.success-box h3{
-    margin-top:0;
-    color:#13753c;
-}
-
-.member-id{
-    font-size:26px;
-    font-weight:800;
-    color:#245fe0;
-    margin:10px 0;
-}
-
-/* =========================
-   NOTE
-   ========================= */
-
 .note{
     margin-top:20px;
     padding:13px;
@@ -309,10 +206,6 @@ input[readonly]{
     margin-top:22px;
 }
 
-/* =========================
-   MOBILE
-   ========================= */
-
 @media(max-width:600px){
 
     .header{
@@ -329,41 +222,24 @@ input[readonly]{
     }
 
     .wrap{
-        margin:18px auto;
+        margin:15px auto;
         padding:10px;
     }
 
     .card{
         padding:23px 18px;
     }
-
-    .sponsor-row{
-        flex-direction:column;
-    }
-
-    .verify-btn{
-        width:100%;
-        padding:13px;
-        margin-top:8px;
-    }
-
 }
-
 </style>
-
 </head>
 
-
 <body>
-
 
 <header class="header">
 
     <div class="brand">
 
-        <div class="logo">
-            H
-        </div>
+        <div class="logo">H</div>
 
         <div class="brand-name">
             Hamara Market
@@ -371,99 +247,67 @@ input[readonly]{
 
     </div>
 
-    <a href="login.html"
-       class="login-btn">
+    <a href="login.html" class="login-btn">
         Login
     </a>
 
 </header>
 
 
-<main class="wrap">
+<div class="wrap">
 
-<section class="card">
-
+<div class="card">
 
 <h1 class="title">
-    Create Account
+    Member Registration
 </h1>
 
-
-<p class="subtitle">
-    Register your Hamara Market Member Account
-</p>
-
-
-<!-- =========================================
-     SPONSOR DETAILS
-     ========================================= -->
-
-<div class="sponsor-box">
-
-    <div class="sponsor-heading">
-        Sponsor Details
-    </div>
+<div class="subtitle">
+    Create your Hamara Market Member Account
+</div>
 
 
-    <label for="sponsorId">
-        Sponsor ID
-    </label>
+<form id="registrationForm">
 
+<!-- ================= SPONSOR ================= -->
 
-    <div class="sponsor-row">
+<label for="sponsorId">
+    Sponsor ID
+</label>
 
-        <input
-            type="text"
-            id="sponsorId"
-            value="HM000001"
-            placeholder="Enter Sponsor ID"
-            autocomplete="off"
-            autocapitalize="characters"
-            required
-        >
+<input
+    type="text"
+    id="sponsorId"
+    value="HM000001"
+    placeholder="Enter Sponsor ID"
+    autocomplete="off"
+    autocapitalize="characters"
+    required
+>
 
+<div
+    id="sponsorStatus"
+    class="sponsor-status valid">
 
-        <button
-            type="button"
-            class="verify-btn"
-            id="verifySponsorBtn">
-
-            Verify
-
-        </button>
-
-    </div>
-
-
-    <div
-        id="sponsorStatus"
-        class="sponsor-status">
-
-    </div>
-
-
-    <label for="sponsorName">
-        Sponsor Name
-    </label>
-
-
-    <input
-        type="text"
-        id="sponsorName"
-        value=""
-        placeholder="Sponsor Name will appear automatically"
-        readonly
-    >
+    ✓ Company Sponsor
 
 </div>
 
 
-<!-- =========================================
-     REGISTRATION FORM
-     ========================================= -->
+<label for="sponsorName">
+    Sponsor Name
+</label>
 
-<form id="registrationForm">
+<input
+    type="text"
+    id="sponsorName"
+    class="sponsor-name"
+    value="Hamara Market"
+    readonly
+>
 
+
+<!-- ================= NAME ================= -->
 
 <label for="name">
     Full Name
@@ -478,6 +322,8 @@ input[readonly]{
 >
 
 
+<!-- ================= ADDRESS ================= -->
+
 <label for="address">
     Address
 </label>
@@ -490,6 +336,8 @@ input[readonly]{
     required
 >
 
+
+<!-- ================= MOBILE ================= -->
 
 <label for="mobile">
     Mobile Number
@@ -506,6 +354,8 @@ input[readonly]{
 >
 
 
+<!-- ================= EMAIL ================= -->
+
 <label for="email">
     Email ID
 </label>
@@ -519,29 +369,33 @@ input[readonly]{
 >
 
 
+<!-- ================= PASSWORD ================= -->
+
 <label for="password">
     Password
 </label>
 
 <div class="password-wrap">
 
-    <input
-        type="password"
-        id="password"
-        minlength="8"
-        placeholder="Minimum 8 characters"
-        autocomplete="new-password"
-        required
-    >
+<input
+    type="password"
+    id="password"
+    minlength="8"
+    placeholder="Minimum 8 characters"
+    autocomplete="new-password"
+    required
+>
 
-    <span
-        class="eye"
-        onclick="togglePassword('password',this)">
-        👁
-    </span>
+<span
+    class="eye"
+    onclick="togglePassword('password',this)">
+    👁
+</span>
 
 </div>
 
+
+<!-- ================= CONFIRM PASSWORD ================= -->
 
 <label for="confirmPassword">
     Confirm Password
@@ -549,20 +403,20 @@ input[readonly]{
 
 <div class="password-wrap">
 
-    <input
-        type="password"
-        id="confirmPassword"
-        minlength="8"
-        placeholder="Re-enter password"
-        autocomplete="new-password"
-        required
-    >
+<input
+    type="password"
+    id="confirmPassword"
+    minlength="8"
+    placeholder="Re-enter password"
+    autocomplete="new-password"
+    required
+>
 
-    <span
-        class="eye"
-        onclick="togglePassword('confirmPassword',this)">
-        👁
-    </span>
+<span
+    class="eye"
+    onclick="togglePassword('confirmPassword',this)">
+    👁
+</span>
 
 </div>
 
@@ -579,92 +433,40 @@ input[readonly]{
 </form>
 
 
-<!-- MESSAGE -->
-
 <div
     id="message"
     class="message">
 </div>
 
 
-<!-- SUCCESS -->
-
-<div
-    id="successBox"
-    class="success-box">
-
-    <h3>
-        Registration Successful 🎉
-    </h3>
-
-    <p>
-        Your Member ID is:
-    </p>
-
-    <div
-        id="newMemberId"
-        class="member-id">
-        Processing...
-    </div>
-
-    <p>
-        Sponsor:
-        <strong id="successSponsor">
-        </strong>
-    </p>
-
-    <a
-        href="login.html"
-        style="
-        display:block;
-        margin-top:15px;
-        padding:13px;
-        background:#2463df;
-        color:white;
-        text-decoration:none;
-        border-radius:10px;
-        font-weight:700;
-        ">
-
-        Go to Login
-
-    </a>
-
-</div>
-
-
 <div class="note">
 
-<strong>Important:</strong>
+<strong>Important:</strong><br>
 
-<br>
-
-• No OTP is required during member registration.<br>
-
-• Default Sponsor is
+• Direct registration default Sponsor:
 <strong>HM000001 - Hamara Market</strong>.<br>
 
-• You can enter another valid Sponsor ID.<br>
+• If you have another Sponsor ID, replace HM000001 with that ID.<br>
 
-• Sponsor Name will appear automatically after verification.<br>
+• Sponsor Name will automatically appear after verification.<br>
 
-• Referral links automatically load the sponsor ID.<br>
+• Referral links automatically select the referred Sponsor.<br>
 
-• New members remain inactive until Admin activation.
+• Mobile OTP is not required.<br>
+
+• Member ID will be generated automatically.<br>
+
+• New members start as inactive until Admin activation.
 
 </div>
 
 
 <div class="footer">
-
-© 2026 Hamara Market. All rights reserved.
-
+    © 2026 Hamara Market. All rights reserved.
 </div>
 
-
-</section>
-
-</main>
+</div>
+</div>
 
 
 <script>
@@ -676,10 +478,8 @@ input[readonly]{
 const SUPABASE_URL =
     "https://yaxingstvkaqfmvtyuis.supabase.co";
 
-
 const SUPABASE_KEY =
     "sb_publishable_3dA1_NPBVCHCzcrf155Qtw_16IUxNDt";
-
 
 const supabaseClient =
     window.supabase.createClient(
@@ -689,14 +489,13 @@ const supabaseClient =
 
 
 /* =====================================================
-   COMPANY DEFAULT SPONSOR
+   COMPANY DEFAULT
    ===================================================== */
 
-const COMPANY_SPONSOR_ID =
+const COMPANY_ID =
     "HM000001";
 
-
-const COMPANY_SPONSOR_NAME =
+const COMPANY_NAME =
     "Hamara Market";
 
 
@@ -705,201 +504,133 @@ const COMPANY_SPONSOR_NAME =
    ===================================================== */
 
 const sponsorIdInput =
-    document.getElementById(
-        "sponsorId"
-    );
-
+    document.getElementById("sponsorId");
 
 const sponsorNameInput =
-    document.getElementById(
-        "sponsorName"
-    );
-
+    document.getElementById("sponsorName");
 
 const sponsorStatus =
-    document.getElementById(
-        "sponsorStatus"
-    );
-
-
-const verifySponsorBtn =
-    document.getElementById(
-        "verifySponsorBtn"
-    );
-
+    document.getElementById("sponsorStatus");
 
 const registerBtn =
-    document.getElementById(
-        "registerBtn"
-    );
+    document.getElementById("registerBtn");
 
 
 /* =====================================================
-   GET REFERRAL LINK
+   REFERRAL LINK
    ===================================================== */
 
-/*
-   Example:
-
-   registration.html?ref=HM000025
-
-   If no ref exists:
-   HM000001 is default.
-*/
-
-const urlParams =
+const params =
     new URLSearchParams(
         window.location.search
     );
 
+const referralId =
+    params.get("ref");
 
-const referralFromURL =
-    urlParams.get("ref");
 
+/* =====================================================
+   DEFAULT / REFERRAL SPONSOR
+   ===================================================== */
 
-if(
-    referralFromURL &&
-    referralFromURL.trim() !== ""
-){
+async function loadInitialSponsor(){
 
-    sponsorIdInput.value =
-        referralFromURL
-        .trim()
-        .toUpperCase();
+    if(
+        referralId &&
+        referralId.trim() !== ""
+    ){
 
-}else{
+        sponsorIdInput.value =
+            referralId
+            .trim()
+            .toUpperCase();
 
-    sponsorIdInput.value =
-        COMPANY_SPONSOR_ID;
+        await verifySponsor();
 
+    }else{
+
+        sponsorIdInput.value =
+            COMPANY_ID;
+
+        sponsorNameInput.value =
+            COMPANY_NAME;
+
+        sponsorStatus.textContent =
+            "✓ Company Sponsor";
+
+        sponsorStatus.className =
+            "sponsor-status valid";
+
+    }
 }
 
 
 /* =====================================================
-   STATUS
+   VERIFY SPONSOR
    ===================================================== */
 
-function setSponsorStatus(
-    text,
-    type
-){
+async function verifySponsor(){
 
-    sponsorStatus.textContent =
-        text;
-
-
-    sponsorStatus.className =
-        "sponsor-status";
-
-
-    if(type === "success"){
-
-        sponsorStatus.classList.add(
-            "sponsor-success"
-        );
-
-    }
-
-
-    if(type === "error"){
-
-        sponsorStatus.classList.add(
-            "sponsor-error"
-        );
-
-    }
-
-
-    if(type === "loading"){
-
-        sponsorStatus.classList.add(
-            "sponsor-loading"
-        );
-
-    }
-
-}
-
-
-/* =====================================================
-   CHECK SPONSOR
-   ===================================================== */
-
-async function checkSponsor(){
-
-    const sponsorId =
+    const id =
         sponsorIdInput.value
         .trim()
         .toUpperCase();
 
 
     sponsorIdInput.value =
-        sponsorId;
+        id;
 
 
-    sponsorNameInput.value =
-        "";
+    if(!id){
 
+        sponsorNameInput.value = "";
 
-    if(!sponsorId){
+        sponsorStatus.textContent =
+            "Please enter Sponsor ID.";
 
-        setSponsorStatus(
-            "Please enter Sponsor ID.",
-            "error"
-        );
+        sponsorStatus.className =
+            "sponsor-status invalid";
 
         return false;
-
     }
 
 
-    setSponsorStatus(
-        "Checking Sponsor ID...",
-        "loading"
-    );
+    /* Company ID */
+
+    if(id === COMPANY_ID){
+
+        sponsorNameInput.value =
+            COMPANY_NAME;
+
+        sponsorStatus.textContent =
+            "✓ Company Sponsor";
+
+        sponsorStatus.className =
+            "sponsor-status valid";
+
+        return true;
+    }
 
 
-    verifySponsorBtn.disabled =
-        true;
+    /* Member Sponsor */
+
+    sponsorStatus.textContent =
+        "Checking Sponsor ID...";
+
+    sponsorStatus.className =
+        "sponsor-status checking";
+
+    sponsorNameInput.value = "";
 
 
     try{
-
-        /*
-           Company root
-        */
-
-        if(
-            sponsorId ===
-            COMPANY_SPONSOR_ID
-        ){
-
-            sponsorNameInput.value =
-                COMPANY_SPONSOR_NAME;
-
-
-            setSponsorStatus(
-                "✓ Company Sponsor verified",
-                "success"
-            );
-
-
-            return true;
-
-        }
-
-
-        /*
-           Existing member sponsor
-        */
 
         const { data, error } =
             await supabaseClient
             .rpc(
                 "check_sponsor",
                 {
-                    p_member_id:
-                        sponsorId
+                    p_member_id:id
                 }
             );
 
@@ -907,19 +638,17 @@ async function checkSponsor(){
         if(error){
 
             console.error(
-                "Sponsor error:",
+                "Sponsor verification error:",
                 error
             );
 
+            sponsorStatus.textContent =
+                "Unable to verify Sponsor ID.";
 
-            setSponsorStatus(
-                "Sponsor verification failed.",
-                "error"
-            );
-
+            sponsorStatus.className =
+                "sponsor-status invalid";
 
             return false;
-
         }
 
 
@@ -928,14 +657,13 @@ async function checkSponsor(){
             data.length === 0
         ){
 
-            setSponsorStatus(
-                "Invalid or inactive Sponsor ID.",
-                "error"
-            );
+            sponsorStatus.textContent =
+                "✕ Invalid Sponsor ID";
 
+            sponsorStatus.className =
+                "sponsor-status invalid";
 
             return false;
-
         }
 
 
@@ -943,76 +671,68 @@ async function checkSponsor(){
             data[0];
 
 
-        sponsorNameInput.value =
-            sponsor.name || "";
+        const sponsorName =
+            sponsor.name ||
+            sponsor.sponsor_name ||
+            "";
 
 
         if(
-            !sponsor.name
+            sponsor.active === false
         ){
 
-            setSponsorStatus(
-                "Sponsor name not found.",
-                "error"
-            );
+            sponsorStatus.textContent =
+                "✕ Sponsor is inactive";
 
+            sponsorStatus.className =
+                "sponsor-status invalid";
 
             return false;
-
         }
 
 
-        setSponsorStatus(
-            "✓ Sponsor verified",
-            "success"
-        );
+        if(!sponsorName){
 
+            sponsorStatus.textContent =
+                "✕ Sponsor Name not found";
+
+            sponsorStatus.className =
+                "sponsor-status invalid";
+
+            return false;
+        }
+
+
+        sponsorNameInput.value =
+            sponsorName;
+
+
+        sponsorStatus.textContent =
+            "✓ Sponsor verified";
+
+        sponsorStatus.className =
+            "sponsor-status valid";
 
         return true;
 
 
     }catch(error){
 
-        console.error(
-            error
-        );
+        console.error(error);
 
+        sponsorStatus.textContent =
+            "Sponsor verification failed.";
 
-        setSponsorStatus(
-            "Unable to verify Sponsor ID.",
-            "error"
-        );
-
+        sponsorStatus.className =
+            "sponsor-status invalid";
 
         return false;
-
-
-    }finally{
-
-        verifySponsorBtn.disabled =
-            false;
-
     }
-
 }
 
 
 /* =====================================================
-   VERIFY BUTTON
-   ===================================================== */
-
-verifySponsorBtn.addEventListener(
-    "click",
-    async function(){
-
-        await checkSponsor();
-
-    }
-);
-
-
-/* =====================================================
-   AUTOMATIC VERIFY WHEN USER ENTERS ID
+   SPONSOR ID CHANGE
    ===================================================== */
 
 let sponsorTimer;
@@ -1022,8 +742,8 @@ sponsorIdInput.addEventListener(
     "input",
     function(){
 
-        sponsorIdInput.value =
-            sponsorIdInput.value
+        this.value =
+            this.value
             .toUpperCase()
             .replace(
                 /\s/g,
@@ -1031,14 +751,14 @@ sponsorIdInput.addEventListener(
             );
 
 
-        sponsorNameInput.value =
-            "";
+        sponsorNameInput.value = "";
 
 
-        setSponsorStatus(
-            "",
-            ""
-        );
+        sponsorStatus.textContent =
+            "Checking Sponsor ID...";
+
+        sponsorStatus.className =
+            "sponsor-status checking";
 
 
         clearTimeout(
@@ -1046,44 +766,29 @@ sponsorIdInput.addEventListener(
         );
 
 
-        if(
-            sponsorIdInput.value.length >= 4
-        ){
+        sponsorTimer =
+            setTimeout(
+                function(){
 
-            sponsorTimer =
-                setTimeout(
-                    function(){
+                    verifySponsor();
 
-                        checkSponsor();
-
-                    },
-                    700
-                );
-
-        }
+                },
+                600
+            );
 
     }
 );
 
 
 /* =====================================================
-   ENTER KEY FOR SPONSOR
+   SPONSOR BLUR
    ===================================================== */
 
 sponsorIdInput.addEventListener(
-    "keydown",
-    function(event){
+    "blur",
+    function(){
 
-        if(
-            event.key ===
-            "Enter"
-        ){
-
-            event.preventDefault();
-
-            checkSponsor();
-
-        }
+        verifySponsor();
 
     }
 );
@@ -1099,9 +804,7 @@ function togglePassword(
 ){
 
     const input =
-        document.getElementById(
-            id
-        );
+        document.getElementById(id);
 
 
     if(
@@ -1122,9 +825,7 @@ function togglePassword(
 
         element.textContent =
             "👁";
-
     }
-
 }
 
 
@@ -1156,14 +857,12 @@ function showMessage(
         box.classList.add(
             type
         );
-
     }
-
 }
 
 
 /* =====================================================
-   MOBILE NUMBER ONLY
+   MOBILE VALIDATION
    ===================================================== */
 
 document.getElementById(
@@ -1199,10 +898,6 @@ document.getElementById(
 
         event.preventDefault();
 
-
-        /* -----------------------------------------
-           VALUES
-           ----------------------------------------- */
 
         const name =
             document.getElementById(
@@ -1250,15 +945,9 @@ document.getElementById(
             .value;
 
 
-        const sponsorId =
-            sponsorIdInput.value
-            .trim()
-            .toUpperCase();
-
-
-        /* -----------------------------------------
-           VALIDATION
-           ----------------------------------------- */
+        /* ===============================
+           BASIC VALIDATION
+           =============================== */
 
         if(
             name.length < 2
@@ -1270,7 +959,6 @@ document.getElementById(
             );
 
             return;
-
         }
 
 
@@ -1284,23 +972,21 @@ document.getElementById(
             );
 
             return;
-
         }
 
 
         if(
-            !/^[6-9][0-9]{9}$/.test(
+            !/^[0-9]{10}$/.test(
                 mobile
             )
         ){
 
             showMessage(
-                "Please enter a valid 10 digit Indian mobile number.",
+                "Enter a valid 10 digit mobile number.",
                 "error"
             );
 
             return;
-
         }
 
 
@@ -1315,7 +1001,6 @@ document.getElementById(
             );
 
             return;
-
         }
 
 
@@ -1329,7 +1014,6 @@ document.getElementById(
             );
 
             return;
-
         }
 
 
@@ -1339,105 +1023,77 @@ document.getElementById(
         ){
 
             showMessage(
-                "Password and Confirm Password do not match.",
+                "Passwords do not match.",
                 "error"
             );
 
             return;
-
         }
 
 
-        if(!sponsorId){
-
-            showMessage(
-                "Sponsor ID is required.",
-                "error"
-            );
-
-            return;
-
-        }
-
-
-        /* -----------------------------------------
-           DISABLE
-           ----------------------------------------- */
+        /* ===============================
+           VERIFY SPONSOR AGAIN
+           =============================== */
 
         registerBtn.disabled =
             true;
-
 
         registerBtn.textContent =
             "Verifying Sponsor...";
 
 
-        showMessage(
-            "",
-            ""
-        );
+        const sponsorValid =
+            await verifySponsor();
 
 
-        /* -----------------------------------------
-           FINAL SPONSOR CHECK
-           ----------------------------------------- */
-
-        const validSponsor =
-            await checkSponsor();
-
-
-        if(!validSponsor){
+        if(!sponsorValid){
 
             showMessage(
                 "Please enter a valid and active Sponsor ID.",
                 "error"
             );
 
-
             registerBtn.disabled =
                 false;
-
 
             registerBtn.textContent =
                 "Create Member Account";
 
-
             return;
-
         }
 
 
-        const verifiedSponsorName =
+        const finalSponsorId =
+            sponsorIdInput.value
+            .trim()
+            .toUpperCase();
+
+
+        const finalSponsorName =
             sponsorNameInput.value
             .trim();
 
 
-        if(
-            !verifiedSponsorName
-        ){
+        if(!finalSponsorName){
 
             showMessage(
                 "Sponsor Name could not be verified.",
                 "error"
             );
 
-
             registerBtn.disabled =
                 false;
-
 
             registerBtn.textContent =
                 "Create Member Account";
 
-
             return;
-
         }
 
 
-        /* -----------------------------------------
-           CREATE SUPABASE AUTH USER
-           ----------------------------------------- */
+        /* ===============================
+           CREATE AUTH USER
+           =============================== */
 
         registerBtn.textContent =
             "Creating Account...";
@@ -1450,30 +1106,25 @@ document.getElementById(
                 .auth
                 .signUp({
 
-                    email:
-                        email,
+                    email:email,
 
-                    password:
-                        password,
+                    password:password,
 
                     options:{
 
                         data:{
 
-                            name:
-                                name,
+                            name:name,
 
-                            address:
-                                address,
+                            address:address,
 
-                            mobile:
-                                mobile,
+                            mobile:mobile,
 
                             sponsor_id:
-                                sponsorId,
+                                finalSponsorId,
 
                             sponsor_name:
-                                verifiedSponsorName
+                                finalSponsorName
 
                         }
 
@@ -1499,82 +1150,26 @@ document.getElementById(
                 registerBtn.disabled =
                     false;
 
-
                 registerBtn.textContent =
                     "Create Member Account";
 
-
                 return;
-
             }
 
 
-            /* -----------------------------------------
+            /* ===============================
                SUCCESS
-               ----------------------------------------- */
+               =============================== */
 
             showMessage(
-                "Registration successful. Your Member ID has been generated.",
+                "Registration successful! Your Member ID has been generated. Please login.",
                 "success"
             );
 
 
             /*
-               The database trigger creates the
-               Member ID automatically.
-            */
-
-            if(
-                data &&
-                data.user
-            ){
-
-                /*
-                   Try to read the newly created
-                   profile when session is available.
-                */
-
-                const { data:profile } =
-                    await supabaseClient
-                    .from("profiles")
-                    .select(
-                        "member_id"
-                    )
-                    .eq(
-                        "id",
-                        data.user.id
-                    )
-                    .maybeSingle();
-
-
-                if(
-                    profile &&
-                    profile.member_id
-                ){
-
-                    document.getElementById(
-                        "newMemberId"
-                    ).textContent =
-                        profile.member_id;
-
-                    document.getElementById(
-                        "successSponsor"
-                    ).textContent =
-                        sponsorId;
-
-                    document.getElementById(
-                        "successBox"
-                    ).style.display =
-                        "block";
-
-                }
-
-            }
-
-
-            /*
-               Clear member fields only.
-               Sponsor remains selected.
+               Keep Sponsor information.
+               Clear member information.
             */
 
             document.getElementById(
@@ -1607,6 +1202,9 @@ document.getElementById(
             ).value = "";
 
 
+            registerBtn.disabled =
+                false;
+
             registerBtn.textContent =
                 "Registration Complete";
 
@@ -1627,10 +1225,8 @@ document.getElementById(
             registerBtn.disabled =
                 false;
 
-
             registerBtn.textContent =
                 "Create Member Account";
-
         }
 
     }
@@ -1638,13 +1234,12 @@ document.getElementById(
 
 
 /* =====================================================
-   INITIAL SPONSOR VERIFICATION
+   START
    ===================================================== */
 
-checkSponsor();
+loadInitialSponsor();
 
 </script>
 
 </body>
-
 </html>
