@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Hamara Market - Registration</title>
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Hamara Market - Member Registration</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -16,144 +19,127 @@
 
 body{
     margin:0;
-    background:#f5f7fb;
     font-family:Arial,Helvetica,sans-serif;
-    color:#333;
-}
-
-.page{
-    max-width:760px;
-    margin:auto;
-    padding:20px 18px 40px;
+    background:linear-gradient(135deg,#eef7ff,#ffffff);
+    min-height:100vh;
+    color:#17213b;
 }
 
 .header{
-    background:linear-gradient(135deg,#5239e9,#4030b9);
-    color:white;
-    border-radius:0 0 30px 30px;
-    padding:30px 25px;
-    text-align:center;
-    box-shadow:0 5px 20px rgba(0,0,0,.12);
+    background:#ffffff;
+    border-bottom:1px solid #e4e9f0;
+    padding:16px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
 }
 
 .logo{
-    width:70px;
-    height:70px;
-    border-radius:50%;
-    background:white;
-    color:#5239e9;
-    margin:auto;
+    width:48px;
+    height:48px;
+    border-radius:14px;
+    background:linear-gradient(135deg,#2463df,#1847b5);
+    color:#ffffff;
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:35px;
-    font-weight:bold;
+    font-size:25px;
+    font-weight:800;
+    box-shadow:0 8px 20px #245ed933;
 }
 
-.header h1{
-    margin:12px 0 5px;
-    font-size:29px;
+.brand-name{
+    font-size:22px;
+    font-weight:800;
+    color:#173b9e;
 }
 
-.header p{
-    margin:0;
-    font-size:17px;
+.login-btn{
+    text-decoration:none;
+    background:#2463df;
+    color:#ffffff;
+    padding:11px 17px;
+    border-radius:10px;
+    font-weight:700;
+}
+
+.wrap{
+    max-width:500px;
+    margin:35px auto;
+    padding:20px;
 }
 
 .card{
-    background:white;
-    margin-top:25px;
-    padding:25px;
-    border-radius:20px;
-    box-shadow:0 3px 15px rgba(0,0,0,.08);
+    background:#ffffff;
+    border-radius:22px;
+    padding:28px 25px;
+    box-shadow:0 12px 40px rgba(20,50,100,.12);
+    border:1px solid #e4ebf5;
 }
 
-.card h2{
-    margin-top:0;
-    color:#5239e9;
-    font-size:25px;
+.title{
     text-align:center;
+    margin:0 0 7px;
+    font-size:27px;
+    color:#173b9e;
 }
 
-.field{
-    margin-bottom:19px;
+.subtitle{
+    text-align:center;
+    color:#68738a;
+    margin-bottom:25px;
 }
 
 label{
     display:block;
-    font-size:17px;
-    font-weight:600;
-    margin-bottom:8px;
-    color:#555;
+    margin-top:15px;
+    margin-bottom:7px;
+    font-weight:700;
+    font-size:14px;
 }
 
 input{
     width:100%;
-    height:58px;
-    border:1.5px solid #d9dce5;
-    border-radius:13px;
-    padding:0 17px;
-    font-size:18px;
+    padding:14px;
+    border:1px solid #ccd5e3;
+    border-radius:10px;
+    font-size:16px;
     outline:none;
-    background:white;
 }
 
 input:focus{
-    border-color:#5239e9;
-    box-shadow:0 0 0 3px rgba(82,57,233,.10);
+    border-color:#2463df;
+    box-shadow:0 0 0 3px #2463df18;
 }
 
-.sponsor-name{
-    background:#f3fff5;
-    color:#17833c;
-    font-weight:bold;
+.ref-box{
+    background:#eef5ff;
+    border:1px solid #cfe0ff;
+    padding:13px;
+    border-radius:10px;
+    margin-bottom:8px;
 }
 
-.sponsor-status{
-    display:block;
-    margin-top:7px;
-    font-size:14px;
-}
-
-.password-box{
-    position:relative;
-}
-
-.password-box input{
-    padding-right:60px;
-}
-
-.show-password{
-    position:absolute;
-    right:16px;
-    top:16px;
-    font-size:23px;
-    cursor:pointer;
-}
-
-.terms{
-    display:flex;
-    align-items:flex-start;
-    gap:10px;
-    font-size:15px;
-    margin:15px 0 22px;
-}
-
-.terms input{
-    width:20px;
-    height:20px;
-    margin-top:2px;
+.ref-box strong{
+    color:#173b9e;
 }
 
 button{
     width:100%;
-    height:60px;
     border:0;
-    border-radius:14px;
-    background:linear-gradient(90deg,#5239e9,#4e3ce8);
-    color:white;
-    font-size:20px;
-    font-weight:bold;
+    background:#2463df;
+    color:#ffffff;
+    padding:15px;
+    margin-top:24px;
+    border-radius:11px;
+    font-size:17px;
+    font-weight:800;
     cursor:pointer;
 }
 
@@ -162,398 +148,270 @@ button:disabled{
     cursor:not-allowed;
 }
 
-.login-btn{
-    margin-top:15px;
-    background:#5239e9;
-}
-
 .message{
     display:none;
     margin-top:18px;
-    padding:14px;
-    border-radius:12px;
-    font-size:16px;
-}
-
-.error{
-    background:#ffe7e7;
-    color:#b00020;
+    padding:13px;
+    border-radius:10px;
+    text-align:center;
+    font-weight:600;
 }
 
 .success{
-    background:#e7f8ed;
-    color:#08752c;
-}
-
-.success-card{
-    display:none;
-    background:white;
-    margin-top:25px;
-    padding:28px 22px;
-    border-radius:22px;
-    text-align:center;
-    box-shadow:0 5px 25px rgba(0,0,0,.12);
-}
-
-.success-icon{
-    width:90px;
-    height:90px;
-    border-radius:50%;
-    background:#e8fff0;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    margin:0 auto 15px;
-    font-size:50px;
-}
-
-.success-card h2{
-    color:#15803d;
-    margin:8px 0;
-}
-
-.id-box{
-    background:#f2f0ff;
-    border:2px solid #5239e9;
-    border-radius:14px;
-    padding:15px;
-    margin:18px 0;
-}
-
-.id-box small{
     display:block;
-    color:#666;
-    margin-bottom:5px;
+    background:#e8f8ee;
+    color:#13753c;
 }
 
-.id-box strong{
-    color:#3e2bc5;
-    font-size:25px;
-    letter-spacing:1px;
-}
-
-.password-card{
-    background:#fff7df;
-    border:1px solid #f0d477;
-    border-radius:14px;
-    padding:15px;
-    margin:15px 0;
-}
-
-.password-card strong{
-    font-size:21px;
-    color:#9a6700;
-    word-break:break-all;
+.error{
+    display:block;
+    background:#fff0f0;
+    color:#c62828;
 }
 
 .note{
-    color:#666;
-    font-size:14px;
-    line-height:1.5;
+    margin-top:20px;
+    padding:12px;
+    background:#fff8e6;
+    border:1px solid #f4df9c;
+    border-radius:10px;
+    font-size:13px;
+    color:#765b12;
 }
 
-@media(max-width:480px){
+.footer{
+    text-align:center;
+    color:#7b8496;
+    font-size:13px;
+    margin-top:22px;
+}
 
-    .page{
-        padding:15px 12px 30px;
-    }
+.password-wrap{
+    position:relative;
+}
+
+.password-wrap input{
+    padding-right:50px;
+}
+
+.eye{
+    position:absolute;
+    right:14px;
+    top:50%;
+    transform:translateY(-50%);
+    cursor:pointer;
+    font-size:20px;
+}
+
+@media(max-width:600px){
 
     .header{
-        padding:25px 18px;
+        padding:13px;
     }
 
-    .header h1{
-        font-size:25px;
+    .brand-name{
+        font-size:19px;
+    }
+
+    .login-btn{
+        padding:9px 12px;
+        font-size:14px;
+    }
+
+    .wrap{
+        margin:20px auto;
+        padding:12px;
     }
 
     .card{
-        padding:20px 16px;
+        padding:23px 18px;
     }
 
 }
 
 </style>
+
 </head>
 
 <body>
 
-<div class="page">
+<header class="header">
 
-    <div class="header">
+    <div class="brand">
 
         <div class="logo">H</div>
 
-        <h1>Hamara Market</h1>
-
-        <p>Create Your Member Account</p>
+        <div class="brand-name">
+            Hamara Market
+        </div>
 
     </div>
 
+    <a href="login.html" class="login-btn">
+        Login
+    </a>
 
-    <!-- REGISTRATION CARD -->
+</header>
 
-    <div class="card" id="registrationCard">
 
-        <h2>Register New Account</h2>
+<div class="wrap">
 
-        <form id="registrationForm">
+<div class="card">
 
+<h1 class="title">
+    Member Registration
+</h1>
 
-            <!-- SPONSOR ID -->
+<div class="subtitle">
+    Create your Hamara Market Member Account
+</div>
 
-            <div class="field">
 
-                <label for="sponsor">Sponsor ID</label>
+<div class="ref-box">
 
-                <input
-                    id="sponsor"
-                    type="text"
-                    placeholder="Enter Sponsor ID"
-                    autocomplete="off"
-                    required
-                >
+    Referral ID:
+    <strong id="referralDisplay">
+        Checking...
+    </strong>
 
-            </div>
+</div>
 
 
-            <!-- SPONSOR NAME -->
+<form id="registrationForm">
 
-            <div class="field">
 
-                <label for="sponsorName">Sponsor Name</label>
+<label for="name">
+    Full Name
+</label>
 
-                <input
-                    id="sponsorName"
-                    class="sponsor-name"
-                    type="text"
-                    placeholder="Sponsor Name"
-                    readonly
-                >
+<input
+    type="text"
+    id="name"
+    placeholder="Enter your full name"
+    required
+>
 
-                <span
-                    id="sponsorStatus"
-                    class="sponsor-status"
-                ></span>
 
-            </div>
+<label for="mobile">
+    Mobile Number
+</label>
 
+<input
+    type="tel"
+    id="mobile"
+    inputmode="numeric"
+    maxlength="10"
+    placeholder="10 digit mobile number"
+    required
+>
 
-            <!-- FULL NAME -->
 
-            <div class="field">
+<label for="email">
+    Email Address
+</label>
 
-                <label for="name">Full Name</label>
+<input
+    type="email"
+    id="email"
+    placeholder="Enter your email"
+    required
+>
 
-                <input
-                    id="name"
-                    type="text"
-                    placeholder="Full Name as per bank record"
-                    required
-                >
 
-            </div>
+<label for="password">
+    Password
+</label>
 
+<div class="password-wrap">
 
-            <!-- ADDRESS -->
+<input
+    type="password"
+    id="password"
+    minlength="8"
+    placeholder="Minimum 8 characters"
+    required
+>
 
-            <div class="field">
+<span class="eye"
+      onclick="togglePassword('password',this)">
+    👁
+</span>
 
-                <label for="address">Address</label>
+</div>
 
-                <input
-                    id="address"
-                    type="text"
-                    placeholder="Enter Address"
-                    required
-                >
 
-            </div>
+<label for="confirmPassword">
+    Confirm Password
+</label>
 
+<div class="password-wrap">
 
-            <!-- MOBILE -->
+<input
+    type="password"
+    id="confirmPassword"
+    minlength="8"
+    placeholder="Re-enter password"
+    required
+>
 
-            <div class="field">
+<span class="eye"
+      onclick="togglePassword('confirmPassword',this)">
+    👁
+</span>
 
-                <label for="mobile">Mobile Number</label>
+</div>
 
-                <input
-                    id="mobile"
-                    type="tel"
-                    inputmode="numeric"
-                    maxlength="10"
-                    pattern="[0-9]{10}"
-                    placeholder="Enter 10 digit Mobile Number"
-                    required
-                >
 
-            </div>
+<button
+    type="submit"
+    id="registerBtn">
 
+    Create Member Account
 
-            <!-- EMAIL -->
+</button>
 
-            <div class="field">
+</form>
 
-                <label for="email">Email ID</label>
 
-                <input
-                    id="email"
-                    type="email"
-                    placeholder="Enter Email ID"
-                    required
-                >
+<div id="message"
+     class="message">
+</div>
 
-            </div>
 
+<div class="note">
 
-            <!-- PASSWORD -->
+<strong>Important:</strong><br>
 
-            <div class="field">
+• Mobile OTP is not required.<br>
+• Your Member ID will be generated automatically.<br>
+• Your referral ID will be linked automatically.<br>
+• New members start as inactive until activated by Admin.
 
-                <label for="password">Password</label>
+</div>
 
-                <div class="password-box">
 
-                    <input
-                        id="password"
-                        type="password"
-                        minlength="8"
-                        placeholder="Minimum 8 characters"
-                        required
-                    >
+<div class="footer">
 
-                    <span
-                        class="show-password"
-                        id="showPassword"
-                    >👁</span>
+© Hamara Market
 
-                </div>
+</div>
 
-            </div>
-
-
-            <!-- TERMS -->
-
-            <label class="terms">
-
-                <input
-                    id="terms"
-                    type="checkbox"
-                    required
-                >
-
-                <span>
-                    I agree to the Terms and Conditions.
-                </span>
-
-            </label>
-
-
-            <!-- SIGN UP -->
-
-            <button
-                type="submit"
-                id="registerBtn"
-            >
-                Sign Up
-            </button>
-
-
-        </form>
-
-
-        <div
-            class="message error"
-            id="errorMessage"
-        ></div>
-
-
-        <div
-            class="message success"
-            id="successMessage"
-        ></div>
-
-
-    </div>
-
-
-    <!-- SUCCESS CARD -->
-
-    <div
-        class="success-card"
-        id="successCard"
-    >
-
-        <div class="success-icon">
-            🎉
-        </div>
-
-        <h2>Registration Successful</h2>
-
-        <p>
-            Your Hamara Market member account has been created successfully.
-        </p>
-
-
-        <div class="id-box">
-
-            <small>
-                Your Hamara Market Member ID
-            </small>
-
-            <strong id="generatedId">
-                -
-            </strong>
-
-        </div>
-
-
-        <div class="password-card">
-
-            <div>Password</div>
-
-            <strong id="displayPassword">
-                -
-            </strong>
-
-        </div>
-
-
-        <p class="note">
-            Please keep your Member ID and Password safe.
-            You will need them to login to your account.
-        </p>
-
-
-        <button
-            class="login-btn"
-            onclick="goToLogin()"
-        >
-            Already Have Acc.
-        </button>
-
-    </div>
+</div>
 
 </div>
 
 
 <script>
 
-/* =========================================
-   SUPABASE CONNECTION
-   ========================================= */
-
-/*
-   IMPORTANT:
-   Yahan apne purane registration.html
-   wale SUPABASE_URL aur SUPABASE_KEY
-   same-to-same rakhen.
-*/
+/* =====================================================
+   SUPABASE CONFIGURATION
+   ===================================================== */
 
 const SUPABASE_URL =
-    "PASTE_YOUR_EXISTING_SUPABASE_URL_HERE";
+    "YOUR_SUPABASE_URL";
 
 const SUPABASE_KEY =
-    "PASTE_YOUR_EXISTING_SUPABASE_KEY_HERE";
+    "YOUR_SUPABASE_PUBLISHABLE_KEY";
 
 
 const supabaseClient =
@@ -563,999 +421,376 @@ const supabaseClient =
     );
 
 
-/* =========================================
-   ELEMENTS
-   ========================================= */
+/* =====================================================
+   GET REFERRAL ID FROM URL
+   Example:
+   registration.html?ref=HM000001
+   ===================================================== */
 
-const sponsorInput =
-    document.getElementById("sponsor");
+const params =
+    new URLSearchParams(window.location.search);
 
-const sponsorName =
-    document.getElementById("sponsorName");
-
-const sponsorStatus =
-    document.getElementById("sponsorStatus");
-
-const passwordInput =
-    document.getElementById("password");
-
-const showPassword =
-    document.getElementById("showPassword");
-
-const registrationForm =
-    document.getElementById("registrationForm");
-
-const registerBtn =
-    document.getElementById("registerBtn");
-
-const errorMessage =
-    document.getElementById("errorMessage");
-
-const successMessage =
-    document.getElementById("successMessage");
-
-const registrationCard =
-    document.getElementById("registrationCard");
-
-const successCard =
-    document.getElementById("successCard");
+let sponsorId =
+    params.get("ref");
 
 
-/* =========================================
-   SHOW / HIDE PASSWORD
-   ========================================= */
+/*
+   If no referral ID is supplied,
+   use Company/Admin ID.
+*/
 
-showPassword.addEventListener("click", function(){
+if(!sponsorId){
 
-    if(passwordInput.type === "password"){
+    sponsorId = "HM000001";
 
-        passwordInput.type = "text";
-
-        showPassword.textContent = "🙈";
-
-    }else{
-
-        passwordInput.type = "password";
-
-        showPassword.textContent = "👁";
-
-    }
-
-});
+}
 
 
-/* =========================================
-   FIND SPONSOR NAME
-   ========================================= */
+document.getElementById(
+    "referralDisplay"
+).textContent = sponsorId;
 
-async function findSponsor(){
 
-    const sponsorId =
-        sponsorInput.value.trim();
+/* =====================================================
+   CHECK REFERRAL
+   ===================================================== */
 
-    sponsorName.value = "";
+async function checkReferral(){
 
-    sponsorStatus.textContent = "";
-
-    if(!sponsorId){
-
-        return;
-
-    }
-
-    sponsorStatus.textContent =
-        "Checking Sponsor ID...";
-
-    sponsorStatus.style.color =
-        "#777";
-
+    const display =
+        document.getElementById(
+            "referralDisplay"
+        );
 
     try{
 
         const { data, error } =
             await supabaseClient
-            .from("profiles")
-            .select("member_id,name")
-            .eq("member_id", sponsorId)
-            .maybeSingle();
+            .rpc(
+                "check_sponsor",
+                {
+                    p_member_id:sponsorId
+                }
+            );
 
 
         if(error){
 
             console.error(error);
 
-            sponsorStatus.textContent =
-                "Unable to check Sponsor ID.";
+            display.textContent =
+                "Invalid";
 
-            sponsorStatus.style.color =
-                "#b00020";
-
-            return;
-
+            return false;
         }
 
 
-        if(!data){
+        if(!data || data.length === 0){
 
-            sponsorStatus.textContent =
-                "Sponsor ID not found.";
+            display.textContent =
+                "Invalid / Inactive";
 
-            sponsorStatus.style.color =
-                "#b00020";
-
-            return;
-
+            return false;
         }
 
 
-        sponsorName.value =
-            data.name || "";
+        display.textContent =
+            data[0].member_id +
+            " - " +
+            data[0].name;
 
-        sponsorStatus.textContent =
-            "✓ Sponsor verified";
-
-        sponsorStatus.style.color =
-            "#17833c";
-
+        return true;
 
     }catch(err){
 
         console.error(err);
 
-        sponsorStatus.textContent =
-            "Unable to verify Sponsor.";
+        display.textContent =
+            "Error";
 
-        sponsorStatus.style.color =
-            "#b00020";
-
+        return false;
     }
 
 }
 
 
-/* Sponsor ID se bahar aane par check */
+/* =====================================================
+   PASSWORD SHOW / HIDE
+   ===================================================== */
 
-sponsorInput.addEventListener(
-    "blur",
-    findSponsor
+function togglePassword(
+    id,
+    element
+){
+
+    const input =
+        document.getElementById(id);
+
+    if(input.type === "password"){
+
+        input.type = "text";
+
+        element.textContent = "🙈";
+
+    }else{
+
+        input.type = "password";
+
+        element.textContent = "👁";
+    }
+
+}
+
+
+/* =====================================================
+   SHOW MESSAGE
+   ===================================================== */
+
+function showMessage(
+    text,
+    type
+){
+
+    const box =
+        document.getElementById(
+            "message"
+        );
+
+    box.textContent = text;
+
+    box.className =
+        "message " + type;
+
+}
+
+
+/* =====================================================
+   REGISTRATION
+   ===================================================== */
+
+document.getElementById(
+    "registrationForm"
+).addEventListener(
+    "submit",
+    async function(event){
+
+        event.preventDefault();
+
+
+        const button =
+            document.getElementById(
+                "registerBtn"
+            );
+
+        const name =
+            document.getElementById(
+                "name"
+            ).value.trim();
+
+        const mobile =
+            document.getElementById(
+                "mobile"
+            ).value.trim();
+
+        const email =
+            document.getElementById(
+                "email"
+            ).value.trim();
+
+        const password =
+            document.getElementById(
+                "password"
+            ).value;
+
+        const confirmPassword =
+            document.getElementById(
+                "confirmPassword"
+            ).value;
+
+
+        /* ---------- Validation ---------- */
+
+        if(name.length < 2){
+
+            showMessage(
+                "Please enter your full name.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        if(!/^[0-9]{10}$/.test(mobile)){
+
+            showMessage(
+                "Enter a valid 10 digit mobile number.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        if(password.length < 8){
+
+            showMessage(
+                "Password must contain at least 8 characters.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        if(password !== confirmPassword){
+
+            showMessage(
+                "Passwords do not match.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        button.disabled = true;
+
+        button.textContent =
+            "Creating Account...";
+
+
+        showMessage(
+            "",
+            ""
+        );
+
+
+        /* ---------- Check referral ---------- */
+
+        const validReferral =
+            await checkReferral();
+
+
+        if(!validReferral){
+
+            showMessage(
+                "Referral ID is invalid or inactive.",
+                "error"
+            );
+
+            button.disabled = false;
+
+            button.textContent =
+                "Create Member Account";
+
+            return;
+        }
+
+
+        /* ---------- Supabase Auth ---------- */
+
+        try{
+
+            const { data, error } =
+                await supabaseClient
+                .auth
+                .signUp({
+
+                    email: email,
+
+                    password: password,
+
+                    options:{
+
+                        data:{
+
+                            name:name,
+
+                            mobile:mobile,
+
+                            sponsor_id:sponsorId
+
+                        }
+
+                    }
+
+                });
+
+
+            if(error){
+
+                console.error(error);
+
+                showMessage(
+                    error.message,
+                    "error"
+                );
+
+                button.disabled = false;
+
+                button.textContent =
+                    "Create Member Account";
+
+                return;
+            }
+
+
+            /*
+               Database trigger automatically creates:
+
+               HM000002
+               HM000003
+               HM000004
+               ...
+            */
+
+
+            showMessage(
+                "Registration successful! Your Member ID has been generated. Please login.",
+                "success"
+            );
+
+
+            document.getElementById(
+                "registrationForm"
+            ).reset();
+
+
+            document.getElementById(
+                "referralDisplay"
+            ).textContent =
+                sponsorId;
+
+
+            button.textContent =
+                "Registration Complete";
+
+
+        }catch(err){
+
+            console.error(err);
+
+            showMessage(
+                "Registration failed. Please try again.",
+                "error"
+            );
+
+            button.disabled = false;
+
+            button.textContent =
+                "Create Member Account";
+        }
+
+    }
 );
 
 
-/* =========================================
-   REGISTRATION
-   ========================================= */
-
-registrationForm.addEventListener(
-"submit",
-async function(e){
-
-    e.preventDefault();
-
-
-    errorMessage.style.display =
-        "none";
-
-    successMessage.style.display =
-        "none";
-
-
-    const sponsor =
-        document.getElementById("sponsor")
-        .value.trim();
-
-    const name =
-        document.getElementById("name")
-        .value.trim();
-
-    const address =
-        document.getElementById("address")
-        .value.trim();
-
-    const mobile =
-        document.getElementById("mobile")
-        .value.trim();
-
-    const email =
-        document.getElementById("email")
-        .value.trim();
-
-    const password =
-        document.getElementById("password")
-        .value;
-
-    const terms =
-        document.getElementById("terms")
-        .checked;
-
-
-    /* MOBILE CHECK */
-
-    if(!/^[0-9]{10}$/.test(mobile)){
-
-        showError(
-            "Please enter a valid 10 digit mobile number."
-        );
-
-        return;
-
-    }
-
-
-    /* PASSWORD CHECK */
-
-    if(password.length < 8){
-
-        showError(
-            "Password must contain at least 8 characters."
-        );
-
-        return;
-
-    }
-
-
-    /* TERMS CHECK */
-
-    if(!terms){
-
-        showError(
-            "Please agree to the Terms and Conditions."
-        );
-
-        return;
-
-    }
-
-
-    /* SPONSOR CHECK */
-
-    const { data: sponsorData,
-            error: sponsorError } =
-        await supabaseClient
-        .from("profiles")
-        .select("member_id,name")
-        .eq("member_id", sponsor)
-        .maybeSingle();
-
-
-    if(sponsorError){
-
-        showError(
-            "Unable to verify Sponsor ID."
-        );
-
-        console.error(sponsorError);
-
-        return;
-
-    }
-
-
-    if(!sponsorData){
-
-        showError(
-            "Invalid Sponsor ID. Please enter a valid Sponsor ID."
-        );
-
-        return;
-
-    }
-
-
-    registerBtn.disabled = true;
-
-    registerBtn.textContent =
-        "Creating Account...";
-
-
-    try{
-
-
-        /* =====================================
-           STEP 1 - CREATE AUTH ACCOUNT
-           ===================================== */
-
-        const {
-            data: authData,
-            error: authError
-        } =
-        await supabaseClient.auth.signUp({
-
-            email: email,
-
-            password: password
-
-        });
-
-
-        if(authError){
-
-            throw authError;
-
-        }
-
-
-        if(!authData.user){
-
-            throw new Error(
-                "Account could not be created."
-            );
-
-        }
-
-
-        /* =====================================
-           STEP 2 - GENERATE MEMBER ID
-           ===================================== */
-
-        const {
-            data: memberId,
-            error: idError
-        } =
-        await supabaseClient
-        .rpc("generate_member_id");
-
-
-        if(idError){
-
-            throw idError;
-
-        }
-
-
-        /* =====================================
-           STEP 3 - SAVE PROFILE
-           ===================================== */
-
-        const {
-            error: profileError
-        } =
-        await supabaseClient
-        .from("profiles")
-        .insert({
-
-            id: authData.user.id,
-
-            member_id: memberId,
-
-            sponsor_id: sponsor,
-
-            name: name,
-
-            address: address,
-
-            mobile: mobile,
-
-            email: email,
-
-            active: true,
-
-            activation_date:
-                new Date().toISOString()
-
-        });
-
-
-        if(profileError){
-
-            throw profileError;
-
-        }
-
-
-        /* =====================================
-           SUCCESS SCREEN
-           ===================================== */
-
-        document.getElementById(
-            "generatedId"
-        ).textContent = memberId;
-
-
-        document.getElementById(
-            "displayPassword"
-        ).textContent = password;
-
-
-        registrationCard.style.display =
-            "none";
-
-        successCard.style.display =
-            "block";
-
-
-    }catch(error){
-
-        console.error(error);
-
-
-        showError(
-            error.message ||
-            "Registration failed. Please try again."
-        );
-
-
-        registerBtn.disabled =
-            false;
-
-        registerBtn.textContent =
-            "Sign Up";
-
-    }
-
-});
-
-
-/* =========================================
-   ERROR FUNCTION
-   ========================================= */
-
-function showError(message){
-
-    errorMessage.textContent =
-        message;
-
-    errorMessage.style.display =
-        "block";
-
-    window.scrollTo({
-        top:0,
-        behavior:"smooth"
-    });
-
-}
-
-
-/* =========================================
-   LOGIN PAGE
-   ========================================= */
-
-function goToLogin(){
-
-    window.location.href =
-        "login.html";
-
-}
-
-</script>
-
-</body>
-</html>
-.password-box input{
-  padding-right:55px;
-}
-
-.show-password{
-  position:absolute;
-  right:15px;
-  top:17px;
-  font-size:23px;
-  cursor:pointer;
-}
-
-.terms{
-  display:flex;
-  align-items:flex-start;
-  gap:10px;
-  font-size:15px;
-  margin:15px 0 22px;
-}
-
-.terms input{
-  width:20px;
-  height:20px;
-  margin-top:2px;
-}
-
-button{
-  width:100%;
-  height:60px;
-  border:0;
-  border-radius:14px;
-  background:linear-gradient(90deg,#5239e9,#4e3ce8);
-  color:white;
-  font-size:20px;
-  font-weight:bold;
-  cursor:pointer;
-}
-
-button:disabled{
-  opacity:.6;
-}
-
-.message{
-  display:none;
-  margin-top:18px;
-  padding:14px;
-  border-radius:12px;
-  font-size:16px;
-}
-
-.error{
-  background:#ffe7e7;
-  color:#b00020;
-}
-
-.success{
-  background:#e7f8ed;
-  color:#08752c;
-}
-
-.success-card{
-  display:none;
-  background:white;
-  margin-top:25px;
-  padding:28px 22px;
-  border-radius:22px;
-  text-align:center;
-  box-shadow:0 5px 25px rgba(0,0,0,.12);
-}
-
-.success-icon{
-  width:90px;
-  height:90px;
-  border-radius:50%;
-  background:#e8fff0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  margin:0 auto 15px;
-  font-size:50px;
-}
-
-.success-card h2{
-  color:#15803d;
-  margin:8px 0;
-}
-
-.id-box{
-  background:#f2f0ff;
-  border:2px solid #5239e9;
-  border-radius:14px;
-  padding:15px;
-  margin:18px 0;
-}
-
-.id-box small{
-  display:block;
-  color:#666;
-  margin-bottom:5px;
-}
-
-.id-box strong{
-  color:#3e2bc5;
-  font-size:25px;
-  letter-spacing:1px;
-}
-
-.password-card{
-  background:#fff7df;
-  border:1px solid #f0d477;
-  border-radius:14px;
-  padding:15px;
-  margin:15px 0;
-}
-
-.password-card strong{
-  font-size:21px;
-  color:#9a6700;
-  word-break:break-all;
-}
-
-.note{
-  color:#666;
-  font-size:14px;
-  line-height:1.5;
-}
-
-.login-btn{
-  margin-top:10px;
-}
-
-@media(max-width:480px){
-  .page{
-    padding:15px 12px 30px;
-  }
-
-  .header{
-    padding:25px 18px;
-  }
-
-  .header h1{
-    font-size:25px;
-  }
-
-  .card{
-    padding:20px 16px;
-  }
-}
-</style>
-</head>
-
-<body>
-
-<div class="page">
-
-  <div class="header">
-    <div class="logo">🏪</div>
-    <h1>Hamara Market</h1>
-    <p>Create Your Member Account</p>
-  </div>
-
-  <div class="card" id="registrationCard">
-
-    <h2>Member Registration</h2>
-
-    <form id="registrationForm">
-
-    <div class="field">
-        <label for="sponsor">Sponsor ID</label>
-        <input
-            id="sponsor"
-            type="text"
-            placeholder="Enter Sponsor ID"
-            required>
-    </div>
-
-    <div class="field">
-        <label for="sponsorName">Sponsor Name</label>
-        <input
-            id="sponsorName"
-            type="text"
-            placeholder="Sponsor Name"
-            readonly>
-    </div>
-
-    <div class="field">
-        <label for="name">Name</label>
-        <input
-            id="name"
-            type="text"
-            placeholder="Full Name as per bank record"
-            required>
-    </div>
-
-    <div class="field">
-        <label for="address">Address</label>
-        <input
-            id="address"
-            type="text"
-            placeholder="Address"
-            required>
-    </div>
-
-    <div class="field">
-        <label for="mobile">Mobile Number</label>
-        <input
-            id="mobile"
-            type="tel"
-            inputmode="numeric"
-            maxlength="10"
-            pattern="[0-9]{10}"
-            placeholder="Enter Mobile Number"
-            required>
-    </div>
-
-    <div class="field">
-        <label for="email">Email</label>
-        <input
-            id="email"
-            type="email"
-            placeholder="Email ID"
-            required>
-    </div>
-
-    <div class="field">
-        <label for="password">Password</label>
-
-        <div class="password-box">
-            <input
-                id="password"
-                type="password"
-                minlength="8"
-                placeholder="Password"
-                required>
-
-            <span
-                class="show-password"
-                id="showPassword">👁️</span>
-        </div>
-    </div>
-
-    <label class="terms">
-        <input id="terms" type="checkbox" required>
-        <span>I agree to Terms and condition</span>
-    </label>
-
-    <button type="submit" id="registerBtn">
-        Sign Up
-    </button>
-
-    <button type="button" class="login-btn" onclick="goToLogin()">
-        Already Have Acc.
-    </button>
-
-</form>
-
-    <div class="message error" id="errorMessage"></div>
-    <div class="message success" id="successMessage"></div>
-
-  </div>
-
-  <!-- REGISTRATION SUCCESS -->
-  <div class="success-card" id="successCard">
-
-    <div class="success-icon">🎉</div>
-
-    <h2>Registration Successful!</h2>
-
-    <p>Your Hamara Market member account has been created successfully.</p>
-
-    <div class="id-box">
-      <small>Your Hamara Market Member ID</small>
-      <strong id="generatedId">HM000000</strong>
-    </div>
-
-    <div class="password-card">
-      <div>Password</div>
-      <strong id="displayPassword"></strong>
-    </div>
-
-    <p class="note">
-      Please keep your Member ID and Password safe.
-      You will need them to login to your account.
-    </p>
-
-    <button class="login-btn" onclick="goToLogin()">
-      Continue to Login
-    </button>
-
-  </div>
-
-</div>
-
-
-<script>
-
-/* =========================================
-   SUPABASE CONNECTION
-   ========================================= */
-
-const SUPABASE_URL =
-  "https://yaxingstvkaqfmvtyuis.supabase.co";
-
-const SUPABASE_KEY =
-  "sb_publishable_3dA1_NPBVCHCzcrf155Qtw_16IUxNDt";
-
-const supabaseClient =
-  window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-  );
-
-
-/* =========================================
-   SHOW / HIDE PASSWORD
-   ========================================= */
-
-document
-  .getElementById("showPassword")
-  .addEventListener("click", function(){
-
-    const password =
-      document.getElementById("password");
-
-    if(password.type === "password"){
-      password.type = "text";
-      this.textContent = "🙈";
-    }else{
-      password.type = "password";
-      this.textContent = "👁️";
-    }
-
-  });
-
-
-/* =========================================
-   REGISTRATION
-   ========================================= */
-
-document
-  .getElementById("registrationForm")
-  .addEventListener("submit", async function(e){
-
-    e.preventDefault();
-
-    const registerBtn =
-      document.getElementById("registerBtn");
-
-    const errorMessage =
-      document.getElementById("errorMessage");
-
-    const successMessage =
-      document.getElementById("successMessage");
-
-    errorMessage.style.display = "none";
-    successMessage.style.display = "none";
-
-    const name =
-      document.getElementById("name").value.trim();
-
-    const address =
-      document.getElementById("address").value.trim();
-
-    const mobile =
-      document.getElementById("mobile").value.trim();
-
-    const email =
-      document.getElementById("email").value.trim();
-
-    const sponsor =
-      document.getElementById("sponsor").value.trim();
-
-    const password =
-      document.getElementById("password").value;
-
-
-    /* MOBILE CHECK */
-
-    if(!/^[0-9]{10}$/.test(mobile)){
-      errorMessage.textContent =
-        "Please enter a valid 10 digit mobile number.";
-
-      errorMessage.style.display = "block";
-      return;
-    }
-
-
-    /* PASSWORD CHECK */
-
-    if(password.length < 8){
-      errorMessage.textContent =
-        "Password must contain at least 8 characters.";
-
-      errorMessage.style.display = "block";
-      return;
-    }
-
-
-    registerBtn.disabled = true;
-    registerBtn.textContent = "Creating Account...";
-
-
-    try{
-
-      /* ================================
-         STEP 1 - CREATE AUTH ACCOUNT
-         ================================ */
-
-      const {
-        data: authData,
-        error: authError
-      } =
-      await supabaseClient.auth.signUp({
-        email: email,
-        password: password
-      });
-
-
-      if(authError){
-        throw authError;
-      }
-
-
-      if(!authData.user){
-        throw new Error(
-          "Account could not be created."
-        );
-      }
-
-
-      /* ================================
-         STEP 2 - GENERATE HM MEMBER ID
-         ================================ */
-
-      const {
-        data: memberId,
-        error: idError
-      } =
-      await supabaseClient
-        .rpc("generate_member_id");
-
-
-      if(idError){
-        throw idError;
-      }
-
-
-      /* ================================
-         STEP 3 - SAVE MEMBER PROFILE
-         ================================ */
-
-      const {
-        error: profileError
-      } =
-      await supabaseClient
-        .from("profiles")
-        .insert({
-
-          id: authData.user.id,
-
-          member_id: memberId,
-
-          sponsor_id:
-            sponsor || null,
-
-          name: name,
-
-          address: address,
-
-          mobile: mobile,
-
-          email: email,
-
-          active: true,
-
-          activation_date:
-            new Date().toISOString()
-
-        });
-
-
-      if(profileError){
-        throw profileError;
-      }
-
-
-      /* ================================
-         SUCCESS SCREEN
-         ================================ */
-
-      document
-        .getElementById("generatedId")
-        .textContent = memberId;
-
-      document
-        .getElementById("displayPassword")
-        .textContent = password;
-
-      document
-        .getElementById("registrationCard")
-        .style.display = "none";
-
-      document
-        .getElementById("successCard")
-        .style.display = "block";
-
-
-    }catch(error){
-
-      console.error(error);
-
-      errorMessage.textContent =
-        error.message ||
-        "Registration failed. Please try again.";
-
-      errorMessage.style.display = "block";
-
-      registerBtn.disabled = false;
-      registerBtn.textContent = "Create Account";
-
-    }
-
-  });
-
-
-/* =========================================
-   LOGIN PAGE
-   ========================================= */
-
-function goToLogin(){
-
-  window.location.href =
-    "login.html";
-
-}
+/* =====================================================
+   INITIAL REFERRAL CHECK
+   ===================================================== */
+
+checkReferral();
 
 </script>
 
