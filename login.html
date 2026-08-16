@@ -557,11 +557,6 @@ Remember me
    SUPABASE CONFIGURATION
    ===================================================== */
 
-/*
-   IMPORTANT:
-   This is the correct Supabase URL supplied by you.
-*/
-
 const SUPABASE_URL =
     "https://yaxingstvkaqfmvtyuis.supabase.co";
 
@@ -675,10 +670,9 @@ document
         try{
 
             /*
-              ADMIN LOGIN
+              EMAIL LOGIN
 
-              If user enters email,
-              login directly with Supabase Auth.
+              User enters registered email.
             */
 
             if(loginId.includes("@")){
@@ -713,15 +707,10 @@ document
 
 
             /*
-              MEMBER LOGIN
+              MEMBER MOBILE LOGIN
 
-              IMPORTANT:
-              Registration currently creates
-              Auth account using EMAIL.
-
-              Therefore we first find the
-              member's email from profiles
-              using their mobile number.
+              Find registered email from
+              profiles table using mobile.
             */
 
             const mobile =
@@ -795,8 +784,8 @@ document
 
 
             /*
-              Login using the Auth email
-              connected with the member.
+              Login using the email connected
+              with this member.
             */
 
             const {data,error} =
@@ -853,7 +842,7 @@ document
 
 
 /* =====================================================
-   LOAD PROFILE
+   LOAD PROFILE AND OPEN DASHBOARD
    ===================================================== */
 
 async function loadProfileAndRedirect(
@@ -931,20 +920,33 @@ async function loadProfileAndRedirect(
         "Login Successful";
 
 
+    /*
+       =================================================
+       IMPORTANT CHANGE
+       =================================================
+
+       Earlier the code opened:
+
+       admin-dashboard.html
+       member-dashboard.html
+
+       Those files are not present in your
+       GitHub repository.
+
+       Your actual dashboard file is:
+
+       dashboard.html
+
+       Therefore every successful login
+       now opens dashboard.html.
+       =================================================
+    */
+
     setTimeout(
         function(){
 
-            if(profile.role === "admin"){
-
-                window.location.href =
-                    "admin-dashboard.html";
-
-            }else{
-
-                window.location.href =
-                    "member-dashboard.html";
-
-            }
+            window.location.href =
+                "dashboard.html";
 
         },
         800
@@ -1050,6 +1052,12 @@ async function startPasswordRecovery(){
 
     try{
 
+        /*
+           IMPORTANT:
+           This URL is your actual GitHub
+           reset-password.html page.
+        */
+
         const redirectURL =
             "https://somanathmishra87-ux.github.io/Hamara-Market/reset-password.html";
 
@@ -1121,13 +1129,6 @@ async function checkExistingSession(){
             data.session &&
             data.session.user
         ){
-
-            /*
-              User already logged in.
-              We do not automatically redirect
-              here so that the login page remains
-              usable.
-            */
 
             console.log(
                 "Existing session found."
