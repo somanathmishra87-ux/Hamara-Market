@@ -1,366 +1,360 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
 <title>Hamara Market - Login</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-*{box-sizing:border-box}
+
+*{
+    box-sizing:border-box;
+}
 
 body{
-  margin:0;
-  font-family:Arial,Helvetica,sans-serif;
-  background:linear-gradient(145deg,#eef3ff,#ffffff);
-  color:#17213b;
-  min-height:100vh;
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:linear-gradient(145deg,#eef3ff,#ffffff);
+    color:#17213b;
+    min-height:100vh;
 }
 
 .header{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:18px 24px;
-  background:#fff;
-  border-bottom:1px solid #e4e8f0;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:18px 24px;
+    background:#fff;
+    border-bottom:1px solid #e4e8f0;
 }
 
 .brand{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  font-weight:800;
-  font-size:25px;
-  color:#173b9e;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    font-weight:800;
+    font-size:25px;
+    color:#173b9e;
 }
 
 .logo{
-  width:52px;
-  height:52px;
-  border-radius:16px;
-  background:linear-gradient(145deg,#2463df,#1847b5);
-  color:#fff;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:30px;
-  font-weight:800;
-  box-shadow:0 8px 20px #245ed933;
+    width:52px;
+    height:52px;
+    border-radius:16px;
+    background:linear-gradient(145deg,#2463df,#1847b5);
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:28px;
+    font-weight:800;
+    box-shadow:0 8px 20px #245ed933;
 }
 
 .signup{
-  text-decoration:none;
-  background:#2463df;
-  color:white;
-  padding:13px 20px;
-  border-radius:12px;
-  font-weight:700;
+    text-decoration:none;
+    background:#2463df;
+    color:white;
+    padding:13px 20px;
+    border-radius:12px;
+    font-weight:700;
 }
 
 .wrap{
-  max-width:470px;
-  margin:45px auto;
-  padding:0 20px;
+    max-width:470px;
+    margin:45px auto;
+    padding:0 20px;
 }
 
 .card{
-  background:#fff;
-  border-radius:25px;
-  padding:30px 25px;
-  box-shadow:0 18px 55px #1d35651c;
-  border:1px solid #e9edf5;
+    background:#fff;
+    border-radius:25px;
+    padding:30px 25px;
+    box-shadow:0 18px 55px #1d35651c;
+    border:1px solid #e9edf5;
 }
 
 .title{
-  text-align:center;
-  font-size:30px;
-  margin:4px 0 8px;
+    text-align:center;
+    font-size:30px;
+    margin:4px 0 8px;
 }
 
 .sub{
-  text-align:center;
-  color:#69748b;
-  margin:0 0 28px;
+    text-align:center;
+    color:#69748b;
+    margin:0 0 28px;
 }
 
 label{
-  display:block;
-  font-weight:700;
-  margin:17px 0 8px;
+    display:block;
+    font-weight:700;
+    margin:17px 0 8px;
 }
 
 input{
-  width:100%;
-  padding:16px;
-  border:1px solid #d9deea;
-  border-radius:13px;
-  font-size:16px;
-  outline:none;
-  background:#fafbfe;
+    width:100%;
+    padding:16px;
+    border:1px solid #d9deea;
+    border-radius:13px;
+    font-size:16px;
+    outline:none;
+    background:#fafbfe;
 }
 
 input:focus{
-  border-color:#2463df;
-  box-shadow:0 0 0 3px #2463df18;
+    border-color:#2463df;
+    box-shadow:0 0 0 3px #2463df18;
 }
 
 .password{
-  position:relative;
+    position:relative;
 }
 
 .password input{
-  padding-right:55px;
+    padding-right:55px;
 }
 
 .eye{
-  position:absolute;
-  right:12px;
-  top:50%;
-  transform:translateY(-50%);
-  border:0;
-  background:transparent;
-  font-size:20px;
-  cursor:pointer;
+    position:absolute;
+    right:12px;
+    top:50%;
+    transform:translateY(-50%);
+    border:0;
+    background:transparent;
+    font-size:20px;
+    cursor:pointer;
 }
 
 .row{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin:17px 0;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin:17px 0;
 }
 
 .remember{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  color:#606b80;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    color:#606b80;
+    margin:0;
 }
 
 .remember input{
-  width:18px;
-  height:18px;
+    width:18px;
+    height:18px;
 }
 
 .forgot{
-  color:#2463df;
-  text-decoration:none;
-  font-weight:700;
-  cursor:pointer;
+    color:#2463df;
+    text-decoration:none;
+    font-weight:700;
+    cursor:pointer;
 }
 
 .login{
-  width:100%;
-  border:0;
-  border-radius:14px;
-  padding:16px;
-  background:linear-gradient(90deg,#245fe0,#3d48df);
-  color:white;
-  font-size:18px;
-  font-weight:800;
-  cursor:pointer;
+    width:100%;
+    border:0;
+    border-radius:14px;
+    padding:16px;
+    background:linear-gradient(90deg,#245fe0,#3d48df);
+    color:white;
+    font-size:18px;
+    font-weight:800;
+    cursor:pointer;
 }
 
 .login:disabled{
-  opacity:.65;
+    opacity:.65;
 }
 
 .or{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  color:#929aaa;
-  margin:24px 0;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    color:#929aaa;
+    margin:24px 0;
 }
 
 .or:before,
 .or:after{
-  content:"";
-  height:1px;
-  background:#e3e6ed;
-  flex:1;
+    content:"";
+    height:1px;
+    background:#e3e6ed;
+    flex:1;
 }
 
 .create{
-  display:block;
-  text-align:center;
-  text-decoration:none;
-  border:1px solid #d9e0ed;
-  color:#2456b8;
-  border-radius:14px;
-  padding:15px;
-  font-weight:800;
+    display:block;
+    text-align:center;
+    text-decoration:none;
+    border:1px solid #d9e0ed;
+    color:#2456b8;
+    border-radius:14px;
+    padding:15px;
+    font-weight:800;
 }
 
 .note{
-  text-align:center;
-  color:#8a93a4;
-  font-size:12px;
-  margin-top:22px;
-  line-height:1.5;
+    text-align:center;
+    color:#8a93a4;
+    font-size:12px;
+    margin-top:22px;
+    line-height:1.5;
 }
 
 .footer{
-  text-align:center;
-  color:#8b93a2;
-  font-size:12px;
-  margin:22px;
+    text-align:center;
+    color:#8b93a2;
+    font-size:12px;
+    margin:22px;
 }
 
 .message{
-  text-align:center;
-  margin-top:14px;
-  font-size:14px;
-  font-weight:700;
-  line-height:1.5;
+    text-align:center;
+    margin-top:14px;
+    font-size:14px;
+    font-weight:700;
+    line-height:1.5;
 }
 
 .success{
-  color:#16834b;
+    color:#16834b;
 }
 
 .error{
-  color:#d22f2f;
+    color:#d22f2f;
 }
 
-
-/* =========================
-   FORGOT PASSWORD MODAL
-   ========================= */
-
 .modal{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(10,25,55,.55);
-  z-index:9999;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(10,25,55,.55);
+    z-index:9999;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
 }
 
 .modal-card{
-  width:100%;
-  max-width:430px;
-  background:#fff;
-  border-radius:22px;
-  padding:28px 24px;
-  box-shadow:0 20px 60px rgba(0,0,0,.25);
+    width:100%;
+    max-width:430px;
+    background:#fff;
+    border-radius:22px;
+    padding:28px 24px;
+    box-shadow:0 20px 60px rgba(0,0,0,.25);
 }
 
 .modal-card h2{
-  text-align:center;
-  color:#173b9e;
-  margin:0 0 8px;
+    text-align:center;
+    color:#173b9e;
+    margin:0 0 8px;
 }
 
 .modal-help{
-  text-align:center;
-  color:#69748b;
-  font-size:14px;
-  line-height:1.5;
-  margin-bottom:20px;
+    text-align:center;
+    color:#69748b;
+    font-size:14px;
+    line-height:1.5;
+    margin-bottom:20px;
 }
 
 .modal-btn{
-  width:100%;
-  border:0;
-  border-radius:12px;
-  padding:14px;
-  margin-top:18px;
-  background:#2463df;
-  color:white;
-  font-weight:800;
-  font-size:16px;
-  cursor:pointer;
+    width:100%;
+    border:0;
+    border-radius:12px;
+    padding:14px;
+    margin-top:18px;
+    background:#2463df;
+    color:white;
+    font-weight:800;
+    font-size:16px;
+    cursor:pointer;
 }
 
 .close-btn{
-  width:100%;
-  border:1px solid #d9deea;
-  border-radius:12px;
-  padding:13px;
-  margin-top:10px;
-  background:#fff;
-  color:#2456b8;
-  font-weight:700;
-  cursor:pointer;
-}
-
-
-/* =========================
-   OTP RESET SCREEN
-   ========================= */
-
-#otpModal .modal-card{
-  max-width:430px;
+    width:100%;
+    border:1px solid #d9deea;
+    border-radius:12px;
+    padding:13px;
+    margin-top:10px;
+    background:#fff;
+    color:#2456b8;
+    font-weight:700;
+    cursor:pointer;
 }
 
 @media(max-width:520px){
 
-  .header{
-    padding:15px 16px;
-  }
+    .header{
+        padding:15px 16px;
+    }
 
-  .brand{
-    font-size:22px;
-  }
+    .brand{
+        font-size:22px;
+    }
 
-  .logo{
-    width:48px;
-    height:48px;
-  }
+    .logo{
+        width:48px;
+        height:48px;
+    }
 
-  .signup{
-    padding:11px 15px;
-  }
+    .signup{
+        padding:11px 15px;
+    }
 
-  .wrap{
-    margin:28px auto;
-  }
+    .wrap{
+        margin:28px auto;
+    }
 
-  .card{
-    padding:27px 20px;
-  }
+    .card{
+        padding:27px 20px;
+    }
 
-  .row{
-    gap:10px;
-  }
+    .row{
+        gap:10px;
+    }
 
-  .forgot{
-    font-size:14px;
-  }
+    .forgot{
+        font-size:14px;
+    }
+
 }
-</style>
-</head>
 
+</style>
+
+</head>
 
 <body>
 
 
 <header class="header">
 
-  <div class="brand">
+    <div class="brand">
 
-    <div class="logo">
-      HM
+        <div class="logo">
+            HM
+        </div>
+
+        <span>
+            Hamara Market
+        </span>
+
     </div>
 
-    <span>
-      Hamara Market
-    </span>
-
-  </div>
-
-  <a
-    class="signup"
-    href="registration.html"
-  >
-    Sign Up
-  </a>
+    <a
+        class="signup"
+        href="registration.html">
+        Sign Up
+    </a>
 
 </header>
 
@@ -370,11 +364,11 @@ input:focus{
 <section class="card">
 
 <h1 class="title">
-  Welcome Back
+    Welcome Back
 </h1>
 
 <p class="sub">
-  Login to your Hamara Market account
+    Login to your Hamara Market account
 </p>
 
 
@@ -382,39 +376,38 @@ input:focus{
 
 
 <label for="loginId">
-  Email / Mobile Number
+    Email / Mobile Number
 </label>
 
 <input
-  id="loginId"
-  type="text"
-  placeholder="Admin: Email | Member: Mobile Number"
-  autocomplete="username"
-  required
+    id="loginId"
+    type="text"
+    placeholder="Enter Email or Mobile Number"
+    autocomplete="username"
+    required
 >
 
 
 <label for="password">
-  Password
+    Password
 </label>
 
 
 <div class="password">
 
 <input
-  id="password"
-  type="password"
-  placeholder="Password"
-  autocomplete="current-password"
-  required
+    id="password"
+    type="password"
+    placeholder="Password"
+    autocomplete="current-password"
+    required
 >
 
 <button
-  class="eye"
-  type="button"
-  onclick="togglePassword()"
->
-  👁
+    class="eye"
+    type="button"
+    onclick="togglePassword()">
+    👁
 </button>
 
 </div>
@@ -425,9 +418,8 @@ input:focus{
 <label class="remember">
 
 <input
-  id="remember"
-  type="checkbox"
->
+    id="remember"
+    type="checkbox">
 
 Remember me
 
@@ -435,22 +427,22 @@ Remember me
 
 
 <a
-  class="forgot"
-  href="#"
-  onclick="openForgot(event)"
->
-  Forgot Password?
+    class="forgot"
+    href="#"
+    onclick="openForgot(event)">
+    Forgot Password?
 </a>
 
 </div>
 
 
 <button
-  class="login"
-  id="loginBtn"
-  type="submit"
->
-  Login
+    class="login"
+    id="loginBtn"
+    type="submit">
+
+    Login
+
 </button>
 
 
@@ -458,33 +450,32 @@ Remember me
 
 
 <div
-  id="loginMessage"
-  class="message"
-></div>
+    id="loginMessage"
+    class="message">
+</div>
 
 
 <div class="or">
-  OR
+    OR
 </div>
 
 
 <a
-  class="create"
-  href="registration.html"
->
-  Create New Account
+    class="create"
+    href="registration.html">
+
+    Create New Account
+
 </a>
 
 
 <p class="note">
 
-  Hamara Market • Digital Rewards Platform<br>
+    Hamara Market • Digital Rewards Platform<br>
 
-  Admin: Email Login &nbsp;•&nbsp;
-  Members: Mobile Login
+    Admin: Email Login • Members: Email/Mobile Login
 
 </p>
-
 
 </section>
 
@@ -492,156 +483,66 @@ Remember me
 
 
 <div class="footer">
+
 © 2026 Hamara Market. All rights reserved.
+
 </div>
 
 
 
-<!-- =========================
-     FORGOT PASSWORD MODAL
-     ========================= -->
+<!-- FORGOT PASSWORD -->
 
 <div
-  class="modal"
-  id="forgotModal"
->
+    class="modal"
+    id="forgotModal">
 
 <div class="modal-card">
 
 <h2>
-  Forgot Password?
+    Forgot Password?
 </h2>
-
 
 <p class="modal-help">
 
-  <b>Admin / Company:</b><br>
-  Enter your registered email address.
-
-  <br><br>
-
-  <b>Member:</b><br>
-  Enter your registered 10-digit mobile number.
+    Enter your registered email address.
+    A password reset link will be sent to you.
 
 </p>
 
 
 <label for="forgotId">
-  Email / Mobile Number
+    Registered Email
 </label>
 
 <input
-  id="forgotId"
-  type="text"
-  placeholder="Enter email or mobile number"
+    id="forgotId"
+    type="email"
+    placeholder="Enter registered email"
 >
 
 
 <button
-  class="modal-btn"
-  onclick="startPasswordRecovery()"
->
-  Continue
+    class="modal-btn"
+    onclick="startPasswordRecovery()">
+
+    Send Reset Link
+
 </button>
 
 
 <button
-  class="close-btn"
-  onclick="closeForgot()"
->
-  Cancel
+    class="close-btn"
+    onclick="closeForgot()">
+
+    Cancel
+
 </button>
 
 
 <div
-  id="forgotMessage"
-  class="message"
-></div>
-
+    id="forgotMessage"
+    class="message">
 </div>
-
-</div>
-
-
-
-<!-- =========================
-     MEMBER OTP MODAL
-     ========================= -->
-
-<div
-  class="modal"
-  id="otpModal"
->
-
-<div class="modal-card">
-
-<h2>
-  Verify Mobile OTP
-</h2>
-
-
-<p class="modal-help">
-  Enter the OTP sent to your registered mobile number.
-</p>
-
-
-<label for="otpInput">
-  OTP
-</label>
-
-<input
-  id="otpInput"
-  type="tel"
-  inputmode="numeric"
-  maxlength="6"
-  placeholder="Enter 6-digit OTP"
->
-
-
-<label for="newMemberPassword">
-  New Password
-</label>
-
-<input
-  id="newMemberPassword"
-  type="password"
-  minlength="8"
-  placeholder="New Password"
->
-
-
-<label for="confirmMemberPassword">
-  Confirm Password
-</label>
-
-<input
-  id="confirmMemberPassword"
-  type="password"
-  minlength="8"
-  placeholder="Confirm Password"
->
-
-
-<button
-  class="modal-btn"
-  onclick="verifyMemberOTP()"
->
-  Verify OTP & Set Password
-</button>
-
-
-<button
-  class="close-btn"
-  onclick="closeOTP()"
->
-  Cancel
-</button>
-
-
-<div
-  id="otpMessage"
-  class="message"
-></div>
 
 </div>
 
@@ -652,668 +553,602 @@ Remember me
 <script>
 
 
-/* ==================================================
+/* =====================================================
    SUPABASE CONFIGURATION
-   ================================================== */
+   ===================================================== */
+
+/*
+   IMPORTANT:
+   This is the correct Supabase URL supplied by you.
+*/
 
 const SUPABASE_URL =
-  "https://yaxingstvkqafmvtyuis.supabase.co";
+    "https://yaxingstvkaqfmvtyuis.supabase.co";
 
 
 const SUPABASE_PUBLISHABLE_KEY =
-  "sb_publishable_3dA1_NPBVCHCzcrf155Qtw_16IUxNDt";
+    "sb_publishable_3dA1_NPBVCHCzcrf155Qtw_16IUxNDt";
 
 
 const supabaseClient =
-  supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_PUBLISHABLE_KEY,
-    {
-      auth:{
-        persistSession:true,
-        autoRefreshToken:true,
-        detectSessionInUrl:true
-      }
-    }
-  );
-
-
-
-/* ==================================================
-   SHOW / HIDE PASSWORD
-   ================================================== */
-
-function togglePassword(){
-
-  const p =
-    document.getElementById("password");
-
-  p.type =
-    p.type === "password"
-    ? "text"
-    : "password";
-}
-
-
-
-/* ==================================================
-   LOGIN
-   ================================================== */
-
-document
-.getElementById("loginForm")
-.addEventListener("submit", async function(e){
-
-  e.preventDefault();
-
-
-  const loginId =
-    document.getElementById("loginId")
-    .value
-    .trim();
-
-
-  const password =
-    document.getElementById("password")
-    .value;
-
-
-  const button =
-    document.getElementById("loginBtn");
-
-
-  const message =
-    document.getElementById("loginMessage");
-
-
-  message.textContent="";
-
-
-  button.disabled=true;
-
-  button.textContent="Logging in...";
-
-
-  let authResult;
-
-
-  /* =========================
-     ADMIN LOGIN
-     ========================= */
-
-  if(loginId.includes("@")){
-
-    authResult =
-      await supabaseClient.auth
-      .signInWithPassword({
-
-        email:loginId,
-
-        password:password
-
-      });
-
-  }
-
-
-  /* =========================
-     MEMBER LOGIN
-     ========================= */
-
-  else{
-
-    const mobile =
-      loginId.replace(/\D/g,"");
-
-
-    if(mobile.length !== 10){
-
-      message.className="message error";
-
-      message.textContent =
-        "Please enter a valid 10-digit mobile number.";
-
-      button.disabled=false;
-
-      button.textContent="Login";
-
-      return;
-
-    }
-
-
-    /*
-      IMPORTANT:
-      Member mobile number must already be
-      registered in Supabase Auth.
-    */
-
-    authResult =
-      await supabaseClient.auth
-      .signInWithPassword({
-
-        phone:mobile,
-
-        password:password
-
-      });
-
-  }
-
-
-  if(authResult.error){
-
-    message.className="message error";
-
-    message.textContent =
-      "❌ " + authResult.error.message;
-
-    button.disabled=false;
-
-    button.textContent="Login";
-
-    return;
-
-  }
-
-
-  const user =
-    authResult.data.user;
-
-
-  /* =========================
-     LOAD PROFILE
-     ========================= */
-
-  const {data:profile,error} =
-    await supabaseClient
-    .from("profiles")
-    .select(
-      "member_id,role,active"
-    )
-    .eq("id",user.id)
-    .maybeSingle();
-
-
-  if(error || !profile){
-
-    await supabaseClient.auth.signOut();
-
-    message.className="message error";
-
-    message.textContent =
-      "Account profile could not be found.";
-
-    button.disabled=false;
-
-    button.textContent="Login";
-
-    return;
-
-  }
-
-
-  /* =========================
-     CHECK ACTIVE
-     ========================= */
-
-  if(profile.active === false){
-
-    await supabaseClient.auth.signOut();
-
-    message.className="message error";
-
-    message.textContent =
-      "This account is inactive.";
-
-    button.disabled=false;
-
-    button.textContent="Login";
-
-    return;
-
-  }
-
-
-  message.className="message success";
-
-  message.textContent =
-    "✅ Login successful. Opening dashboard...";
-
-
-  /* =========================
-     DASHBOARD
-     ========================= */
-
-  setTimeout(function(){
-
-    if(profile.role === "admin"){
-
-      window.location.href =
-        "admin-dashboard.html";
-
-    }
-
-    else{
-
-      window.location.href =
-        "member-dashboard.html";
-
-    }
-
-  },800);
-
-
-});
-
-
-
-/* ==================================================
-   OPEN FORGOT PASSWORD
-   ================================================== */
-
-function openForgot(event){
-
-  event.preventDefault();
-
-  document.getElementById(
-    "forgotModal"
-  ).style.display="flex";
-
-
-  document.getElementById(
-    "forgotId"
-  ).value="";
-
-
-  document.getElementById(
-    "forgotMessage"
-  ).textContent="";
-
-
-  document.getElementById(
-    "forgotId"
-  ).focus();
-
-}
-
-
-
-/* ==================================================
-   CLOSE FORGOT PASSWORD
-   ================================================== */
-
-function closeForgot(){
-
-  document.getElementById(
-    "forgotModal"
-  ).style.display="none";
-
-}
-
-
-
-/* ==================================================
-   ADMIN EMAIL RESET
-   OR
-   MEMBER MOBILE OTP
-   ================================================== */
-
-async function startPasswordRecovery(){
-
-  const loginId =
-    document.getElementById(
-      "forgotId"
-    ).value.trim();
-
-
-  const message =
-    document.getElementById(
-      "forgotMessage"
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY,
+        {
+            auth:{
+                persistSession:true,
+                autoRefreshToken:true,
+                detectSessionInUrl:true
+            }
+        }
     );
 
 
-  if(!loginId){
+/* =====================================================
+   PASSWORD SHOW / HIDE
+   ===================================================== */
 
-    message.className="message error";
+function togglePassword(){
+
+    const password =
+        document.getElementById("password");
+
+    if(password.type === "password"){
+
+        password.type = "text";
+
+    }else{
+
+        password.type = "password";
+
+    }
+
+}
+
+
+/* =====================================================
+   MESSAGE
+   ===================================================== */
+
+function showLoginMessage(
+    text,
+    type
+){
+
+    const message =
+        document.getElementById(
+            "loginMessage"
+        );
+
+    message.className =
+        "message " + type;
 
     message.textContent =
-      "Please enter your email or mobile number.";
+        text;
 
-    return;
-
-  }
+}
 
 
+/* =====================================================
+   LOGIN
+   ===================================================== */
 
-  /* =====================================
-     ADMIN PASSWORD RESET
-     ===================================== */
+document
+.getElementById("loginForm")
+.addEventListener(
+    "submit",
+    async function(event){
 
-  if(loginId.includes("@")){
-
-    message.className="message";
-
-    message.textContent =
-      "Sending password reset email...";
-
-
-    const redirectURL =
-      "https://somanathmishra87-ux.github.io/Hamara-Market/reset-password.html";
+        event.preventDefault();
 
 
-    const {error} =
-      await supabaseClient.auth
-      .resetPasswordForEmail(
+        const loginId =
+            document
+            .getElementById("loginId")
+            .value
+            .trim();
 
-        loginId,
 
-        {
-          redirectTo:redirectURL
+        const password =
+            document
+            .getElementById("password")
+            .value;
+
+
+        const button =
+            document
+            .getElementById("loginBtn");
+
+
+        showLoginMessage(
+            "",
+            ""
+        );
+
+
+        button.disabled = true;
+
+        button.textContent =
+            "Checking...";
+
+
+        try{
+
+            /*
+              ADMIN LOGIN
+
+              If user enters email,
+              login directly with Supabase Auth.
+            */
+
+            if(loginId.includes("@")){
+
+                const {data,error} =
+                    await supabaseClient
+                    .auth
+                    .signInWithPassword({
+
+                        email:loginId,
+
+                        password:password
+
+                    });
+
+
+                if(error){
+
+                    throw error;
+
+                }
+
+
+                await loadProfileAndRedirect(
+                    data.user,
+                    button
+                );
+
+                return;
+
+            }
+
+
+            /*
+              MEMBER LOGIN
+
+              IMPORTANT:
+              Registration currently creates
+              Auth account using EMAIL.
+
+              Therefore we first find the
+              member's email from profiles
+              using their mobile number.
+            */
+
+            const mobile =
+                loginId.replace(
+                    /\D/g,
+                    ""
+                );
+
+
+            if(!/^[0-9]{10}$/.test(mobile)){
+
+                throw new Error(
+                    "Please enter a valid 10-digit mobile number."
+                );
+
+            }
+
+
+            const {data:profile,error:profileError} =
+                await supabaseClient
+                .from("profiles")
+                .select(
+                    "id,email,mobile,active,role,member_id"
+                )
+                .eq(
+                    "mobile",
+                    mobile
+                )
+                .maybeSingle();
+
+
+            if(profileError){
+
+                console.error(
+                    "Profile lookup error:",
+                    profileError
+                );
+
+                throw new Error(
+                    "Unable to find this mobile number. Please try Email Login."
+                );
+
+            }
+
+
+            if(!profile){
+
+                throw new Error(
+                    "No account found with this mobile number."
+                );
+
+            }
+
+
+            if(profile.active === false){
+
+                throw new Error(
+                    "This account is inactive. Please contact Admin."
+                );
+
+            }
+
+
+            if(!profile.email){
+
+                throw new Error(
+                    "Email is not available for this member account."
+                );
+
+            }
+
+
+            /*
+              Login using the Auth email
+              connected with the member.
+            */
+
+            const {data,error} =
+                await supabaseClient
+                .auth
+                .signInWithPassword({
+
+                    email:profile.email,
+
+                    password:password
+
+                });
+
+
+            if(error){
+
+                throw error;
+
+            }
+
+
+            await loadProfileAndRedirect(
+                data.user,
+                button
+            );
+
+
+        }catch(error){
+
+            console.error(
+                "LOGIN ERROR:",
+                error
+            );
+
+
+            showLoginMessage(
+                "❌ " + (
+                    error.message ||
+                    "Login failed."
+                ),
+                "error"
+            );
+
+
+            button.disabled = false;
+
+            button.textContent =
+                "Login";
+
         }
 
-      );
+    }
+);
+
+
+/* =====================================================
+   LOAD PROFILE
+   ===================================================== */
+
+async function loadProfileAndRedirect(
+    user,
+    button
+){
+
+    const {data:profile,error} =
+        await supabaseClient
+        .from("profiles")
+        .select(
+            "member_id,name,mobile,role,active"
+        )
+        .eq(
+            "id",
+            user.id
+        )
+        .maybeSingle();
 
 
     if(error){
 
-      message.className="message error";
+        console.error(
+            "PROFILE ERROR:",
+            error
+        );
 
-      message.textContent =
-        "❌ " + error.message;
+        await supabaseClient
+        .auth
+        .signOut();
 
-      return;
+
+        throw new Error(
+            "Failed to load account profile."
+        );
 
     }
 
 
-    message.className="message success";
+    if(!profile){
 
-    message.textContent =
-      "✅ Reset password email sent. Please check your Inbox or Spam folder.";
-
-    return;
-
-  }
+        await supabaseClient
+        .auth
+        .signOut();
 
 
+        throw new Error(
+            "Account profile not found."
+        );
 
-  /* =====================================
-     MEMBER MOBILE OTP
-     ===================================== */
-
-  const mobile =
-    loginId.replace(/\D/g,"");
+    }
 
 
-  if(mobile.length !== 10){
+    if(profile.active === false){
 
-    message.className="message error";
-
-    message.textContent =
-      "Please enter a valid 10-digit mobile number.";
-
-    return;
-
-  }
+        await supabaseClient
+        .auth
+        .signOut();
 
 
-  message.className="message";
+        throw new Error(
+            "This account is inactive."
+        );
 
-  message.textContent =
-    "Sending OTP...";
-
-
-  /*
-    shouldCreateUser:false is important.
-    It prevents an unknown number from
-    creating a new Auth account through
-    this password-reset flow.
-  */
-
-  const {error} =
-    await supabaseClient.auth
-    .signInWithOtp({
-
-      phone:mobile,
-
-      options:{
-        shouldCreateUser:false
-      }
-
-    });
+    }
 
 
-  if(error){
-
-    message.className="message error";
-
-    message.textContent =
-      "❌ " + error.message;
-
-    return;
-
-  }
-
-
-  message.className="message success";
-
-  message.textContent =
-    "✅ OTP sent to your registered mobile number.";
-
-
-  setTimeout(function(){
-
-    closeForgot();
-
-    document.getElementById(
-      "otpModal"
-    ).style.display="flex";
-
-  },700);
-
-}
-
-
-
-/* ==================================================
-   MEMBER OTP VERIFY + NEW PASSWORD
-   ================================================== */
-
-async function verifyMemberOTP(){
-
-  const mobile =
-    document.getElementById(
-      "forgotId"
-    ).value
-    .replace(/\D/g,"");
-
-
-  const otp =
-    document.getElementById(
-      "otpInput"
-    ).value.trim();
-
-
-  const newPassword =
-    document.getElementById(
-      "newMemberPassword"
-    ).value;
-
-
-  const confirmPassword =
-    document.getElementById(
-      "confirmMemberPassword"
-    ).value;
-
-
-  const message =
-    document.getElementById(
-      "otpMessage"
+    showLoginMessage(
+        "✅ Login successful. Opening dashboard...",
+        "success"
     );
 
 
-  if(!/^\d{6}$/.test(otp)){
-
-    message.className="message error";
-
-    message.textContent =
-      "Please enter the 6-digit OTP.";
-
-    return;
-
-  }
+    button.textContent =
+        "Login Successful";
 
 
-  if(newPassword.length < 8){
+    setTimeout(
+        function(){
 
-    message.className="message error";
+            if(profile.role === "admin"){
 
-    message.textContent =
-      "Password must be at least 8 characters.";
+                window.location.href =
+                    "admin-dashboard.html";
 
-    return;
+            }else{
 
-  }
+                window.location.href =
+                    "member-dashboard.html";
 
+            }
 
-  if(newPassword !== confirmPassword){
-
-    message.className="message error";
-
-    message.textContent =
-      "New Password and Confirm Password do not match.";
-
-    return;
-
-  }
-
-
-  message.className="message";
-
-  message.textContent =
-    "Verifying OTP...";
-
-
-  /*
-    Verify SMS OTP.
-  */
-
-  const {data,error} =
-    await supabaseClient.auth
-    .verifyOtp({
-
-      phone:mobile,
-
-      token:otp,
-
-      type:"sms"
-
-    });
-
-
-  if(error){
-
-    message.className="message error";
-
-    message.textContent =
-      "❌ " + error.message;
-
-    return;
-
-  }
-
-
-  if(!data.session){
-
-    message.className="message error";
-
-    message.textContent =
-      "OTP verified, but no login session was created.";
-
-    return;
-
-  }
-
-
-  message.textContent =
-    "OTP verified. Updating password...";
-
-
-  const {error:updateError} =
-    await supabaseClient.auth
-    .updateUser({
-
-      password:newPassword
-
-    });
-
-
-  if(updateError){
-
-    message.className="message error";
-
-    message.textContent =
-      "❌ " + updateError.message;
-
-    return;
-
-  }
-
-
-  message.className="message success";
-
-  message.textContent =
-    "✅ Password successfully changed. Redirecting to Login...";
-
-
-  await supabaseClient.auth.signOut();
-
-
-  setTimeout(function(){
-
-    closeOTP();
-
-    window.location.href =
-      "login.html";
-
-  },1800);
+        },
+        800
+    );
 
 }
 
 
+/* =====================================================
+   FORGOT PASSWORD
+   ===================================================== */
 
-/* ==================================================
-   CLOSE OTP
-   ================================================== */
+function openForgot(event){
 
-function closeOTP(){
-
-  document.getElementById(
-    "otpModal"
-  ).style.display="none";
+    event.preventDefault();
 
 
-  document.getElementById(
-    "otpInput"
-  ).value="";
+    document.getElementById(
+        "forgotModal"
+    ).style.display =
+        "flex";
 
 
-  document.getElementById(
-    "newMemberPassword"
-  ).value="";
+    document.getElementById(
+        "forgotId"
+    ).value =
+        "";
 
 
-  document.getElementById(
-    "confirmMemberPassword"
-  ).value="";
+    document.getElementById(
+        "forgotMessage"
+    ).textContent =
+        "";
 
 
-  document.getElementById(
-    "otpMessage"
-  ).textContent="";
+    document.getElementById(
+        "forgotId"
+    ).focus();
 
 }
+
+
+function closeForgot(){
+
+    document.getElementById(
+        "forgotModal"
+    ).style.display =
+        "none";
+
+}
+
+
+/* =====================================================
+   PASSWORD RESET
+   ===================================================== */
+
+async function startPasswordRecovery(){
+
+    const email =
+        document.getElementById(
+            "forgotId"
+        ).value.trim();
+
+
+    const message =
+        document.getElementById(
+            "forgotMessage"
+        );
+
+
+    if(!email){
+
+        message.className =
+            "message error";
+
+        message.textContent =
+            "Please enter your registered email.";
+
+        return;
+
+    }
+
+
+    if(!email.includes("@")){
+
+        message.className =
+            "message error";
+
+        message.textContent =
+            "Please enter your registered email address.";
+
+        return;
+
+    }
+
+
+    message.className =
+        "message";
+
+    message.textContent =
+        "Sending reset link...";
+
+
+    try{
+
+        const redirectURL =
+            "https://somanathmishra87-ux.github.io/Hamara-Market/reset-password.html";
+
+
+        const {error} =
+            await supabaseClient
+            .auth
+            .resetPasswordForEmail(
+                email,
+                {
+                    redirectTo:
+                        redirectURL
+                }
+            );
+
+
+        if(error){
+
+            throw error;
+
+        }
+
+
+        message.className =
+            "message success";
+
+        message.textContent =
+            "✅ Reset link sent. Please check your Email Inbox or Spam folder.";
+
+
+    }catch(error){
+
+        console.error(
+            error
+        );
+
+
+        message.className =
+            "message error";
+
+        message.textContent =
+            "❌ " +
+            (
+                error.message ||
+                "Unable to send reset link."
+            );
+
+    }
+
+}
+
+
+/* =====================================================
+   CHECK EXISTING SESSION
+   ===================================================== */
+
+async function checkExistingSession(){
+
+    try{
+
+        const {data} =
+            await supabaseClient
+            .auth
+            .getSession();
+
+
+        if(
+            data &&
+            data.session &&
+            data.session.user
+        ){
+
+            /*
+              User already logged in.
+              We do not automatically redirect
+              here so that the login page remains
+              usable.
+            */
+
+            console.log(
+                "Existing session found."
+            );
+
+        }
+
+    }catch(error){
+
+        console.error(
+            "SESSION CHECK ERROR:",
+            error
+        );
+
+    }
+
+}
+
+
+checkExistingSession();
+
 
 </script>
 
