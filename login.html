@@ -670,7 +670,9 @@ document
         try{
 
             /*
+              =================================================
               EMAIL LOGIN
+              =================================================
 
               User enters registered email.
             */
@@ -707,7 +709,9 @@ document
 
 
             /*
+              =================================================
               MEMBER MOBILE LOGIN
+              =================================================
 
               Find registered email from
               profiles table using mobile.
@@ -842,7 +846,7 @@ document
 
 
 /* =====================================================
-   LOAD PROFILE AND OPEN DASHBOARD
+   LOAD PROFILE AND OPEN CORRECT DASHBOARD
    ===================================================== */
 
 async function loadProfileAndRedirect(
@@ -910,8 +914,63 @@ async function loadProfileAndRedirect(
     }
 
 
+    /*
+      =====================================================
+      ROLE BASED DASHBOARD
+      =====================================================
+
+      profiles table me role check hoga.
+
+      role = admin
+          -> admin-dashboard.html
+
+      role = member
+          -> dashboard.html
+
+      Agar role blank/unknown hai
+          -> dashboard.html
+    */
+
+    const userRole =
+        String(
+            profile.role || "member"
+        )
+        .trim()
+        .toLowerCase();
+
+
+    let dashboardURL =
+        "dashboard.html";
+
+
+    if(userRole === "admin"){
+
+        dashboardURL =
+            "admin-dashboard.html";
+
+    }
+
+
+    console.log(
+        "Logged-in Member ID:",
+        profile.member_id
+    );
+
+    console.log(
+        "Logged-in Role:",
+        userRole
+    );
+
+    console.log(
+        "Opening Dashboard:",
+        dashboardURL
+    );
+
+
     showLoginMessage(
-        "✅ Login successful. Opening dashboard...",
+        userRole === "admin"
+            ? "✅ Admin login successful. Opening Admin Dashboard..."
+            : "✅ Login successful. Opening dashboard...",
         "success"
     );
 
@@ -921,32 +980,15 @@ async function loadProfileAndRedirect(
 
 
     /*
-       =================================================
-       IMPORTANT CHANGE
-       =================================================
-
-       Earlier the code opened:
-
-       admin-dashboard.html
-       member-dashboard.html
-
-       Those files are not present in your
-       GitHub repository.
-
-       Your actual dashboard file is:
-
-       dashboard.html
-
-       Therefore every successful login
-       now opens dashboard.html.
-       =================================================
+       Small delay so the user can see
+       the successful login message.
     */
 
     setTimeout(
         function(){
 
             window.location.href =
-                "dashboard.html";
+                dashboardURL;
 
         },
         800
@@ -1053,9 +1095,7 @@ async function startPasswordRecovery(){
     try{
 
         /*
-           IMPORTANT:
-           This URL is your actual GitHub
-           reset-password.html page.
+           Actual GitHub reset-password.html page.
         */
 
         const redirectURL =
