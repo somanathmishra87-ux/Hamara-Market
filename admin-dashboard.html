@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
@@ -23,8 +24,6 @@ body{
     background:#f4f6fb;
     color:#17213b;
 }
-
-/* ================= HEADER ================= */
 
 .header{
     background:linear-gradient(135deg,#4936e8,#643cf1);
@@ -112,8 +111,6 @@ body{
     font-weight:800;
 }
 
-/* ================= MAIN ================= */
-
 .container{
     max-width:1200px;
     margin:auto;
@@ -131,8 +128,6 @@ body{
 .company strong{
     color:#4936e8;
 }
-
-/* ================= STATS ================= */
 
 .stats{
     display:grid;
@@ -162,8 +157,6 @@ body{
     margin-top:5px;
 }
 
-/* ================= SECTION ================= */
-
 .section{
     background:#fff;
     margin-top:18px;
@@ -177,8 +170,6 @@ body{
     color:#27325a;
     font-size:21px;
 }
-
-/* ================= GRID ================= */
 
 .grid{
     display:grid;
@@ -208,9 +199,8 @@ body{
     line-height:1.5;
 }
 
-/* ================= FORM ================= */
-
-.form-group label{
+.form-group label,
+label{
     display:block;
     font-weight:700;
     margin-bottom:7px;
@@ -230,8 +220,6 @@ textarea{
 textarea{
     min-height:90px;
 }
-
-/* ================= BUTTON ================= */
 
 .actions{
     display:flex;
@@ -270,8 +258,6 @@ textarea{
     cursor:not-allowed;
 }
 
-/* ================= SEARCH ================= */
-
 .search-box{
     display:flex;
     gap:10px;
@@ -280,8 +266,6 @@ textarea{
 .search-box input{
     flex:1;
 }
-
-/* ================= MESSAGE ================= */
 
 .message{
     margin-top:12px;
@@ -306,8 +290,6 @@ textarea{
     color:#3b35a5;
 }
 
-/* ================= TABLE ================= */
-
 .table-wrap{
     overflow-x:auto;
 }
@@ -330,8 +312,6 @@ td{
     vertical-align:top;
 }
 
-/* ================= STATUS ================= */
-
 .status{
     display:inline-block;
     padding:5px 9px;
@@ -340,12 +320,14 @@ td{
     font-weight:800;
 }
 
-.active{
+.active,
+.approved{
     background:#dff7eb;
     color:#118454;
 }
 
-.inactive{
+.inactive,
+.rejected{
     background:#ffe2e2;
     color:#c62828;
 }
@@ -354,18 +336,6 @@ td{
     background:#fff1c7;
     color:#9a6a00;
 }
-
-.approved{
-    background:#dff7eb;
-    color:#118454;
-}
-
-.rejected{
-    background:#ffe2e2;
-    color:#c62828;
-}
-
-/* ================= MEMBER ================= */
 
 .member-card{
     display:none;
@@ -387,8 +357,6 @@ td{
     border-bottom:0;
 }
 
-/* ================= LEVEL ================= */
-
 .level-grid{
     display:grid;
     grid-template-columns:repeat(2,1fr);
@@ -407,8 +375,6 @@ td{
     font-size:20px;
 }
 
-/* ================= NOTICE ================= */
-
 .notice{
     padding:13px;
     border-left:4px solid #4b39df;
@@ -417,7 +383,18 @@ td{
     border-radius:8px;
 }
 
-/* ================= MOBILE ================= */
+.empty{
+    text-align:center;
+    padding:20px;
+    color:#70798b;
+}
+
+.loading{
+    text-align:center;
+    padding:20px;
+    color:#4936e8;
+    font-weight:700;
+}
 
 @media(max-width:900px){
 
@@ -469,6 +446,11 @@ td{
         grid-template-columns:1fr 1fr;
     }
 
+    .member-row{
+        flex-direction:column;
+        gap:3px;
+    }
+
 }
 
 </style>
@@ -477,71 +459,70 @@ td{
 
 <body>
 
-<!-- ================= HEADER ================= -->
 
 <header class="header">
 
-    <div class="brand">
+<div class="brand">
 
-        <div class="logo">
-            HM
-        </div>
+<div class="logo">
+HM
+</div>
 
-        <div class="brand-text">
+<div class="brand-text">
 
-            <h1>
-                Hamara Market
-            </h1>
+<h1>Hamara Market</h1>
 
-            <small>
-                Admin Panel • HM000001
-            </small>
+<small>
+Admin Panel • HM000001
+</small>
 
-        </div>
+</div>
 
-    </div>
+</div>
 
-    <button
-        class="menu-btn"
-        onclick="toggleMenu()">
 
-        ⋮
+<button
+class="menu-btn"
+onclick="toggleMenu()">
 
-    </button>
+⋮
 
-    <div
-        class="menu"
-        id="menu">
+</button>
 
-        <button onclick="go('deposits')">
-            💰 Deposits
-        </button>
 
-        <button onclick="go('withdrawals')">
-            💸 Withdrawals
-        </button>
+<div
+class="menu"
+id="menu">
 
-        <button onclick="go('videos')">
-            🎬 Videos
-        </button>
+<button onclick="go('deposits')">
+💰 Deposits
+</button>
 
-        <button onclick="go('reports')">
-            📊 Reports
-        </button>
+<button onclick="go('withdrawals')">
+💸 Withdrawals
+</button>
 
-        <button onclick="go('security')">
-            🔐 Security
-        </button>
+<button onclick="go('videos')">
+🎬 Videos
+</button>
 
-        <button
-            class="logout"
-            onclick="logout()">
+<button onclick="go('reports')">
+📊 Reports
+</button>
 
-            🚪 Logout
+<button onclick="go('security')">
+🔐 Security
+</button>
 
-        </button>
+<button
+class="logout"
+onclick="logout()">
 
-    </div>
+🚪 Logout
+
+</button>
+
+</div>
 
 </header>
 
@@ -549,17 +530,15 @@ td{
 <main class="container">
 
 
-<!-- ================= COMPANY ================= -->
-
 <div class="company">
 
-    <strong>
-        Company ID: HM000001
-    </strong>
+<strong>
+Company ID: HM000001
+</strong>
 
-    <br>
+<br>
 
-    Hamara Market Administration
+Hamara Market Administration
 
 </div>
 
@@ -568,167 +547,143 @@ td{
 
 <div class="stats">
 
-
 <div class="stat">
 
-    <div class="stat-icon">
-        👥
-    </div>
+<div class="stat-icon">👥</div>
 
-    <div class="stat-title">
-        Total Members
-    </div>
+<div class="stat-title">
+Total Members
+</div>
 
-    <div
-        class="stat-value"
-        id="totalMembers">
-
-        0
-
-    </div>
+<div
+class="stat-value"
+id="totalMembers">
+0
+</div>
 
 </div>
 
 
 <div class="stat">
 
-    <div class="stat-icon">
-        🟢
-    </div>
+<div class="stat-icon">🟢</div>
 
-    <div class="stat-title">
-        Active Members
-    </div>
+<div class="stat-title">
+Active Members
+</div>
 
-    <div
-        class="stat-value"
-        id="activeMembers">
-
-        0
-
-    </div>
+<div
+class="stat-value"
+id="activeMembers">
+0
+</div>
 
 </div>
 
 
 <div class="stat">
 
-    <div class="stat-icon">
-        🆕
-    </div>
+<div class="stat-icon">🆕</div>
 
-    <div class="stat-title">
-        Today's Registrations
-    </div>
+<div class="stat-title">
+Today's Registrations
+</div>
 
-    <div
-        class="stat-value"
-        id="todayRegistrations">
-
-        0
-
-    </div>
+<div
+class="stat-value"
+id="todayRegistrations">
+0
+</div>
 
 </div>
 
 
 <div class="stat">
 
-    <div class="stat-icon">
-        💰
-    </div>
+<div class="stat-icon">💰</div>
 
-    <div class="stat-title">
-        Total Income
-    </div>
+<div class="stat-title">
+Total Income
+</div>
 
-    <div
-        class="stat-value"
-        id="totalIncome">
-
-        ₹0.00
-
-    </div>
+<div
+class="stat-value"
+id="totalIncome">
+₹0.00
+</div>
 
 </div>
 
 
 <div class="stat">
 
-    <div class="stat-icon">
-        💳
-    </div>
+<div class="stat-icon">💳</div>
 
-    <div class="stat-title">
-        Wallet Balance
-    </div>
+<div class="stat-title">
+Wallet Balance
+</div>
 
-    <div
-        class="stat-value"
-        id="totalWallet">
+<div
+class="stat-value"
+id="totalWallet">
+₹0.00
+</div>
 
-        ₹0.00
-
-    </div>
+</div>
 
 </div>
 
 
-</div>
-
-
-<!-- ================= DEPOSIT MANAGEMENT ================= -->
+<!-- ================= DEPOSIT ================= -->
 
 <section
-    class="section"
-    id="deposits">
+class="section"
+id="deposits">
 
 <h2>
-    💰 Deposit Management
+💰 Deposit Management
 </h2>
 
 
 <div class="grid">
 
-
 <div class="card">
 
-    <div class="muted">
-        Today's Total Deposit
-    </div>
+<div class="muted">
+Today's Total Deposit
+</div>
 
-    <h2 id="todayDeposit">
-        ₹0.00
-    </h2>
+<h2 id="todayDeposit">
+₹0.00
+</h2>
 
 </div>
 
 
 <div class="card">
 
-    <div class="muted">
-        Total Approved Deposit
-    </div>
+<div class="muted">
+Total Approved Deposit
+</div>
 
-    <h2 id="approvedDeposit">
-        ₹0.00
-    </h2>
+<h2 id="approvedDeposit">
+₹0.00
+</h2>
 
 </div>
 
 
 <div class="card">
 
-    <div class="muted">
-        Pending Deposit
-    </div>
-
-    <h2 id="pendingDeposit">
-        ₹0.00
-    </h2>
-
+<div class="muted">
+Pending Deposit
 </div>
 
+<h2 id="pendingDeposit">
+₹0.00
+</h2>
+
+</div>
 
 </div>
 
@@ -740,26 +695,22 @@ td{
 
 <div>
 
-<label>
-From date
-</label>
+<label>From date</label>
 
 <input
-    type="date"
-    id="depositFrom">
+type="date"
+id="depositFrom">
 
 </div>
 
 
 <div>
 
-<label>
-To date
-</label>
+<label>To date</label>
 
 <input
-    type="date"
-    id="depositTo">
+type="date"
+id="depositTo">
 
 </div>
 
@@ -772,19 +723,19 @@ To date
 <div class="actions">
 
 <button
-    class="btn"
-    onclick="loadDeposits()">
+class="btn"
+onclick="loadDeposits()">
 
-    🔄 Refresh Deposits
+🔄 Refresh Deposits
 
 </button>
 
 
 <button
-    class="btn gray"
-    onclick="clearDepositFilter()">
+class="btn gray"
+onclick="clearDepositFilter()">
 
-    Clear Filter
+Clear Filter
 
 </button>
 
@@ -792,15 +743,14 @@ To date
 
 
 <div
-    id="depositMessage"
-    class="message">
+id="depositMessage"
+class="message">
 </div>
 
 
 <div
-    class="table-wrap"
-    style="margin-top:15px">
-
+class="table-wrap"
+style="margin-top:15px">
 
 <table>
 
@@ -808,43 +758,23 @@ To date
 
 <tr>
 
-<th>
-Member
-</th>
-
-<th>
-Amount
-</th>
-
-<th>
-Plan
-</th>
-
-<th>
-Date
-</th>
-
-<th>
-Status
-</th>
-
-<th>
-Action
-</th>
+<th>Member</th>
+<th>Amount</th>
+<th>Plan</th>
+<th>Date</th>
+<th>Status</th>
+<th>Action</th>
 
 </tr>
 
 </thead>
 
-
 <tbody id="depositTable">
 
 <tr>
-
-<td colspan="6">
+<td colspan="6" class="loading">
 Loading...
 </td>
-
 </tr>
 
 </tbody>
@@ -861,22 +791,22 @@ Loading...
 <section class="section">
 
 <h2>
-    🔎 Member Search
+🔎 Member Search
 </h2>
 
 
 <div class="search-box">
 
 <input
-    id="memberSearch"
-    placeholder="Mobile Number / Member ID / Email">
+id="memberSearch"
+placeholder="Mobile Number / Member ID / Email">
 
 
 <button
-    class="btn"
-    onclick="searchMember()">
+class="btn"
+onclick="searchMember()">
 
-    Search
+Search
 
 </button>
 
@@ -884,95 +814,71 @@ Loading...
 
 
 <div
-    id="memberMessage"
-    class="message">
+id="memberMessage"
+class="message">
 </div>
 
 
 <div
-    id="memberCard"
-    class="member-card">
+id="memberCard"
+class="member-card">
 
 
 <h3>
-    📄 Member Full Details
+📄 Member Full Details
 </h3>
 
 
 <div class="member-row">
 
-<strong>
-Member ID
-</strong>
+<strong>Member ID</strong>
 
-<span id="mMemberId">
--
-</span>
+<span id="mMemberId">-</span>
 
 </div>
 
 
 <div class="member-row">
 
-<strong>
-Name
-</strong>
+<strong>Name</strong>
 
-<span id="mName">
--
-</span>
+<span id="mName">-</span>
 
 </div>
 
 
 <div class="member-row">
 
-<strong>
-Email
-</strong>
+<strong>Email</strong>
 
-<span id="mEmail">
--
-</span>
+<span id="mEmail">-</span>
 
 </div>
 
 
 <div class="member-row">
 
-<strong>
-Mobile
-</strong>
+<strong>Mobile</strong>
 
-<span id="mMobile">
--
-</span>
+<span id="mMobile">-</span>
 
 </div>
 
 
 <div class="member-row">
 
-<strong>
-Role
-</strong>
+<strong>Role</strong>
 
-<span id="mRole">
--
-</span>
+<span id="mRole">-</span>
 
 </div>
 
 
 <div class="member-row">
 
-<strong>
-Status
-</strong>
+<strong>Status</strong>
 
-<span id="mStatus">
--
-</span>
+<span id="mStatus">-</span>
 
 </div>
 
@@ -981,13 +887,12 @@ Status
 
 
 <button
-    class="btn green"
-    onclick="toggleMemberStatus()">
+class="btn green"
+onclick="toggleMemberStatus()">
 
-    Activate / Deactivate
+Activate / Deactivate
 
 </button>
-
 
 </div>
 
@@ -997,21 +902,21 @@ Status
 <!-- ================= WITHDRAWAL ================= -->
 
 <section
-    class="section"
-    id="withdrawals">
+class="section"
+id="withdrawals">
 
 <h2>
-    💸 Withdrawal Management
+💸 Withdrawal Management
 </h2>
 
 
 <div class="actions">
 
 <button
-    class="btn gray"
-    onclick="loadWithdrawals()">
+class="btn gray"
+onclick="loadWithdrawals()">
 
-    🔄 Refresh
+🔄 Refresh
 
 </button>
 
@@ -1019,15 +924,14 @@ Status
 
 
 <div
-    id="withdrawalMessage"
-    class="message">
+id="withdrawalMessage"
+class="message">
 </div>
 
 
 <div
-    class="table-wrap"
-    style="margin-top:15px">
-
+class="table-wrap"
+style="margin-top:15px">
 
 <table>
 
@@ -1035,43 +939,23 @@ Status
 
 <tr>
 
-<th>
-Member
-</th>
-
-<th>
-Amount
-</th>
-
-<th>
-Method
-</th>
-
-<th>
-Date
-</th>
-
-<th>
-Status
-</th>
-
-<th>
-Action
-</th>
+<th>Member</th>
+<th>Amount</th>
+<th>Method</th>
+<th>Date</th>
+<th>Status</th>
+<th>Action</th>
 
 </tr>
 
 </thead>
 
-
 <tbody id="withdrawalTable">
 
 <tr>
-
-<td colspan="6">
+<td colspan="6" class="loading">
 Loading...
 </td>
-
 </tr>
 
 </tbody>
@@ -1088,7 +972,7 @@ Loading...
 <section class="section">
 
 <h2>
-    📜 Payout / Income Ledger
+📜 Payout / Income Ledger
 </h2>
 
 
@@ -1105,74 +989,62 @@ business rules and applicable law.
 
 <div class="level-grid">
 
-
 <div class="level">
 Level 1
 <strong>₹100</strong>
 </div>
-
 
 <div class="level">
 Level 2
 <strong>₹50</strong>
 </div>
 
-
 <div class="level">
 Level 3
 <strong>₹40</strong>
 </div>
-
 
 <div class="level">
 Level 4
 <strong>₹30</strong>
 </div>
 
-
 <div class="level">
 Level 5
 <strong>₹20</strong>
 </div>
-
 
 <div class="level">
 Level 6
 <strong>₹10</strong>
 </div>
 
-
 <div class="level">
 Level 7
 <strong>₹10</strong>
 </div>
-
 
 <div class="level">
 Level 8
 <strong>₹5</strong>
 </div>
 
-
 <div class="level">
 Level 9
 <strong>₹5</strong>
 </div>
-
 
 <div class="level">
 Level 10
 <strong>₹5</strong>
 </div>
 
-
 </div>
 
 
 <div
-    class="table-wrap"
-    style="margin-top:15px">
-
+class="table-wrap"
+style="margin-top:15px">
 
 <table>
 
@@ -1180,35 +1052,22 @@ Level 10
 
 <tr>
 
-<th>
-Member
-</th>
-
-<th>
-Amount
-</th>
-
-<th>
-Type
-</th>
-
-<th>
-Date
-</th>
+<th>Member</th>
+<th>Amount</th>
+<th>Type</th>
+<th>Status</th>
+<th>Date</th>
 
 </tr>
 
 </thead>
 
-
 <tbody id="ledgerTable">
 
 <tr>
-
-<td colspan="4">
+<td colspan="5" class="loading">
 Loading...
 </td>
-
 </tr>
 
 </tbody>
@@ -1218,26 +1077,27 @@ Loading...
 </div>
 
 
-<button
-    class="btn gray"
-    onclick="loadLedger()">
+<br>
 
-    🔄 Refresh Ledger
+<button
+class="btn gray"
+onclick="loadLedger()">
+
+🔄 Refresh Ledger
 
 </button>
-
 
 </section>
 
 
-<!-- ================= VIDEO MANAGEMENT ================= -->
+<!-- ================= VIDEO ================= -->
 
 <section
-    class="section"
-    id="videos">
+class="section"
+id="videos">
 
 <h2>
-    🎬 Sponsored Video Management
+🎬 Sponsored Video Management
 </h2>
 
 
@@ -1246,50 +1106,42 @@ Loading...
 
 <div class="form-group">
 
-<label>
-Video Title
-</label>
+<label>Video Title</label>
 
 <input
-    id="videoTitle"
-    placeholder="Sponsored Video 01">
+id="videoTitle"
+placeholder="Sponsored Video 01">
 
 </div>
 
 
 <div class="form-group">
 
-<label>
-Reward Amount
-</label>
+<label>Reward Amount</label>
 
 <input
-    id="videoReward"
-    type="number"
-    step="0.01"
-    placeholder="5">
+id="videoReward"
+type="number"
+step="0.01"
+placeholder="5">
 
 </div>
 
 
 <div class="form-group">
 
-<label>
-Video URL
-</label>
+<label>Video URL</label>
 
 <input
-    id="videoUrl"
-    placeholder="https://...">
+id="videoUrl"
+placeholder="https://...">
 
 </div>
 
 
 <div class="form-group">
 
-<label>
-Status
-</label>
+<label>Status</label>
 
 <select id="videoStatus">
 
@@ -1305,7 +1157,6 @@ Inactive
 
 </div>
 
-
 </div>
 
 
@@ -1313,24 +1164,23 @@ Inactive
 
 
 <button
-    class="btn"
-    onclick="addVideo()">
+class="btn"
+onclick="addVideo()">
 
-    ➕ Add Sponsored Video
+➕ Add Sponsored Video
 
 </button>
 
 
 <div
-    id="videoMessage"
-    class="message">
+id="videoMessage"
+class="message">
 </div>
 
 
 <div
-    class="table-wrap"
-    style="margin-top:15px">
-
+class="table-wrap"
+style="margin-top:15px">
 
 <table>
 
@@ -1338,39 +1188,22 @@ Inactive
 
 <tr>
 
-<th>
-Title
-</th>
-
-<th>
-Reward
-</th>
-
-<th>
-URL
-</th>
-
-<th>
-Status
-</th>
-
-<th>
-Action
-</th>
+<th>Title</th>
+<th>Reward</th>
+<th>URL</th>
+<th>Status</th>
+<th>Action</th>
 
 </tr>
 
 </thead>
 
-
 <tbody id="videoTable">
 
 <tr>
-
-<td colspan="5">
+<td colspan="5" class="loading">
 Loading...
 </td>
-
 </tr>
 
 </tbody>
@@ -1382,12 +1215,12 @@ Loading...
 </section>
 
 
-<!-- ================= REWARD MANAGEMENT ================= -->
+<!-- ================= REWARD ================= -->
 
 <section class="section">
 
 <h2>
-    💰 Member Reward Management
+💰 Member Reward Management
 </h2>
 
 
@@ -1396,44 +1229,37 @@ Loading...
 
 <div class="form-group">
 
-<label>
-Member ID
-</label>
+<label>Member ID</label>
 
 <input
-    id="rewardMember"
-    placeholder="HM000002">
+id="rewardMember"
+placeholder="HM000002">
 
 </div>
 
 
 <div class="form-group">
 
-<label>
-Reward Amount
-</label>
+<label>Reward Amount</label>
 
 <input
-    id="rewardAmount"
-    type="number"
-    step="0.01"
-    placeholder="5">
+id="rewardAmount"
+type="number"
+step="0.01"
+placeholder="5">
 
 </div>
 
 
 <div class="form-group">
 
-<label>
-Description
-</label>
+<label>Description</label>
 
 <input
-    id="rewardDescription"
-    placeholder="Sponsored video reward">
+id="rewardDescription"
+placeholder="Sponsored video reward">
 
 </div>
-
 
 </div>
 
@@ -1442,17 +1268,17 @@ Description
 
 
 <button
-    class="btn green"
-    onclick="addReward()">
+class="btn green"
+onclick="addReward()">
 
-    💰 Add Reward
+💰 Add Reward
 
 </button>
 
 
 <div
-    id="rewardMessage"
-    class="message">
+id="rewardMessage"
+class="message">
 </div>
 
 </section>
@@ -1461,11 +1287,11 @@ Description
 <!-- ================= REPORTS ================= -->
 
 <section
-    class="section"
-    id="reports">
+class="section"
+id="reports">
 
 <h2>
-    📊 Reports
+📊 Reports
 </h2>
 
 
@@ -1483,10 +1309,10 @@ Total, active and inactive members.
 </p>
 
 <button
-    class="btn"
-    onclick="loadMembersReport()">
+class="btn"
+onclick="loadMembersReport()">
 
-    View
+View
 
 </button>
 
@@ -1504,10 +1330,10 @@ Income and reward ledger.
 </p>
 
 <button
-    class="btn"
-    onclick="loadIncomeReport()">
+class="btn"
+onclick="loadIncomeReport()">
 
-    View
+View
 
 </button>
 
@@ -1525,10 +1351,10 @@ Approved, pending and deposit records.
 </p>
 
 <button
-    class="btn"
-    onclick="loadDepositsReport()">
+class="btn"
+onclick="loadDepositsReport()">
 
-    View
+View
 
 </button>
 
@@ -1546,25 +1372,23 @@ Withdrawal requests and status.
 </p>
 
 <button
-    class="btn"
-    onclick="loadWithdrawalReport()">
+class="btn"
+onclick="loadWithdrawalReport()">
 
-    View
+View
 
 </button>
 
 </div>
 
-
 </div>
 
 
 <div
-    id="reportArea"
-    class="table-wrap"
-    style="margin-top:20px">
+id="reportArea"
+class="table-wrap"
+style="margin-top:20px">
 </div>
-
 
 </section>
 
@@ -1574,13 +1398,13 @@ Withdrawal requests and status.
 <section class="section">
 
 <h2>
-    🔔 Notifications / Announcements
+🔔 Notifications / Announcements
 </h2>
 
 
 <textarea
-    id="announcement"
-    placeholder="Write announcement for members...">
+id="announcement"
+placeholder="Write announcement for members...">
 </textarea>
 
 
@@ -1589,25 +1413,24 @@ Withdrawal requests and status.
 
 
 <button
-    class="btn"
-    onclick="sendAnnouncement()">
+class="btn"
+onclick="sendAnnouncement()">
 
-    🔔 Send Announcement
+🔔 Send Announcement
 
 </button>
 
 
 <div
-    id="notificationMessage"
-    class="message">
+id="notificationMessage"
+class="message">
 </div>
 
 
 <div
-    id="notificationsList"
-    style="margin-top:20px">
+id="notificationsList"
+style="margin-top:20px">
 </div>
-
 
 </section>
 
@@ -1615,11 +1438,11 @@ Withdrawal requests and status.
 <!-- ================= SECURITY ================= -->
 
 <section
-    class="section"
-    id="security">
+class="section"
+id="security">
 
 <h2>
-    🔐 Admin Security
+🔐 Admin Security
 </h2>
 
 
@@ -1656,10 +1479,10 @@ Sign out completely from the admin account.
 
 
 <button
-    class="btn red"
-    onclick="logout()">
+class="btn red"
+onclick="logout()">
 
-    Logout
+Logout
 
 </button>
 
@@ -1675,15 +1498,11 @@ Sign out completely from the admin account.
 <p class="muted">
 
 Company ID:
-
-<strong>
-HM000001
-</strong>
+<strong>HM000001</strong>
 
 </p>
 
 </div>
-
 
 </div>
 
@@ -1691,8 +1510,8 @@ HM000001
 
 
 <div
-    id="globalMessage"
-    class="message">
+id="globalMessage"
+class="message">
 </div>
 
 
@@ -1702,16 +1521,14 @@ HM000001
 <script>
 
 /* =====================================================
-   SUPABASE CONFIGURATION
+   SUPABASE
 ===================================================== */
 
 const SUPABASE_URL =
 "https://yaxingstvkaqfmvtyuis.supabase.co";
 
-
 const SUPABASE_PUBLISHABLE_KEY =
 "sb_publishable_3dA1_NPBVCHCzcrf155Qtw_16IUxNDt";
-
 
 const COMPANY_ID =
 "HM000001";
@@ -1741,8 +1558,8 @@ let selectedMember = null;
 function toggleMenu(){
 
     document
-        .getElementById("menu")
-        .classList.toggle("show");
+    .getElementById("menu")
+    .classList.toggle("show");
 
 }
 
@@ -1761,8 +1578,8 @@ function go(id){
     }
 
     document
-        .getElementById("menu")
-        .classList.remove("show");
+    .getElementById("menu")
+    .classList.remove("show");
 
 }
 
@@ -1795,7 +1612,7 @@ function msg(
 
 
 /* =====================================================
-   MONEY FORMAT
+   MONEY
 ===================================================== */
 
 function money(value){
@@ -1808,7 +1625,7 @@ function money(value){
 
 
 /* =====================================================
-   HTML ESCAPE
+   ESCAPE HTML
 ===================================================== */
 
 function esc(value){
@@ -1820,13 +1637,11 @@ function esc(value){
         function(match){
 
             const map = {
-
                 "&":"&amp;",
                 "<":"&lt;",
                 ">":"&gt;",
                 '"':"&quot;",
                 "'":"&#039;"
-
             };
 
             return map[match];
@@ -1838,7 +1653,7 @@ function esc(value){
 
 
 /* =====================================================
-   STATUS BADGE
+   STATUS
 ===================================================== */
 
 function statusBadge(status){
@@ -1848,8 +1663,23 @@ function statusBadge(status){
             status || "pending"
         ).toLowerCase();
 
+    let cls =
+        value;
+
+    if(
+        value !== "active" &&
+        value !== "inactive" &&
+        value !== "pending" &&
+        value !== "approved" &&
+        value !== "rejected"
+    ){
+
+        cls = "pending";
+
+    }
+
     return `
-        <span class="status ${value}">
+        <span class="status ${cls}">
             ${esc(value)}
         </span>
     `;
@@ -1863,39 +1693,41 @@ function statusBadge(status){
 
 async function checkAdmin(){
 
-    const {
-        data,
-        error
-    } =
-    await supabaseClient
+    try{
+
+        const {
+            data,
+            error
+        } =
+        await supabaseClient
         .auth
         .getSession();
 
 
-    if(
-        error ||
-        !data ||
-        !data.session ||
-        !data.session.user
-    ){
+        if(
+            error ||
+            !data ||
+            !data.session ||
+            !data.session.user
+        ){
 
-        window.location.href =
-            "login.html";
+            window.location.href =
+                "login.html";
 
-        return false;
+            return false;
 
-    }
-
-
-    const user =
-        data.session.user;
+        }
 
 
-    const {
-        data:profile,
-        error:profileError
-    } =
-    await supabaseClient
+        const user =
+            data.session.user;
+
+
+        const {
+            data:profile,
+            error:profileError
+        } =
+        await supabaseClient
         .from("profiles")
         .select(
             "id,member_id,name,email,mobile,role,active"
@@ -1907,61 +1739,74 @@ async function checkAdmin(){
         .maybeSingle();
 
 
-    if(
-        profileError ||
-        !profile
-    ){
+        if(
+            profileError ||
+            !profile
+        ){
 
-        await supabaseClient
+            await supabaseClient
             .auth
             .signOut();
 
-        window.location.href =
-            "login.html";
+            window.location.href =
+                "login.html";
 
-        return false;
+            return false;
 
-    }
+        }
 
 
-    if(
-        profile.role !==
-        "admin"
-    ){
+        if(
+            profile.role !== "admin"
+        ){
 
-        await supabaseClient
+            await supabaseClient
             .auth
             .signOut();
 
-        alert(
-            "Admin access required."
+            alert(
+                "Admin access required."
+            );
+
+            window.location.href =
+                "dashboard.html";
+
+            return false;
+
+        }
+
+
+        if(
+            profile.active === false
+        ){
+
+            await supabaseClient
+            .auth
+            .signOut();
+
+            window.location.href =
+                "login.html";
+
+            return false;
+
+        }
+
+
+        return true;
+
+    }catch(error){
+
+        console.error(
+            "Admin check:",
+            error
         );
 
         window.location.href =
-            "dashboard.html";
-
-        return false;
-
-    }
-
-
-    if(
-        profile.active === false
-    ){
-
-        await supabaseClient
-            .auth
-            .signOut();
-
-        window.location.href =
             "login.html";
 
         return false;
 
     }
-
-
-    return true;
 
 }
 
@@ -1972,154 +1817,176 @@ async function checkAdmin(){
 
 async function loadMemberStats(){
 
-    const {
-        data:profiles,
-        error
-    } =
-    await supabaseClient
+    try{
+
+        const {
+            data:profiles,
+            error
+        } =
+        await supabaseClient
         .from("profiles")
         .select(
             "id,active,created_at,role"
         );
 
 
-    if(error){
+        if(error){
+
+            console.error(
+                "Profile error:",
+                error
+            );
+
+            return;
+
+        }
+
+
+        const members =
+            (profiles || [])
+            .filter(
+                profile =>
+                    profile.role !== "admin"
+            );
+
+
+        document.getElementById(
+            "totalMembers"
+        ).textContent =
+            members.length;
+
+
+        const active =
+            members.filter(
+                profile =>
+                    profile.active !== false
+            ).length;
+
+
+        document.getElementById(
+            "activeMembers"
+        ).textContent =
+            active;
+
+
+        const start =
+            new Date();
+
+        start.setHours(
+            0,
+            0,
+            0,
+            0
+        );
+
+
+        const todayRegistrations =
+            members.filter(
+                profile =>
+                    profile.created_at &&
+                    new Date(
+                        profile.created_at
+                    ) >= start
+            ).length;
+
+
+        document.getElementById(
+            "todayRegistrations"
+        ).textContent =
+            todayRegistrations;
+
+
+    }catch(error){
 
         console.error(error);
-
-        return;
 
     }
 
 
-    const members =
-        (profiles || [])
-        .filter(
-            profile =>
-                profile.role !==
-                "admin"
-        );
+    try{
 
-
-    document.getElementById(
-        "totalMembers"
-    ).textContent =
-        members.length;
-
-
-    const active =
-        members.filter(
-            profile =>
-                profile.active !== false
-        ).length;
-
-
-    document.getElementById(
-        "activeMembers"
-    ).textContent =
-        active;
-
-
-    const start =
-        new Date();
-
-
-    start.setHours(
-        0,
-        0,
-        0,
-        0
-    );
-
-
-    const todayRegistrations =
-        members.filter(
-            profile =>
-                profile.created_at &&
-                new Date(
-                    profile.created_at
-                ) >= start
-        ).length;
-
-
-    document.getElementById(
-        "todayRegistrations"
-    ).textContent =
-        todayRegistrations;
-
-
-    /*
-        Income and wallet.
-    */
-
-    const {
-        data:transactions
-    } =
-    await supabaseClient
+        const {
+            data:transactions,
+            error
+        } =
+        await supabaseClient
         .from("transactions")
         .select(
             "amount,type,status"
         );
 
 
-    let income = 0;
+        if(error){
 
-    let wallet = 0;
+            console.error(error);
 
-
-    (
-        transactions || []
-    ).forEach(
-        transaction => {
-
-            const amount =
-                Number(
-                    transaction.amount ||
-                    0
-                );
-
-
-            if(
-                transaction.type ===
-                "reward" ||
-                transaction.type ===
-                "income"
-            ){
-
-                income += amount;
-
-            }
-
-
-            if(
-                transaction.type ===
-                "wallet"
-            ){
-
-                wallet += amount;
-
-            }
+            return;
 
         }
-    );
 
 
-    document.getElementById(
-        "totalIncome"
-    ).textContent =
-        money(income);
+        let income = 0;
+        let wallet = 0;
 
 
-    document.getElementById(
-        "totalWallet"
-    ).textContent =
-        money(wallet);
+        (transactions || [])
+        .forEach(
+            transaction => {
+
+                const amount =
+                    Number(
+                        transaction.amount || 0
+                    );
+
+
+                if(
+                    transaction.type === "reward" ||
+                    transaction.type === "income"
+                ){
+
+                    income += amount;
+
+                }
+
+
+                if(
+                    transaction.type === "wallet"
+                ){
+
+                    wallet += amount;
+
+                }
+
+            }
+        );
+
+
+        document.getElementById(
+            "totalIncome"
+        ).textContent =
+            money(income);
+
+
+        document.getElementById(
+            "totalWallet"
+        ).textContent =
+            money(wallet);
+
+
+    }catch(error){
+
+        console.error(
+            "Transaction statistics:",
+            error
+        );
+
+    }
 
 }
 
 
 /* =====================================================
-   DEPOSIT MANAGEMENT
+   DEPOSITS
 ===================================================== */
 
 async function loadDeposits(){
@@ -2130,14 +1997,13 @@ async function loadDeposits(){
         );
 
 
-    body.innerHTML =
-        `
+    body.innerHTML = `
         <tr>
-            <td colspan="6">
-                Loading...
+            <td colspan="6" class="loading">
+                Loading deposits...
             </td>
         </tr>
-        `;
+    `;
 
 
     const {
@@ -2145,27 +2011,25 @@ async function loadDeposits(){
         error
     } =
     await supabaseClient
-        .from("deposits")
-        .select("*")
-        .order(
-            "created_at",
-            {
-                ascending:false
-            }
-        );
+    .from("deposits")
+    .select("*")
+    .order(
+        "created_at",
+        {
+            ascending:false
+        }
+    );
 
 
     if(error){
 
-        body.innerHTML =
-            `
+        body.innerHTML = `
             <tr>
-                <td colspan="6">
+                <td colspan="6" class="empty">
                     Deposit table could not be read.
-                    Check Supabase table/RLS.
                 </td>
             </tr>
-            `;
+        `;
 
         msg(
             "depositMessage",
@@ -2182,18 +2046,86 @@ async function loadDeposits(){
         data || [];
 
 
-    let today =
-        0;
-
-    let approved =
-        0;
-
-    let pending =
-        0;
+    let today = 0;
+    let approved = 0;
+    let pending = 0;
 
 
     const now =
         new Date();
+
+
+    rows.forEach(
+        deposit => {
+
+            const amount =
+                Number(
+                    deposit.amount || 0
+                );
+
+
+            const date =
+                deposit.created_at
+                ? new Date(
+                    deposit.created_at
+                )
+                : null;
+
+
+            if(
+                date &&
+                date.toDateString() ===
+                now.toDateString()
+            ){
+
+                today += amount;
+
+            }
+
+
+            const status =
+                String(
+                    deposit.status || ""
+                ).toLowerCase();
+
+
+            if(
+                status === "approved"
+            ){
+
+                approved += amount;
+
+            }
+
+
+            if(
+                status === "pending"
+            ){
+
+                pending += amount;
+
+            }
+
+        }
+    );
+
+
+    document.getElementById(
+        "todayDeposit"
+    ).textContent =
+        money(today);
+
+
+    document.getElementById(
+        "approvedDeposit"
+    ).textContent =
+        money(approved);
+
+
+    document.getElementById(
+        "pendingDeposit"
+    ).textContent =
+        money(pending);
 
 
     const from =
@@ -2214,10 +2146,10 @@ async function loadDeposits(){
 
                 const date =
                     deposit.created_at
-                        ? new Date(
-                            deposit.created_at
-                        )
-                        : null;
+                    ? new Date(
+                        deposit.created_at
+                    )
+                    : null;
 
 
                 if(
@@ -2256,96 +2188,15 @@ async function loadDeposits(){
         );
 
 
-    rows.forEach(
-        deposit => {
+    if(!filtered.length){
 
-            const amount =
-                Number(
-                    deposit.amount ||
-                    0
-                );
-
-
-            const date =
-                deposit.created_at
-                    ? new Date(
-                        deposit.created_at
-                    )
-                    : null;
-
-
-            if(
-                date &&
-                date.toDateString() ===
-                now.toDateString()
-            ){
-
-                today += amount;
-
-            }
-
-
-            const status =
-                String(
-                    deposit.status || ""
-                ).toLowerCase();
-
-
-            if(
-                status ===
-                "approved"
-            ){
-
-                approved +=
-                    amount;
-
-            }
-
-
-            if(
-                status ===
-                "pending"
-            ){
-
-                pending +=
-                    amount;
-
-            }
-
-        }
-    );
-
-
-    document.getElementById(
-        "todayDeposit"
-    ).textContent =
-        money(today);
-
-
-    document.getElementById(
-        "approvedDeposit"
-    ).textContent =
-        money(approved);
-
-
-    document.getElementById(
-        "pendingDeposit"
-    ).textContent =
-        money(pending);
-
-
-    if(
-        !filtered.length
-    ){
-
-        body.innerHTML =
-            `
+        body.innerHTML = `
             <tr>
-                <td colspan="6">
+                <td colspan="6" class="empty">
                     No deposit records available.
                 </td>
             </tr>
-            `;
+        `;
 
         return;
 
@@ -2363,96 +2214,80 @@ async function loadDeposits(){
                     ).toLowerCase();
 
 
-                let action =
-                    "-";
+                let action = "-";
 
 
                 if(
-                    status ===
-                    "pending"
+                    status === "pending"
                 ){
 
-                    action =
-                    `
-                    <div class="actions">
+                    action = `
+                        <div class="actions">
 
                         <button
-                            class="btn green"
-                            onclick="updateDeposit(
-                                '${esc(deposit.id)}',
-                                'approved'
-                            )">
+                        class="btn green"
+                        onclick="updateDeposit('${esc(deposit.id)}','approved')">
 
-                            Approve
+                        Approve
 
                         </button>
 
-
                         <button
-                            class="btn red"
-                            onclick="updateDeposit(
-                                '${esc(deposit.id)}',
-                                'rejected'
-                            )">
+                        class="btn red"
+                        onclick="updateDeposit('${esc(deposit.id)}','rejected')">
 
-                            Reject
+                        Reject
 
                         </button>
 
-                    </div>
+                        </div>
                     `;
 
                 }
 
 
                 return `
-
-                <tr>
+                    <tr>
 
                     <td>
-                        ${esc(
-                            deposit.member_id ||
-                            deposit.user_id ||
-                            "-"
-                        )}
+                    ${esc(
+                        deposit.member_id ||
+                        deposit.user_id ||
+                        "-"
+                    )}
                     </td>
 
                     <td>
-                        ${money(
-                            deposit.amount
-                        )}
+                    ${money(deposit.amount)}
                     </td>
 
                     <td>
-                        ${esc(
-                            deposit.plan ||
-                            deposit.plan_name ||
-                            "₹899"
-                        )}
+                    ${esc(
+                        deposit.plan ||
+                        deposit.plan_name ||
+                        "₹899"
+                    )}
                     </td>
 
                     <td>
-                        ${
+                    ${
+                        deposit.created_at
+                        ? new Date(
                             deposit.created_at
-                            ?
-                            new Date(
-                                deposit.created_at
-                            ).toLocaleString()
-                            :
-                            "-"
-                        }
+                        ).toLocaleString()
+                        : "-"
+                    }
                     </td>
 
                     <td>
-                        ${statusBadge(status)}
+                    ${statusBadge(status)}
                     </td>
 
                     <td>
-                        ${action}
+                    ${action}
                     </td>
 
-                </tr>
-
+                    </tr>
                 `;
 
             }
@@ -2461,30 +2296,20 @@ async function loadDeposits(){
 }
 
 
-/* =====================================================
-   CLEAR DEPOSIT FILTER
-===================================================== */
-
 function clearDepositFilter(){
 
     document.getElementById(
         "depositFrom"
     ).value = "";
 
-
     document.getElementById(
         "depositTo"
     ).value = "";
-
 
     loadDeposits();
 
 }
 
-
-/* =====================================================
-   UPDATE DEPOSIT
-===================================================== */
 
 async function updateDeposit(
     id,
@@ -2508,14 +2333,14 @@ async function updateDeposit(
         error
     } =
     await supabaseClient
-        .from("deposits")
-        .update({
-            status:status
-        })
-        .eq(
-            "id",
-            id
-        );
+    .from("deposits")
+    .update({
+        status:status
+    })
+    .eq(
+        "id",
+        id
+    );
 
 
     if(error){
@@ -2533,13 +2358,12 @@ async function updateDeposit(
 
     msg(
         "depositMessage",
-        "Deposit status updated.",
+        "Deposit status updated successfully.",
         "success"
     );
 
 
     await loadDeposits();
-
     await loadMemberStats();
 
 }
@@ -2553,11 +2377,11 @@ async function searchMember(){
 
     const query =
         document
-            .getElementById(
-                "memberSearch"
-            )
-            .value
-            .trim();
+        .getElementById(
+            "memberSearch"
+        )
+        .value
+        .trim();
 
 
     if(!query){
@@ -2573,19 +2397,55 @@ async function searchMember(){
     }
 
 
+    let request =
+        supabaseClient
+        .from("profiles")
+        .select(
+            "id,member_id,name,email,mobile,role,active"
+        );
+
+
+    if(
+        query.includes("@")
+    ){
+
+        request =
+            request.eq(
+                "email",
+                query
+            );
+
+    }else if(
+        query.toUpperCase()
+        .startsWith("HM")
+    ){
+
+        request =
+            request.eq(
+                "member_id",
+                query.toUpperCase()
+            );
+
+    }else{
+
+        request =
+            request.eq(
+                "mobile",
+                query.replace(
+                    /\D/g,
+                    ""
+                )
+            );
+
+    }
+
+
     const {
         data,
         error
     } =
-    await supabaseClient
-        .from("profiles")
-        .select(
-            "id,member_id,name,email,mobile,role,active"
-        )
-        .or(
-            `member_id.eq.${query},mobile.eq.${query},email.eq.${query}`
-        )
-        .limit(1);
+    await request
+    .limit(1);
 
 
     if(
@@ -2602,7 +2462,9 @@ async function searchMember(){
 
         msg(
             "memberMessage",
-            "Member not found.",
+            error
+            ? error.message
+            : "Member not found.",
             "error"
         );
 
@@ -2624,60 +2486,49 @@ async function searchMember(){
     document.getElementById(
         "mMemberId"
     ).textContent =
-        selectedMember.member_id ||
-        "-";
+        selectedMember.member_id || "-";
 
 
     document.getElementById(
         "mName"
     ).textContent =
-        selectedMember.name ||
-        "-";
+        selectedMember.name || "-";
 
 
     document.getElementById(
         "mEmail"
     ).textContent =
-        selectedMember.email ||
-        "-";
+        selectedMember.email || "-";
 
 
     document.getElementById(
         "mMobile"
     ).textContent =
-        selectedMember.mobile ||
-        "-";
+        selectedMember.mobile || "-";
 
 
     document.getElementById(
         "mRole"
     ).textContent =
-        selectedMember.role ||
-        "-";
+        selectedMember.role || "-";
 
 
     document.getElementById(
         "mStatus"
     ).textContent =
         selectedMember.active === false
-        ?
-        "Inactive"
-        :
-        "Active";
+        ? "Inactive"
+        : "Active";
 
 
     msg(
         "memberMessage",
-        "Member found.",
+        "Member found successfully.",
         "success"
     );
 
 }
 
-
-/* =====================================================
-   MEMBER ACTIVATE / DEACTIVATE
-===================================================== */
 
 async function toggleMemberStatus(){
 
@@ -2692,18 +2543,31 @@ async function toggleMemberStatus(){
         selectedMember.active === false;
 
 
+    if(
+        !confirm(
+            active
+            ? "Activate this member?"
+            : "Deactivate this member?"
+        )
+    ){
+
+        return;
+
+    }
+
+
     const {
         error
     } =
     await supabaseClient
-        .from("profiles")
-        .update({
-            active:active
-        })
-        .eq(
-            "id",
-            selectedMember.id
-        );
+    .from("profiles")
+    .update({
+        active:active
+    })
+    .eq(
+        "id",
+        selectedMember.id
+    );
 
 
     if(error){
@@ -2727,26 +2591,24 @@ async function toggleMemberStatus(){
         "mStatus"
     ).textContent =
         active
-        ?
-        "Active"
-        :
-        "Inactive";
+        ? "Active"
+        : "Inactive";
 
 
     msg(
         "memberMessage",
-        "Member status updated.",
+        "Member status updated successfully.",
         "success"
     );
 
 
-    loadMemberStats();
+    await loadMemberStats();
 
 }
 
 
 /* =====================================================
-   WITHDRAWAL MANAGEMENT
+   WITHDRAWALS
 ===================================================== */
 
 async function loadWithdrawals(){
@@ -2757,14 +2619,13 @@ async function loadWithdrawals(){
         );
 
 
-    body.innerHTML =
-        `
+    body.innerHTML = `
         <tr>
-            <td colspan="6">
-                Loading...
+            <td colspan="6" class="loading">
+                Loading withdrawals...
             </td>
         </tr>
-        `;
+    `;
 
 
     const {
@@ -2772,35 +2633,31 @@ async function loadWithdrawals(){
         error
     } =
     await supabaseClient
-        .from("withdrawals")
-        .select("*")
-        .order(
-            "created_at",
-            {
-                ascending:false
-            }
-        );
+    .from("withdrawals")
+    .select("*")
+    .order(
+        "created_at",
+        {
+            ascending:false
+        }
+    );
 
 
     if(error){
 
-        body.innerHTML =
-            `
+        body.innerHTML = `
             <tr>
-                <td colspan="6">
+                <td colspan="6" class="empty">
                     Withdrawal table could not be read.
-                    Check Supabase table/RLS.
                 </td>
             </tr>
-            `;
-
+        `;
 
         msg(
             "withdrawalMessage",
             error.message,
             "error"
         );
-
 
         return;
 
@@ -2812,14 +2669,13 @@ async function loadWithdrawals(){
         !data.length
     ){
 
-        body.innerHTML =
-            `
+        body.innerHTML = `
             <tr>
-                <td colspan="6">
+                <td colspan="6" class="empty">
                     No withdrawal records available.
                 </td>
             </tr>
-            `;
+        `;
 
         return;
 
@@ -2837,95 +2693,79 @@ async function loadWithdrawals(){
                     ).toLowerCase();
 
 
-                let action =
-                    "-";
+                let action = "-";
 
 
                 if(
-                    status ===
-                    "pending"
+                    status === "pending"
                 ){
 
-                    action =
-                    `
-                    <div class="actions">
+                    action = `
+                        <div class="actions">
 
                         <button
-                            class="btn green"
-                            onclick="updateWithdrawal(
-                                '${esc(withdrawal.id)}',
-                                'approved'
-                            )">
+                        class="btn green"
+                        onclick="updateWithdrawal('${esc(withdrawal.id)}','approved')">
 
-                            Approve
+                        Approve
 
                         </button>
 
-
                         <button
-                            class="btn red"
-                            onclick="updateWithdrawal(
-                                '${esc(withdrawal.id)}',
-                                'rejected'
-                            )">
+                        class="btn red"
+                        onclick="updateWithdrawal('${esc(withdrawal.id)}','rejected')">
 
-                            Reject
+                        Reject
 
                         </button>
 
-                    </div>
+                        </div>
                     `;
 
                 }
 
 
                 return `
-
-                <tr>
+                    <tr>
 
                     <td>
-                        ${esc(
-                            withdrawal.member_id ||
-                            withdrawal.user_id ||
-                            "-"
-                        )}
+                    ${esc(
+                        withdrawal.member_id ||
+                        withdrawal.user_id ||
+                        "-"
+                    )}
                     </td>
 
                     <td>
-                        ${money(
-                            withdrawal.amount
-                        )}
+                    ${money(withdrawal.amount)}
                     </td>
 
                     <td>
-                        ${esc(
-                            withdrawal.method ||
-                            "-"
-                        )}
+                    ${esc(
+                        withdrawal.method ||
+                        "-"
+                    )}
                     </td>
 
                     <td>
-                        ${
+                    ${
+                        withdrawal.created_at
+                        ? new Date(
                             withdrawal.created_at
-                            ?
-                            new Date(
-                                withdrawal.created_at
-                            ).toLocaleString()
-                            :
-                            "-"
-                        }
+                        ).toLocaleString()
+                        : "-"
+                    }
                     </td>
 
                     <td>
-                        ${statusBadge(status)}
+                    ${statusBadge(status)}
                     </td>
 
                     <td>
-                        ${action}
+                    ${action}
                     </td>
 
-                </tr>
-
+                    </tr>
                 `;
 
             }
@@ -2933,10 +2773,6 @@ async function loadWithdrawals(){
 
 }
 
-
-/* =====================================================
-   UPDATE WITHDRAWAL
-===================================================== */
 
 async function updateWithdrawal(
     id,
@@ -2960,14 +2796,14 @@ async function updateWithdrawal(
         error
     } =
     await supabaseClient
-        .from("withdrawals")
-        .update({
-            status:status
-        })
-        .eq(
-            "id",
-            id
-        );
+    .from("withdrawals")
+    .update({
+        status:status
+    })
+    .eq(
+        "id",
+        id
+    );
 
 
     if(error){
@@ -2985,18 +2821,18 @@ async function updateWithdrawal(
 
     msg(
         "withdrawalMessage",
-        "Withdrawal status updated.",
+        "Withdrawal status updated successfully.",
         "success"
     );
 
 
-    loadWithdrawals();
+    await loadWithdrawals();
 
 }
 
 
 /* =====================================================
-   INCOME LEDGER
+   LEDGER
 ===================================================== */
 
 async function loadLedger(){
@@ -3012,17 +2848,17 @@ async function loadLedger(){
         error
     } =
     await supabaseClient
-        .from("transactions")
-        .select(
-            "member_id,amount,type,created_at"
-        )
-        .order(
-            "created_at",
-            {
-                ascending:false
-            }
-        )
-        .limit(100);
+    .from("transactions")
+    .select(
+        "member_id,amount,type,status,created_at"
+    )
+    .order(
+        "created_at",
+        {
+            ascending:false
+        }
+    )
+    .limit(100);
 
 
     if(
@@ -3031,14 +2867,13 @@ async function loadLedger(){
         !data.length
     ){
 
-        body.innerHTML =
-            `
+        body.innerHTML = `
             <tr>
-                <td colspan="4">
+                <td colspan="5" class="empty">
                     No income ledger records available.
                 </td>
             </tr>
-            `;
+        `;
 
         return;
 
@@ -3051,37 +2886,39 @@ async function loadLedger(){
 
             <tr>
 
-                <td>
-                    ${esc(
-                        transaction.member_id ||
-                        "-"
-                    )}
-                </td>
+            <td>
+            ${esc(
+                transaction.member_id || "-"
+            )}
+            </td>
 
-                <td>
-                    ${money(
-                        transaction.amount
-                    )}
-                </td>
+            <td>
+            ${money(
+                transaction.amount
+            )}
+            </td>
 
-                <td>
-                    ${esc(
-                        transaction.type ||
-                        "-"
-                    )}
-                </td>
+            <td>
+            ${esc(
+                transaction.type || "-"
+            )}
+            </td>
 
-                <td>
-                    ${
-                        transaction.created_at
-                        ?
-                        new Date(
-                            transaction.created_at
-                        ).toLocaleString()
-                        :
-                        "-"
-                    }
-                </td>
+            <td>
+            ${statusBadge(
+                transaction.status
+            )}
+            </td>
+
+            <td>
+            ${
+                transaction.created_at
+                ? new Date(
+                    transaction.created_at
+                ).toLocaleString()
+                : "-"
+            }
+            </td>
 
             </tr>
 
@@ -3092,7 +2929,7 @@ async function loadLedger(){
 
 
 /* =====================================================
-   ADD SPONSORED VIDEO
+   VIDEOS
 ===================================================== */
 
 async function addVideo(){
@@ -3120,19 +2957,19 @@ async function addVideo(){
     const active =
         document.getElementById(
             "videoStatus"
-        ).value ===
-        "true";
+        ).value === "true";
 
 
     if(
         !title ||
         !url ||
-        !Number.isFinite(reward)
+        !Number.isFinite(reward) ||
+        reward < 0
     ){
 
         msg(
             "videoMessage",
-            "Enter video title, reward and URL.",
+            "Enter valid video title, reward and URL.",
             "error"
         );
 
@@ -3145,18 +2982,18 @@ async function addVideo(){
         error
     } =
     await supabaseClient
-        .from("sponsored_videos")
-        .insert({
+    .from("sponsored_videos")
+    .insert({
 
-            title:title,
+        title:title,
 
-            reward_amount:reward,
+        reward_amount:reward,
 
-            video_url:url,
+        video_url:url,
 
-            active:active
+        active:active
 
-        });
+    });
 
 
     if(error){
@@ -3174,7 +3011,7 @@ async function addVideo(){
 
     msg(
         "videoMessage",
-        "Sponsored video added.",
+        "Sponsored video added successfully.",
         "success"
     );
 
@@ -3194,14 +3031,10 @@ async function addVideo(){
     ).value = "";
 
 
-    loadVideos();
+    await loadVideos();
 
 }
 
-
-/* =====================================================
-   LOAD VIDEOS
-===================================================== */
 
 async function loadVideos(){
 
@@ -3216,14 +3049,14 @@ async function loadVideos(){
         error
     } =
     await supabaseClient
-        .from("sponsored_videos")
-        .select("*")
-        .order(
-            "created_at",
-            {
-                ascending:false
-            }
-        );
+    .from("sponsored_videos")
+    .select("*")
+    .order(
+        "created_at",
+        {
+            ascending:false
+        }
+    );
 
 
     if(
@@ -3232,14 +3065,20 @@ async function loadVideos(){
         !data.length
     ){
 
-        body.innerHTML =
-            `
+        body.innerHTML = `
             <tr>
-                <td colspan="5">
+                <td colspan="5" class="empty">
                     No sponsored videos available.
                 </td>
             </tr>
-            `;
+        `;
+
+        if(error){
+            console.error(
+                "Video error:",
+                error
+            );
+        }
 
         return;
 
@@ -3252,62 +3091,55 @@ async function loadVideos(){
 
             <tr>
 
-                <td>
-                    ${esc(
-                        video.title
-                    )}
-                </td>
+            <td>
+            ${esc(video.title)}
+            </td>
 
-                <td>
-                    ${money(
-                        video.reward_amount
-                    )}
-                </td>
+            <td>
+            ${money(video.reward_amount)}
+            </td>
 
-                <td>
+            <td>
 
-                    <a
-                        href="${esc(video.video_url)}"
-                        target="_blank">
+            <a
+            href="${esc(video.video_url)}"
+            target="_blank"
+            rel="noopener noreferrer">
 
-                        Open
+            Open
 
-                    </a>
+            </a>
 
-                </td>
+            </td>
 
-                <td>
+            <td>
 
-                    ${statusBadge(
-                        video.active === false
-                        ?
-                        "inactive"
-                        :
-                        "active"
-                    )}
+            ${statusBadge(
+                video.active === false
+                ? "inactive"
+                : "active"
+            )}
 
-                </td>
+            </td>
 
-                <td>
+            <td>
 
-                    <button
-                        class="btn gray"
-                        onclick="toggleVideo(
-                            '${esc(video.id)}',
-                            ${video.active === false}
-                        )">
+            <button
+            class="btn gray"
+            onclick="toggleVideo(
+                '${esc(video.id)}',
+                ${video.active === false}
+            )">
 
-                        ${
-                            video.active === false
-                            ?
-                            "Activate"
-                            :
-                            "Deactivate"
-                        }
+            ${
+                video.active === false
+                ? "Activate"
+                : "Deactivate"
+            }
 
-                    </button>
+            </button>
 
-                </td>
+            </td>
 
             </tr>
 
@@ -3316,10 +3148,6 @@ async function loadVideos(){
 
 }
 
-
-/* =====================================================
-   TOGGLE VIDEO
-===================================================== */
 
 async function toggleVideo(
     id,
@@ -3330,14 +3158,14 @@ async function toggleVideo(
         error
     } =
     await supabaseClient
-        .from("sponsored_videos")
-        .update({
-            active:active
-        })
-        .eq(
-            "id",
-            id
-        );
+    .from("sponsored_videos")
+    .update({
+        active:active
+    })
+    .eq(
+        "id",
+        id
+    );
 
 
     if(error){
@@ -3353,13 +3181,22 @@ async function toggleVideo(
     }
 
 
-    loadVideos();
+    msg(
+        "videoMessage",
+        active
+        ? "Video activated."
+        : "Video deactivated.",
+        "success"
+    );
+
+
+    await loadVideos();
 
 }
 
 
 /* =====================================================
-   ADD REWARD
+   REWARD
 ===================================================== */
 
 async function addReward(){
@@ -3405,20 +3242,20 @@ async function addReward(){
         error
     } =
     await supabaseClient
-        .from("transactions")
-        .insert({
+    .from("transactions")
+    .insert({
 
-            member_id:member_id,
+        member_id:member_id,
 
-            amount:amount,
+        amount:amount,
 
-            type:"reward",
+        type:"reward",
 
-            status:"approved",
+        status:"approved",
 
-            description:description
+        description:description
 
-        });
+    });
 
 
     if(error){
@@ -3434,6 +3271,21 @@ async function addReward(){
     }
 
 
+    document.getElementById(
+        "rewardMember"
+    ).value = "";
+
+
+    document.getElementById(
+        "rewardAmount"
+    ).value = "";
+
+
+    document.getElementById(
+        "rewardDescription"
+    ).value = "";
+
+
     msg(
         "rewardMessage",
         "Reward recorded successfully.",
@@ -3441,9 +3293,8 @@ async function addReward(){
     );
 
 
-    loadMemberStats();
-
-    loadLedger();
+    await loadMemberStats();
+    await loadLedger();
 
 }
 
@@ -3459,35 +3310,35 @@ async function loadMembersReport(){
         error
     } =
     await supabaseClient
-        .from("profiles")
-        .select(
-            "member_id,name,email,mobile,role,active,created_at"
-        )
-        .order(
-            "created_at",
-            {
-                ascending:false
-            }
+    .from("profiles")
+    .select(
+        "member_id,name,email,mobile,role,active,created_at"
+    )
+    .order(
+        "created_at",
+        {
+            ascending:false
+        }
+    );
+
+
+    const area =
+        document.getElementById(
+            "reportArea"
         );
 
 
     if(error){
 
-        document.getElementById(
-            "reportArea"
-        ).innerHTML =
-            esc(error.message);
+        area.innerHTML =
+            `<p class="error">${esc(error.message)}</p>`;
 
         return;
 
     }
 
 
-    document.getElementById(
-        "reportArea"
-    ).innerHTML =
-
-    `
+    area.innerHTML = `
 
     <table>
 
@@ -3495,34 +3346,17 @@ async function loadMembersReport(){
 
     <tr>
 
-        <th>
-            Member ID
-        </th>
-
-        <th>
-            Name
-        </th>
-
-        <th>
-            Email
-        </th>
-
-        <th>
-            Mobile
-        </th>
-
-        <th>
-            Status
-        </th>
-
-        <th>
-            Joined
-        </th>
+    <th>Member ID</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Mobile</th>
+    <th>Role</th>
+    <th>Status</th>
+    <th>Joined</th>
 
     </tr>
 
     </thead>
-
 
     <tbody>
 
@@ -3533,57 +3367,48 @@ async function loadMembersReport(){
 
             <tr>
 
-                <td>
-                    ${esc(
-                        profile.member_id
-                    )}
-                </td>
+            <td>
+            ${esc(profile.member_id)}
+            </td>
 
-                <td>
-                    ${esc(
-                        profile.name
-                    )}
-                </td>
+            <td>
+            ${esc(profile.name)}
+            </td>
 
-                <td>
-                    ${esc(
-                        profile.email
-                    )}
-                </td>
+            <td>
+            ${esc(profile.email)}
+            </td>
 
-                <td>
-                    ${esc(
-                        profile.mobile
-                    )}
-                </td>
+            <td>
+            ${esc(profile.mobile)}
+            </td>
 
-                <td>
-                    ${statusBadge(
-                        profile.active === false
-                        ?
-                        "inactive"
-                        :
-                        "active"
-                    )}
-                </td>
+            <td>
+            ${esc(profile.role)}
+            </td>
 
-                <td>
-                    ${
-                        profile.created_at
-                        ?
-                        new Date(
-                            profile.created_at
-                        ).toLocaleDateString()
-                        :
-                        "-"
-                    }
-                </td>
+            <td>
+            ${statusBadge(
+                profile.active === false
+                ? "inactive"
+                : "active"
+            )}
+            </td>
+
+            <td>
+            ${
+                profile.created_at
+                ? new Date(
+                    profile.created_at
+                ).toLocaleDateString()
+                : "-"
+            }
+            </td>
 
             </tr>
 
             `
-        )
-        .join("")
+        ).join("")
     }
 
     </tbody>
@@ -3606,33 +3431,33 @@ async function loadIncomeReport(){
         error
     } =
     await supabaseClient
-        .from("transactions")
-        .select("*")
-        .order(
-            "created_at",
-            {
-                ascending:false
-            }
+    .from("transactions")
+    .select("*")
+    .order(
+        "created_at",
+        {
+            ascending:false
+        }
+    );
+
+
+    const area =
+        document.getElementById(
+            "reportArea"
         );
 
 
     if(error){
 
-        document.getElementById(
-            "reportArea"
-        ).innerHTML =
-            esc(error.message);
+        area.innerHTML =
+            `<p>${esc(error.message)}</p>`;
 
         return;
 
     }
 
 
-    document.getElementById(
-        "reportArea"
-    ).innerHTML =
-
-    `
+    area.innerHTML = `
 
     <table>
 
@@ -3640,30 +3465,16 @@ async function loadIncomeReport(){
 
     <tr>
 
-        <th>
-            Member
-        </th>
-
-        <th>
-            Amount
-        </th>
-
-        <th>
-            Type
-        </th>
-
-        <th>
-            Status
-        </th>
-
-        <th>
-            Date
-        </th>
+    <th>Member</th>
+    <th>Amount</th>
+    <th>Type</th>
+    <th>Description</th>
+    <th>Status</th>
+    <th>Date</th>
 
     </tr>
 
     </thead>
-
 
     <tbody>
 
@@ -3674,47 +3485,40 @@ async function loadIncomeReport(){
 
             <tr>
 
-                <td>
-                    ${esc(
-                        transaction.member_id
-                    )}
-                </td>
+            <td>
+            ${esc(transaction.member_id)}
+            </td>
 
-                <td>
-                    ${money(
-                        transaction.amount
-                    )}
-                </td>
+            <td>
+            ${money(transaction.amount)}
+            </td>
 
-                <td>
-                    ${esc(
-                        transaction.type
-                    )}
-                </td>
+            <td>
+            ${esc(transaction.type)}
+            </td>
 
-                <td>
-                    ${statusBadge(
-                        transaction.status
-                    )}
-                </td>
+            <td>
+            ${esc(transaction.description)}
+            </td>
 
-                <td>
-                    ${
-                        transaction.created_at
-                        ?
-                        new Date(
-                            transaction.created_at
-                        ).toLocaleString()
-                        :
-                        "-"
-                    }
-                </td>
+            <td>
+            ${statusBadge(transaction.status)}
+            </td>
+
+            <td>
+            ${
+                transaction.created_at
+                ? new Date(
+                    transaction.created_at
+                ).toLocaleString()
+                : "-"
+            }
+            </td>
 
             </tr>
 
             `
-        )
-        .join("")
+        ).join("")
     }
 
     </tbody>
@@ -3732,29 +3536,111 @@ async function loadIncomeReport(){
 
 async function loadDepositsReport(){
 
-    await loadDeposits();
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+    .from("deposits")
+    .select("*")
+    .order(
+        "created_at",
+        {
+            ascending:false
+        }
+    );
 
 
-    const source =
-        document.querySelector(
-            "#depositTable"
+    const area =
+        document.getElementById(
+            "reportArea"
         );
 
 
-    if(!source){
+    if(error){
+
+        area.innerHTML =
+            `<p>${esc(error.message)}</p>`;
 
         return;
 
     }
 
 
-    document.getElementById(
-        "reportArea"
-    ).innerHTML =
+    area.innerHTML = `
 
-        source
-        .parentElement
-        .outerHTML;
+    <table>
+
+    <thead>
+
+    <tr>
+
+    <th>Member</th>
+    <th>Amount</th>
+    <th>Plan</th>
+    <th>Status</th>
+    <th>Date</th>
+
+    </tr>
+
+    </thead>
+
+    <tbody>
+
+    ${
+        (data || [])
+        .map(
+            deposit => `
+
+            <tr>
+
+            <td>
+            ${esc(
+                deposit.member_id ||
+                deposit.user_id ||
+                "-"
+            )}
+            </td>
+
+            <td>
+            ${money(deposit.amount)}
+            </td>
+
+            <td>
+            ${esc(
+                deposit.plan ||
+                deposit.plan_name ||
+                "-"
+            )}
+            </td>
+
+            <td>
+            ${statusBadge(
+                deposit.status
+            )}
+            </td>
+
+            <td>
+            ${
+                deposit.created_at
+                ? new Date(
+                    deposit.created_at
+                ).toLocaleString()
+                : "-"
+            }
+            </td>
+
+            </tr>
+
+            `
+        ).join("")
+    }
+
+    </tbody>
+
+    </table>
+
+    `;
 
 }
 
@@ -3765,35 +3651,113 @@ async function loadDepositsReport(){
 
 async function loadWithdrawalReport(){
 
-    await loadWithdrawals();
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+    .from("withdrawals")
+    .select("*")
+    .order(
+        "created_at",
+        {
+            ascending:false
+        }
+    );
 
 
-    const source =
-        document.querySelector(
-            "#withdrawalTable"
+    const area =
+        document.getElementById(
+            "reportArea"
         );
 
 
-    if(!source){
+    if(error){
+
+        area.innerHTML =
+            `<p>${esc(error.message)}</p>`;
 
         return;
 
     }
 
 
-    document.getElementById(
-        "reportArea"
-    ).innerHTML =
+    area.innerHTML = `
 
-        source
-        .parentElement
-        .outerHTML;
+    <table>
+
+    <thead>
+
+    <tr>
+
+    <th>Member</th>
+    <th>Amount</th>
+    <th>Method</th>
+    <th>Status</th>
+    <th>Date</th>
+
+    </tr>
+
+    </thead>
+
+    <tbody>
+
+    ${
+        (data || [])
+        .map(
+            withdrawal => `
+
+            <tr>
+
+            <td>
+            ${esc(
+                withdrawal.member_id ||
+                withdrawal.user_id ||
+                "-"
+            )}
+            </td>
+
+            <td>
+            ${money(withdrawal.amount)}
+            </td>
+
+            <td>
+            ${esc(withdrawal.method)}
+            </td>
+
+            <td>
+            ${statusBadge(
+                withdrawal.status
+            )}
+            </td>
+
+            <td>
+            ${
+                withdrawal.created_at
+                ? new Date(
+                    withdrawal.created_at
+                ).toLocaleString()
+                : "-"
+            }
+            </td>
+
+            </tr>
+
+            `
+        ).join("")
+    }
+
+    </tbody>
+
+    </table>
+
+    `;
 
 }
 
 
 /* =====================================================
-   SEND ANNOUNCEMENT
+   NOTIFICATIONS
 ===================================================== */
 
 async function sendAnnouncement(){
@@ -3821,31 +3785,29 @@ async function sendAnnouncement(){
         data:userData
     } =
     await supabaseClient
-        .auth
-        .getUser();
+    .auth
+    .getUser();
 
 
     const admin_id =
         userData &&
         userData.user
-        ?
-        userData.user.id
-        :
-        null;
+        ? userData.user.id
+        : null;
 
 
     const {
         error
     } =
     await supabaseClient
-        .from("notifications")
-        .insert({
+    .from("notifications")
+    .insert({
 
-            message:message,
+        message:message,
 
-            admin_id:admin_id
+        admin_id:admin_id
 
-        });
+    });
 
 
     if(error){
@@ -3868,42 +3830,38 @@ async function sendAnnouncement(){
 
     msg(
         "notificationMessage",
-        "Announcement sent.",
+        "Announcement sent successfully.",
         "success"
     );
 
 
-    loadNotifications();
+    await loadNotifications();
 
 }
 
 
-/* =====================================================
-   LOAD NOTIFICATIONS
-===================================================== */
-
 async function loadNotifications(){
+
+    const box =
+        document.getElementById(
+            "notificationsList"
+        );
+
 
     const {
         data,
         error
     } =
     await supabaseClient
-        .from("notifications")
-        .select("*")
-        .order(
-            "created_at",
-            {
-                ascending:false
-            }
-        )
-        .limit(20);
-
-
-    const box =
-        document.getElementById(
-            "notificationsList"
-        );
+    .from("notifications")
+    .select("*")
+    .order(
+        "created_at",
+        {
+            ascending:false
+        }
+    )
+    .limit(20);
 
 
     if(
@@ -3926,31 +3884,27 @@ async function loadNotifications(){
 
             <div class="notice">
 
-                <strong>
-                    🔔 Announcement
-                </strong>
+            <strong>
+            🔔 Announcement
+            </strong>
 
-                <br>
+            <br>
 
-                ${esc(
-                    notification.message
-                )}
+            ${esc(
+                notification.message
+            )}
 
-                <br>
+            <br>
 
-                <small>
-
-                    ${
-                        notification.created_at
-                        ?
-                        new Date(
-                            notification.created_at
-                        ).toLocaleString()
-                        :
-                        ""
-                    }
-
-                </small>
+            <small>
+            ${
+                notification.created_at
+                ? new Date(
+                    notification.created_at
+                ).toLocaleString()
+                : ""
+            }
+            </small>
 
             </div>
 
@@ -3977,9 +3931,20 @@ async function logout(){
     }
 
 
-    await supabaseClient
+    try{
+
+        await supabaseClient
         .auth
         .signOut();
+
+    }catch(error){
+
+        console.error(
+            "Logout error:",
+            error
+        );
+
+    }
 
 
     window.location.href =
@@ -3989,7 +3954,7 @@ async function logout(){
 
 
 /* =====================================================
-   LOAD DASHBOARD
+   DASHBOARD START
 ===================================================== */
 
 async function loadDashboard(){
@@ -4029,4 +3994,5 @@ loadDashboard();
 </script>
 
 </body>
+
 </html>
