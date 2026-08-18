@@ -473,7 +473,7 @@ Remember me
 
     Hamara Market • Digital Rewards Platform<br>
 
-              Members: Email/Mobile Login
+    Members: Email / Mobile Login
 
 </p>
 
@@ -602,18 +602,13 @@ function togglePassword(){
 
 
 /* =====================================================
-   MESSAGE
+   LOGIN MESSAGE
    ===================================================== */
 
-function showLoginMessage(
-    text,
-    type
-){
+function showLoginMessage(text,type){
 
     const message =
-        document.getElementById(
-            "loginMessage"
-        );
+        document.getElementById("loginMessage");
 
     message.className =
         "message " + type;
@@ -655,10 +650,7 @@ document
             .getElementById("loginBtn");
 
 
-        showLoginMessage(
-            "",
-            ""
-        );
+        showLoginMessage("","");
 
 
         button.disabled = true;
@@ -669,13 +661,10 @@ document
 
         try{
 
-            /*
-              =================================================
-              EMAIL LOGIN
-              =================================================
 
-              User enters registered email.
-            */
+            /* =================================================
+               EMAIL LOGIN
+               ================================================= */
 
             if(loginId.includes("@")){
 
@@ -708,20 +697,22 @@ document
             }
 
 
-            /*
-              =================================================
-              MEMBER MOBILE LOGIN
-              =================================================
+            /* =================================================
+               MOBILE LOGIN
+               
+               IMPORTANT:
+               Registration creates this internal Auth email:
 
-              Find registered email from
-              profiles table using mobile.
-            */
+               member.9876543210@auth.hamaramarket.local
+
+               Therefore mobile login directly uses the same
+               internal Auth email.
+
+               No profiles.email dependency.
+               ================================================= */
 
             const mobile =
-                loginId.replace(
-                    /\D/g,
-                    ""
-                );
+                loginId.replace(/\D/g,"");
 
 
             if(!/^[0-9]{10}$/.test(mobile)){
@@ -733,11 +724,17 @@ document
             }
 
 
+            /*
+
+               First check whether this mobile exists.
+
+            */
+
             const {data:profile,error:profileError} =
                 await supabaseClient
                 .from("profiles")
                 .select(
-                    "id,email,mobile,active,role,member_id"
+                    "id,member_id,name,mobile,role,active,email"
                 )
                 .eq(
                     "mobile",
@@ -754,7 +751,7 @@ document
                 );
 
                 throw new Error(
-                    "Unable to find this mobile number. Please try Email Login."
+                    "Unable to check this mobile number."
                 );
 
             }
@@ -769,27 +766,37 @@ document
             }
 
 
-            if(profile.active === false){
+            /*
+              IMPORTANT:
 
-                throw new Error(
-                    "This account is inactive. Please contact Admin."
-                );
+              DO NOT CHECK profile.active HERE.
 
-            }
+              Inactive members are allowed to LOGIN.
+
+              Admin activation will be used for
+              rewards/withdrawal/other restricted
+              features later.
+            */
 
 
-            if(!profile.email){
-
-                throw new Error(
-                    "Email is not available for this member account."
-                );
-
-            }
+            let authEmail;
 
 
             /*
-              Login using the email connected
-              with this member.
+              If member supplied a real email during
+              registration, allow mobile login through
+              the internal email because the registration
+              function created Auth using internal email
+              when email was blank.
+            */
+
+            authEmail =
+                `member.${mobile}@auth.hamaramarket.local`;
+
+
+            /*
+              Login using the same Auth email created
+              by rapid-action during registration.
             */
 
             const {data,error} =
@@ -797,7 +804,7 @@ document
                 .auth
                 .signInWithPassword({
 
-                    email:profile.email,
+                    email:authEmail,
 
                     password:password
 
@@ -805,6 +812,11 @@ document
 
 
             if(error){
+
+                console.error(
+                    "Mobile Auth login error:",
+                    error
+                );
 
                 throw error;
 
@@ -826,7 +838,8 @@ document
 
 
             showLoginMessage(
-                "❌ " + (
+                "❌ " +
+                (
                     error.message ||
                     "Login failed."
                 ),
@@ -846,7 +859,7 @@ document
 
 
 /* =====================================================
-   LOAD PROFILE AND OPEN CORRECT DASHBOARD
+   LOAD PROFILE AND REDIRECT
    ===================================================== */
 
 async function loadProfileAndRedirect(
@@ -858,7 +871,7 @@ async function loadProfileAndRedirect(
         await supabaseClient
         .from("profiles")
         .select(
-            "member_id,name,mobile,role,active"
+            "member_id,name,mobile,role,active,email"
         )
         .eq(
             "id",
@@ -873,6 +886,7 @@ async function loadProfileAndRedirect(
             "PROFILE ERROR:",
             error
         );
+
 
         await supabaseClient
         .auth
@@ -900,36 +914,27 @@ async function loadProfileAndRedirect(
     }
 
 
-    if(profile.active === false){
-
-        await supabaseClient
-        .auth
-        .signOut();
-
-
-        throw new Error(
-            "This account is inactive."
-        );
-
-    }
-
-
     /*
       =====================================================
-      ROLE BASED DASHBOARD
+      IMPORTANT
+
+      ACTIVE STATUS IS NOT CHECKED HERE.
+
+      Therefore:
+
+      active = true  -> Login allowed
+      active = false -> Login allowed
+
+      The member can enter dashboard even when inactive.
+
+      Later dashboard can show:
+
+      "Account Status: Inactive"
+
+      and restricted features can remain locked.
       =====================================================
-
-      profiles table me role check hoga.
-
-      role = admin
-          -> admin-dashboard.html
-
-      role = member
-          -> dashboard.html
-
-      Agar role blank/unknown hai
-          -> dashboard.html
     */
+
 
     const userRole =
         String(
@@ -956,10 +961,18 @@ async function loadProfileAndRedirect(
         profile.member_id
     );
 
+
     console.log(
         "Logged-in Role:",
         userRole
     );
+
+
+    console.log(
+        "Account Active:",
+        profile.active
+    );
+
 
     console.log(
         "Opening Dashboard:",
@@ -970,7 +983,7 @@ async function loadProfileAndRedirect(
     showLoginMessage(
         userRole === "admin"
             ? "✅ Admin login successful. Opening Admin Dashboard..."
-            : "✅ Login successful. Opening dashboard...",
+            : "✅ Login successful. Opening Member Dashboard...",
         "success"
     );
 
@@ -978,11 +991,6 @@ async function loadProfileAndRedirect(
     button.textContent =
         "Login Successful";
 
-
-    /*
-       Small delay so the user can see
-       the successful login message.
-    */
 
     setTimeout(
         function(){
@@ -1094,10 +1102,6 @@ async function startPasswordRecovery(){
 
     try{
 
-        /*
-           Actual GitHub reset-password.html page.
-        */
-
         const redirectURL =
             "https://somanathmishra87-ux.github.io/Hamara-Market/reset-password.html";
 
@@ -1131,6 +1135,7 @@ async function startPasswordRecovery(){
     }catch(error){
 
         console.error(
+            "PASSWORD RESET ERROR:",
             error
         );
 
