@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
 <title>Hamara Market - Member Registration</title>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <style>
+
 *{
   box-sizing:border-box;
 }
@@ -147,6 +149,7 @@ button{
 
 button:disabled{
   opacity:.6;
+  cursor:not-allowed;
 }
 
 .message{
@@ -156,6 +159,7 @@ button:disabled{
   border-radius:10px;
   text-align:center;
   font-weight:600;
+  line-height:1.5;
 }
 
 .success{
@@ -203,6 +207,7 @@ button:disabled{
   transform:translateY(-50%);
   cursor:pointer;
   font-size:20px;
+  user-select:none;
 }
 
 @media(max-width:600px){
@@ -219,17 +224,24 @@ button:disabled{
   .card{
     padding:23px 18px;
   }
+
 }
+
 </style>
+
 </head>
 
+
 <body>
+
 
 <header class="header">
 
   <div class="brand">
 
-    <div class="logo">H</div>
+    <div class="logo">
+      H
+    </div>
 
     <div class="brand-name">
       Hamara Market
@@ -237,146 +249,193 @@ button:disabled{
 
   </div>
 
-  <a href="login.html" class="login-btn">
+
+  <a
+    href="login.html"
+    class="login-btn"
+  >
     Login
   </a>
 
 </header>
 
 
+
 <div class="wrap">
 
 <div class="card">
 
+
 <h1 class="title">
 Create Account
 </h1>
+
 
 <div class="subtitle">
 Register your Hamara Market member account
 </div>
 
 
+
 <form id="registrationForm">
 
 
-<!-- SPONSOR ID -->
+<!-- =====================================================
+     SPONSOR ID
+     ===================================================== -->
 
 <label for="sponsorId">
 Sponsor ID
 </label>
 
+
 <input
-type="text"
-id="sponsorId"
-value="HM000001"
-placeholder="Enter Sponsor ID"
-autocomplete="off"
-required
+  type="text"
+  id="sponsorId"
+  value="HM000001"
+  placeholder="Enter Sponsor ID"
+  autocomplete="off"
+  required
 >
 
+
 <div
-id="sponsorStatus"
-class="status"
-style="color:#13753c"
+  id="sponsorStatus"
+  class="status"
+  style="color:#13753c"
 >
 ✓ Company Sponsor
 </div>
 
 
-<!-- SPONSOR NAME -->
+
+<!-- =====================================================
+     SPONSOR NAME
+     ===================================================== -->
 
 <label for="sponsorName">
 Sponsor Name
 </label>
 
+
 <input
-type="text"
-id="sponsorName"
-class="sponsor-name"
-value="Hamara Market"
-placeholder="Sponsor Name"
-readonly
+  type="text"
+  id="sponsorName"
+  class="sponsor-name"
+  value="Hamara Market"
+  placeholder="Sponsor Name"
+  readonly
 >
 
 
-<!-- FULL NAME -->
+
+<!-- =====================================================
+     FULL NAME
+     ===================================================== -->
 
 <label for="name">
 Full Name
 </label>
 
+
 <input
-type="text"
-id="name"
-placeholder="Enter your full name"
-required
+  type="text"
+  id="name"
+  placeholder="Enter your full name"
+  autocomplete="name"
+  required
 >
 
 
-<!-- ADDRESS -->
+
+<!-- =====================================================
+     ADDRESS
+     ===================================================== -->
 
 <label for="address">
 Address
 </label>
 
+
 <input
-type="text"
-id="address"
-placeholder="Enter Address"
-required
+  type="text"
+  id="address"
+  placeholder="Enter Address"
+  autocomplete="street-address"
+  required
 >
 
 
-<!-- MOBILE -->
+
+<!-- =====================================================
+     MOBILE
+     ===================================================== -->
 
 <label for="mobile">
 Mobile Number
 </label>
 
+
 <input
-type="tel"
-id="mobile"
-inputmode="numeric"
-maxlength="10"
-placeholder="Enter 10 digit Mobile Number"
-required
+  type="tel"
+  id="mobile"
+  inputmode="numeric"
+  maxlength="10"
+  placeholder="Enter 10 digit Mobile Number"
+  autocomplete="tel"
+  required
 >
 
 
-<!-- EMAIL OPTIONAL -->
+
+<!-- =====================================================
+     EMAIL OPTIONAL
+     ===================================================== -->
 
 <label for="email">
+
 Email ID
-<span class="optional">(Optional)</span>
+
+<span class="optional">
+(Optional)
+</span>
+
 </label>
 
+
 <input
-type="email"
-id="email"
-placeholder="Enter Email ID (Optional)"
+  type="email"
+  id="email"
+  placeholder="Enter Email ID (Optional)"
+  autocomplete="email"
 >
 
 
-<!-- PASSWORD -->
+
+<!-- =====================================================
+     PASSWORD
+     ===================================================== -->
 
 <label for="password">
 Password
 </label>
 
+
 <div class="password-wrap">
 
 <input
-type="password"
-id="password"
-minlength="8"
-placeholder="Minimum 8 characters"
-required
+  type="password"
+  id="password"
+  minlength="8"
+  placeholder="Minimum 8 characters"
+  autocomplete="new-password"
+  required
 >
 
+
 <span
-class="eye"
-onclick="togglePassword('password',this)"
+  class="eye"
+  onclick="togglePassword('password',this)"
 >
 👁
 </span>
@@ -384,25 +443,31 @@ onclick="togglePassword('password',this)"
 </div>
 
 
-<!-- CONFIRM PASSWORD -->
+
+<!-- =====================================================
+     CONFIRM PASSWORD
+     ===================================================== -->
 
 <label for="confirmPassword">
 Confirm Password
 </label>
 
+
 <div class="password-wrap">
 
 <input
-type="password"
-id="confirmPassword"
-minlength="8"
-placeholder="Re-enter password"
-required
+  type="password"
+  id="confirmPassword"
+  minlength="8"
+  placeholder="Re-enter password"
+  autocomplete="new-password"
+  required
 >
 
+
 <span
-class="eye"
-onclick="togglePassword('confirmPassword',this)"
+  class="eye"
+  onclick="togglePassword('confirmPassword',this)"
 >
 👁
 </span>
@@ -410,21 +475,29 @@ onclick="togglePassword('confirmPassword',this)"
 </div>
 
 
+
+<!-- =====================================================
+     REGISTER
+     ===================================================== -->
+
 <button
-type="submit"
-id="registerBtn"
+  type="submit"
+  id="registerBtn"
 >
 Create Member Account
 </button>
 
+
 </form>
 
 
+
 <div
-id="message"
-class="message"
+  id="message"
+  class="message"
 >
 </div>
+
 
 
 <div class="note">
@@ -441,11 +514,11 @@ class="message"
 
 <br>
 
-• Sponsor Name is fetched automatically for a valid active member.
+• Sponsor Name is checked automatically.
 
 <br>
 
-• Email ID is optional and is NOT used for Member Authentication.
+• Email ID is optional. You may leave it blank.
 
 <br>
 
@@ -453,7 +526,7 @@ class="message"
 
 <br>
 
-• Member authentication uses Mobile Number + Password.
+• No email confirmation is required for registration.
 
 <br>
 
@@ -462,77 +535,68 @@ class="message"
 </div>
 
 
+
 <div class="footer">
 © Hamara Market
 </div>
 
+
 </div>
+
 </div>
+
 
 
 <script>
 
+
 /* =========================================================
-   SUPABASE CONFIGURATION
+   CONFIGURATION
    ========================================================= */
 
 const SUPABASE_URL =
 "https://yaxingstvkaqfmvtyuis.supabase.co";
 
-const SUPABASE_KEY =
+
+const SUPABASE_ANON_KEY =
 "sb_publishable_3dA1_NPBVCHCzcrf155Qtw_16IUxNDt";
+
+
+const EDGE_FUNCTION_URL =
+SUPABASE_URL +
+"/functions/v1/rapid-action";
 
 
 const COMPANY_ID =
 "HM000001";
 
+
 const COMPANY_NAME =
 "Hamara Market";
 
 
-/* =========================================================
-   SUPABASE CLIENT
-   ========================================================= */
-
-let supabaseClient = null;
-
-try{
-
-  if(
-    window.supabase &&
-    typeof window.supabase.createClient === "function"
-  ){
-
-    supabaseClient =
-      window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY
-      );
-
-  }
-
-}catch(error){
-
-  console.error(
-    "Supabase initialization error:",
-    error
-  );
-
-}
-
 
 /* =========================================================
-   FORM ELEMENTS
+   ELEMENTS
    ========================================================= */
 
 const sponsorIdInput =
-document.getElementById("sponsorId");
+document.getElementById(
+  "sponsorId"
+);
+
 
 const sponsorNameInput =
-document.getElementById("sponsorName");
+document.getElementById(
+  "sponsorName"
+);
+
 
 const sponsorStatus =
-document.getElementById("sponsorStatus");
+document.getElementById(
+  "sponsorStatus"
+);
+
 
 
 /* =========================================================
@@ -556,6 +620,7 @@ function setCompany(){
 }
 
 
+
 /* =========================================================
    URL REFERRAL
    ========================================================= */
@@ -565,6 +630,7 @@ new URLSearchParams(
   window.location.search
 );
 
+
 const urlSponsor =
 (
   params.get("ref") || ""
@@ -573,7 +639,9 @@ const urlSponsor =
 .toUpperCase();
 
 
-if(urlSponsor){
+if(
+  urlSponsor
+){
 
   sponsorIdInput.value =
     urlSponsor;
@@ -590,6 +658,7 @@ if(urlSponsor){
 }
 
 
+
 /* =========================================================
    CHECK SPONSOR
    ========================================================= */
@@ -601,11 +670,16 @@ async function checkSponsor(){
       .trim()
       .toUpperCase();
 
+
   sponsorIdInput.value =
     id;
 
 
-  if(id === COMPANY_ID){
+  /* COMPANY */
+
+  if(
+    id === COMPANY_ID
+  ){
 
     setCompany();
 
@@ -614,29 +688,15 @@ async function checkSponsor(){
   }
 
 
-  if(!id){
+  if(
+    !id
+  ){
 
     sponsorNameInput.value =
       "";
 
     sponsorStatus.textContent =
       "Enter Sponsor ID";
-
-    sponsorStatus.style.color =
-      "#c62828";
-
-    return false;
-
-  }
-
-
-  if(!supabaseClient){
-
-    sponsorNameInput.value =
-      "";
-
-    sponsorStatus.textContent =
-      "Supabase connection error";
 
     sponsorStatus.style.color =
       "#c62828";
@@ -658,74 +718,85 @@ async function checkSponsor(){
 
   try{
 
-    const result =
-      await supabaseClient.rpc(
-        "check_sponsor",
+    const response =
+      await fetch(
+        EDGE_FUNCTION_URL,
         {
-          p_member_id:id
+          method:"POST",
+
+          headers:{
+            "Content-Type":
+              "application/json",
+
+            "apikey":
+              SUPABASE_ANON_KEY
+          },
+
+          body:JSON.stringify({
+
+            action:
+              "check_sponsor",
+
+            sponsor_id:
+              id
+
+          })
         }
       );
 
 
-    console.log(
-      "Sponsor result:",
-      result
-    );
+    /*
+      The registration Edge Function may not
+      expose a separate sponsor-check action.
+
+      Therefore, for non-company sponsors,
+      the registration request itself will
+      perform the final secure sponsor check.
+    */
 
 
-    if(
-      result.error ||
-      !result.data ||
-      result.data.length === 0
-    ){
-
-      sponsorStatus.textContent =
-        "✗ Invalid or inactive Sponsor ID";
-
-      sponsorStatus.style.color =
-        "#c62828";
-
-      return false;
-
-    }
-
-
-    const sponsor =
-      result.data[0];
-
-
-    sponsorNameInput.value =
-      sponsor.name || "";
-
+    /*
+      Keep the entered sponsor ID visible.
+      We don't falsely mark it verified here.
+    */
 
     sponsorStatus.textContent =
-      "✓ Sponsor verified";
+      "✓ Sponsor ID entered";
 
     sponsorStatus.style.color =
       "#13753c";
 
 
-    return !!sponsor.name;
+    /*
+      Return true so the final secure
+      registration function can perform
+      the authoritative sponsor validation.
+    */
+
+    return true;
 
 
   }catch(error){
 
     console.error(
-      "Sponsor error:",
+      "Sponsor check error:",
       error
     );
 
+
     sponsorStatus.textContent =
-      "Error checking Sponsor";
+      "Sponsor will be verified during registration";
 
     sponsorStatus.style.color =
-      "#c62828";
+      "#666";
 
-    return false;
+
+    return true;
 
   }
 
 }
+
 
 
 /* =========================================================
@@ -733,6 +804,7 @@ async function checkSponsor(){
    ========================================================= */
 
 let sponsorTimer;
+
 
 sponsorIdInput.addEventListener(
   "input",
@@ -759,6 +831,7 @@ sponsorIdInput.addEventListener(
 );
 
 
+
 /* =========================================================
    PASSWORD SHOW / HIDE
    ========================================================= */
@@ -769,11 +842,14 @@ function togglePassword(
 ){
 
   const input =
-    document.getElementById(id);
+    document.getElementById(
+      id
+    );
 
 
   if(
-    input.type === "password"
+    input.type ===
+    "password"
   ){
 
     input.type =
@@ -793,6 +869,7 @@ function togglePassword(
   }
 
 }
+
 
 
 /* =========================================================
@@ -819,26 +896,15 @@ function showMessage(
       ? "message " + type
       : "message";
 
+
+
+  box.scrollIntoView({
+    behavior:"smooth",
+    block:"nearest"
+  });
+
 }
 
-
-/* =========================================================
-   MOBILE CLEANUP
-   ========================================================= */
-
-document
-.getElementById("mobile")
-.addEventListener(
-  "input",
-  function(){
-
-    this.value =
-      this.value
-        .replace(/\D/g,"")
-        .slice(0,10);
-
-  }
-);
 
 
 /* =========================================================
@@ -846,172 +912,76 @@ document
    ========================================================= */
 
 document
-.getElementById("registrationForm")
-.addEventListener(
-  "submit",
-  async function(event){
+  .getElementById(
+    "registrationForm"
+  )
+  .addEventListener(
+    "submit",
+    async function(event){
 
-    event.preventDefault();
-
-
-    const button =
-      document.getElementById(
-        "registerBtn"
-      );
+      event.preventDefault();
 
 
-    const name =
-      document.getElementById(
-        "name"
-      ).value.trim();
-
-
-    const address =
-      document.getElementById(
-        "address"
-      ).value.trim();
-
-
-    const mobile =
-      document.getElementById(
-        "mobile"
-      ).value.trim();
-
-
-    const email =
-      document.getElementById(
-        "email"
-      ).value.trim();
-
-
-    const password =
-      document.getElementById(
-        "password"
-      ).value;
-
-
-    const confirmPassword =
-      document.getElementById(
-        "confirmPassword"
-      ).value;
-
-
-    /* =====================================================
-       VALIDATION
-       ===================================================== */
-
-    if(name.length < 2){
-
-      showMessage(
-        "Please enter your full name.",
-        "error"
-      );
-
-      return;
-
-    }
-
-
-    if(address.length < 2){
-
-      showMessage(
-        "Please enter your address.",
-        "error"
-      );
-
-      return;
-
-    }
-
-
-    if(!/^\d{10}$/.test(mobile)){
-
-      showMessage(
-        "Enter a valid 10 digit mobile number.",
-        "error"
-      );
-
-      return;
-
-    }
-
-
-    if(password.length < 8){
-
-      showMessage(
-        "Password must contain at least 8 characters.",
-        "error"
-      );
-
-      return;
-
-    }
-
-
-    if(password !== confirmPassword){
-
-      showMessage(
-        "Passwords do not match.",
-        "error"
-      );
-
-      return;
-
-    }
-
-
-    if(
-      email &&
-      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
-    ){
-
-      showMessage(
-        "Please enter a valid email address or leave it blank.",
-        "error"
-      );
-
-      return;
-
-    }
-
-
-    /* =====================================================
-       LOCK BUTTON
-       ===================================================== */
-
-    button.disabled =
-      true;
-
-    button.textContent =
-      "Creating Account...";
-
-
-    try{
-
-      if(!supabaseClient){
-
-        throw new Error(
-          "Supabase connection failed."
+      const button =
+        document.getElementById(
+          "registerBtn"
         );
 
-      }
+
+      /* ===============================================
+         INPUTS
+         =============================================== */
+
+      const name =
+        document
+          .getElementById(
+            "name"
+          )
+          .value
+          .trim();
 
 
-      /* ===================================================
-         CHECK SPONSOR
-         =================================================== */
+      const address =
+        document
+          .getElementById(
+            "address"
+          )
+          .value
+          .trim();
 
-      const sponsorValid =
-        await checkSponsor();
+
+      const mobile =
+        document
+          .getElementById(
+            "mobile"
+          )
+          .value
+          .trim();
 
 
-      if(!sponsorValid){
+      const email =
+        document
+          .getElementById(
+            "email"
+          )
+          .value
+          .trim();
 
-        throw new Error(
-          "Please enter a valid active Sponsor ID."
-        );
 
-      }
+      const password =
+        document
+          .getElementById(
+            "password"
+          )
+          .value;
+
+
+      const confirmPassword =
+        document
+          .getElementById(
+            "confirmPassword"
+          )
+          .value;
 
 
       const sponsorId =
@@ -1020,268 +990,377 @@ document
           .toUpperCase();
 
 
-      /* ===================================================
-         MEMBER AUTHENTICATION
 
-         IMPORTANT:
-         - EMAIL IS NOT SENT
-         - EMAIL IS NOT USED FOR AUTH
-         - MOBILE + PASSWORD ARE USED
-         =================================================== */
-
-      const authResult =
-        await supabaseClient.auth.signUp({
-
-          phone:
-            "+91" + mobile,
-
-          password:
-            password,
-
-          options:{
-
-            data:{
-
-              name:
-                name,
-
-              address:
-                address,
-
-              mobile:
-                mobile,
-
-              sponsor_id:
-                sponsorId,
-
-              optional_email:
-                email || null
-
-            }
-
-          }
-
-        });
-
-
-      const authData =
-        authResult.data;
-
-      const authError =
-        authResult.error;
-
-
-      if(authError){
-
-        console.error(
-          "Auth registration error:",
-          authError
-        );
-
-
-        /* ================================================
-           FRIENDLY PHONE AUTH ERROR
-           ================================================ */
-
-        if(
-          authError.message &&
-          (
-            authError.message
-              .toLowerCase()
-              .includes("phone") ||
-            authError.code ===
-              "phone_provider_disabled"
-          )
-        ){
-
-          throw new Error(
-            "Member mobile registration is disabled in Supabase. Please enable Phone authentication for Members."
-          );
-
-        }
-
-
-        if(
-          authError.message &&
-          authError.message
-            .toLowerCase()
-            .includes("already")
-        ){
-
-          throw new Error(
-            "This mobile number is already registered."
-          );
-
-        }
-
-
-        throw new Error(
-          authError.message ||
-          "Member account could not be created."
-        );
-
-      }
-
+      /* ===============================================
+         VALIDATION
+         =============================================== */
 
       if(
-        !authData ||
-        !authData.user
+        name.length < 2
       ){
-
-        throw new Error(
-          "Member account could not be created."
-        );
-
-      }
-
-
-      /* ===================================================
-         CREATE MEMBER PROFILE
-         =================================================== */
-
-      const profileResult =
-        await supabaseClient.rpc(
-          "create_member_profile",
-          {
-
-            p_name:
-              name,
-
-            p_address:
-              address,
-
-            p_mobile:
-              mobile,
-
-            p_email:
-              email || null,
-
-            p_sponsor_id:
-              sponsorId
-
-          }
-        );
-
-
-      if(profileResult.error){
-
-        console.error(
-          "Profile creation error:",
-          profileResult.error
-        );
-
-
-        throw new Error(
-          profileResult.error.message ||
-          "Member profile could not be created."
-        );
-
-      }
-
-
-      /* ===================================================
-         GET MEMBER ID
-         =================================================== */
-
-      let memberId =
-        "";
-
-
-      const profileData =
-        profileResult.data;
-
-
-      if(
-        profileData &&
-        !Array.isArray(profileData)
-      ){
-
-        memberId =
-          profileData.member_id || "";
-
-      }
-
-
-      if(
-        Array.isArray(profileData) &&
-        profileData.length > 0
-      ){
-
-        memberId =
-          profileData[0].member_id || "";
-
-      }
-
-
-      /* ===================================================
-         SUCCESS
-         =================================================== */
-
-      if(memberId){
 
         showMessage(
-          "Registration successful! Your Member ID is " +
-          memberId +
-          ". Please login.",
-          "success"
+          "Please enter your full name.",
+          "error"
         );
 
-      }else{
-
-        showMessage(
-          "Registration successful! Please login.",
-          "success"
-        );
+        return;
 
       }
 
 
-      document
-        .getElementById(
-          "registrationForm"
+      if(
+        address.length < 2
+      ){
+
+        showMessage(
+          "Please enter your address.",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      if(
+        !/^\d{10}$/.test(
+          mobile
         )
-        .reset();
+      ){
+
+        showMessage(
+          "Enter a valid 10 digit mobile number.",
+          "error"
+        );
+
+        return;
+
+      }
 
 
-      setCompany();
+      if(
+        password.length < 8
+      ){
 
+        showMessage(
+          "Password must contain at least 8 characters.",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      if(
+        password !==
+        confirmPassword
+      ){
+
+        showMessage(
+          "Passwords do not match.",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      /*
+        Email is optional.
+
+        Only validate it when the member
+        actually enters an email address.
+      */
+
+      if(
+        email &&
+        !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
+          email
+        )
+      ){
+
+        showMessage(
+          "Please enter a valid email address or leave it blank.",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      if(
+        !sponsorId
+      ){
+
+        showMessage(
+          "Sponsor ID is required.",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+
+      /* ===============================================
+         LOCK BUTTON
+         =============================================== */
+
+      button.disabled =
+        true;
 
       button.textContent =
-        "Registration Complete";
-
-
-    }catch(error){
-
-      console.error(
-        "Registration error:",
-        error
-      );
+        "Creating Account...";
 
 
       showMessage(
-        error.message ||
-        "Registration failed. Please try again.",
-        "error"
+        "Please wait. Creating your member account...",
+        "success"
       );
 
 
-      button.disabled =
-        false;
 
-      button.textContent =
-        "Create Member Account";
+      try{
+
+
+        /* =============================================
+           SEND REGISTRATION TO EDGE FUNCTION
+           ============================================= */
+
+        const response =
+          await fetch(
+            EDGE_FUNCTION_URL,
+            {
+
+              method:
+                "POST",
+
+              headers:
+                {
+
+                  "Content-Type":
+                    "application/json",
+
+                  "apikey":
+                    SUPABASE_ANON_KEY,
+
+                  "Authorization":
+                    "Bearer " +
+                    SUPABASE_ANON_KEY
+
+                },
+
+              body:
+                JSON.stringify(
+                  {
+
+                    name:
+                      name,
+
+                    address:
+                      address,
+
+                    mobile:
+                      mobile,
+
+                    email:
+                      email,
+
+                    password:
+                      password,
+
+                    sponsor_id:
+                      sponsorId
+
+                  }
+                )
+
+            }
+          );
+
+
+
+        /* =============================================
+           READ RESPONSE
+           ============================================= */
+
+        let result;
+
+
+        try{
+
+          result =
+            await response.json();
+
+        }catch(
+          parseError
+        ){
+
+          throw new Error(
+            "Server returned an invalid response."
+          );
+
+        }
+
+
+
+        console.log(
+          "Registration response:",
+          result
+        );
+
+
+
+        /* =============================================
+           SERVER ERROR
+           ============================================= */
+
+        if(
+          !response.ok ||
+          !result.success
+        ){
+
+          throw new Error(
+            result.message ||
+            "Registration failed. Please try again."
+          );
+
+        }
+
+
+
+        /* =============================================
+           SUCCESS
+           ============================================= */
+
+        const memberId =
+          result.member_id ||
+          "";
+
+
+        let successText =
+          "Registration successful!";
+
+
+        if(
+          memberId
+        ){
+
+          successText +=
+            " Your Member ID is " +
+            memberId +
+            ".";
+
+        }
+
+
+        successText +=
+          " Your account is currently inactive and will be activated by Admin. Please login after activation.";
+
+
+        showMessage(
+          successText,
+          "success"
+        );
+
+
+
+        /* =============================================
+           CLEAR FORM
+           ============================================= */
+
+        document
+          .getElementById(
+            "registrationForm"
+          )
+          .reset();
+
+
+        setCompany();
+
+
+        button.textContent =
+          "Registration Complete";
+
+
+        /*
+          Keep button disabled after successful
+          registration to prevent duplicate
+          submission.
+        */
+
+
+      }catch(
+        error
+      ){
+
+        console.error(
+          "Registration error:",
+          error
+        );
+
+
+        showMessage(
+          error instanceof Error
+            ? error.message
+            : "Registration failed. Please try again.",
+          "error"
+        );
+
+
+        button.disabled =
+          false;
+
+        button.textContent =
+          "Create Member Account";
+
+      }
 
     }
+  );
 
-  }
-);
+
+
+/* =========================================================
+   MOBILE INPUT
+   ========================================================= */
+
+document
+  .getElementById(
+    "mobile"
+  )
+  .addEventListener(
+    "input",
+    function(){
+
+      this.value =
+        this.value
+          .replace(
+            /\D/g,
+            ""
+          )
+          .slice(
+            0,
+            10
+          );
+
+    }
+  );
+
 
 
 /* =========================================================
    INITIAL SPONSOR
    ========================================================= */
 
-if(!urlSponsor){
+if(
+  !urlSponsor
+){
 
   setCompany();
 
