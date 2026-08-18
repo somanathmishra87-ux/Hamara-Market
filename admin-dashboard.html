@@ -1,530 +1,1721 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<meta name="viewport"
+      content="width=device-width,initial-scale=1.0">
+
 <title>Hamara Market - Admin Dashboard</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-*{box-sizing:border-box}
-body{
-    margin:0;font-family:Arial,Helvetica,sans-serif;
-    background:#f4f6fb;color:#17213b;
+
+*{
+    box-sizing:border-box;
 }
+
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f4f6fb;
+    color:#17213b;
+}
+
+/* ================= HEADER ================= */
+
 .header{
     background:linear-gradient(135deg,#4936e8,#643cf1);
-    color:white;padding:15px 18px;display:flex;
-    align-items:center;justify-content:space-between;
-    position:sticky;top:0;z-index:1000;
+    color:#fff;
+    padding:14px 18px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    position:sticky;
+    top:0;
+    z-index:1000;
 }
-.brand{display:flex;align-items:center;gap:11px}
-.logo{
-    width:48px;height:48px;border-radius:14px;background:white;
-    color:#4b39df;display:flex;align-items:center;
-    justify-content:center;font-size:21px;font-weight:900
-}
-.brand-text h1{margin:0;font-size:21px}
-.brand-text small{opacity:.85}
-.menu-btn{
-    border:0;background:#ffffff22;color:white;font-size:25px;
-    width:44px;height:44px;border-radius:12px;cursor:pointer
-}
-.menu{
-    display:none;position:absolute;right:14px;top:68px;background:white;
-    width:230px;border-radius:15px;box-shadow:0 15px 40px #0003;overflow:hidden
-}
-.menu.show{display:block}
-.menu button{
-    width:100%;border:0;background:white;padding:15px;text-align:left;
-    font-size:15px;cursor:pointer
-}
-.menu button:hover{background:#f1f3fa}
-.logout{color:#d52d2d!important;font-weight:800}
 
-.container{max-width:1200px;margin:auto;padding:18px}
-.company,.section,.stat{
-    background:white;border-radius:18px;box-shadow:0 5px 20px #24345d12
+.brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
 }
-.company{padding:18px;margin-bottom:18px}
-.company strong{color:#4936e8}
+
+.logo{
+    width:50px;
+    height:50px;
+    border-radius:15px;
+    background:#fff;
+    color:#4b39df;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:23px;
+    font-weight:900;
+}
+
+.brand-text h1{
+    margin:0;
+    font-size:22px;
+}
+
+.brand-text small{
+    opacity:.9;
+}
+
+.menu-btn{
+    border:0;
+    background:#ffffff22;
+    color:#fff;
+    font-size:25px;
+    width:46px;
+    height:46px;
+    border-radius:12px;
+    cursor:pointer;
+}
+
+.menu{
+    display:none;
+    position:absolute;
+    right:15px;
+    top:70px;
+    background:#fff;
+    width:230px;
+    border-radius:15px;
+    box-shadow:0 15px 40px #0003;
+    overflow:hidden;
+}
+
+.menu.show{
+    display:block;
+}
+
+.menu button{
+    width:100%;
+    border:0;
+    background:#fff;
+    padding:15px;
+    text-align:left;
+    font-size:15px;
+    cursor:pointer;
+}
+
+.menu button:hover{
+    background:#f1f3fa;
+}
+
+.logout{
+    color:#d52d2d !important;
+    font-weight:800;
+}
+
+/* ================= MAIN ================= */
+
+.container{
+    max-width:1200px;
+    margin:auto;
+    padding:18px;
+}
+
+.company{
+    background:#fff;
+    border-radius:20px;
+    box-shadow:0 5px 20px #24345d12;
+    padding:18px;
+    margin-bottom:18px;
+}
+
+.company strong{
+    color:#4936e8;
+}
+
+/* ================= STATS ================= */
 
 .stats{
-    display:grid;grid-template-columns:repeat(5,1fr);gap:13px
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:14px;
 }
-.stat{padding:17px}
-.stat-icon{font-size:26px}
-.stat-title{color:#737d90;margin-top:8px;font-size:14px}
-.stat-value{font-size:25px;font-weight:900;margin-top:5px}
 
-.section{margin-top:18px;padding:19px}
-.section h2{margin:0 0 16px;color:#27325a;font-size:20px}
+.stat{
+    background:#fff;
+    padding:18px;
+    border-radius:18px;
+    box-shadow:0 5px 20px #24345d12;
+}
 
-.search-box{display:flex;gap:9px}
-.search-box input{
-    flex:1;padding:13px;border:1px solid #d9deea;
-    border-radius:11px;font-size:15px
+.stat-icon{
+    font-size:27px;
 }
-.btn{
-    border:0;background:#4b39df;color:white;padding:11px 16px;
-    border-radius:10px;font-weight:800;cursor:pointer
-}
-.btn.green{background:#159765}
-.btn.red{background:#d83b3b}
-.btn.gray{background:#667085}
-.btn.orange{background:#c47a00}
-.btn.small{padding:7px 10px;font-size:12px}
 
-.member-card{
-    display:none;margin-top:14px;background:#f7f8fc;
-    border-radius:14px;padding:16px
+.stat-title{
+    color:#737d90;
+    margin-top:8px;
 }
-.member-row{
-    display:flex;justify-content:space-between;gap:15px;
-    padding:8px 0;border-bottom:1px solid #e5e8ef
-}
-.member-row:last-child{border-bottom:0}
 
-.table-wrap{overflow-x:auto}
-table{width:100%;border-collapse:collapse;min-width:760px}
-th{background:#f0f2fa;text-align:left;padding:11px;font-size:13px}
-td{padding:11px;border-bottom:1px solid #e7e9ef;font-size:13px}
+.stat-value{
+    font-size:26px;
+    font-weight:900;
+    margin-top:5px;
+}
 
-.status{
-    display:inline-block;padding:5px 9px;border-radius:18px;
-    font-size:11px;font-weight:800
-}
-.active{background:#dff7eb;color:#118454}
-.inactive{background:#ffe2e2;color:#c62828}
-.pending{background:#fff1c7;color:#9a6a00}
-.rejected{background:#ffe1e1;color:#b42318}
-.approved{background:#dff7eb;color:#137b4c}
+/* ================= SECTION ================= */
 
-.action-grid{
-    display:grid;grid-template-columns:repeat(3,1fr);gap:13px
+.section{
+    background:#fff;
+    margin-top:18px;
+    padding:20px;
+    border-radius:20px;
+    box-shadow:0 5px 20px #24345d12;
 }
-.action{
-    padding:17px;border:1px solid #e3e6ef;border-radius:15px;
-    background:#fafbfe
+
+.section h2{
+    margin:0 0 15px;
+    color:#27325a;
+    font-size:21px;
 }
-.action h3{margin-top:0}
-.action p{color:#70798b;line-height:1.5}
+
+/* ================= GRID ================= */
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:14px;
+}
 
 .form-grid{
-    display:grid;grid-template-columns:repeat(2,1fr);gap:13px
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:14px;
 }
-.form-group label{display:block;font-weight:700;margin-bottom:6px}
-.form-group input,.form-group select,.form-group textarea{
-    width:100%;padding:12px;border:1px solid #d9deea;
-    border-radius:10px;font-size:14px
+
+.card{
+    padding:16px;
+    border:1px solid #e3e6ef;
+    border-radius:16px;
+    background:#fafbfe;
 }
-.form-group textarea{min-height:90px}
+
+.card h3{
+    margin-top:0;
+}
+
+.muted{
+    color:#70798b;
+    line-height:1.5;
+}
+
+/* ================= FORM ================= */
+
+.form-group label{
+    display:block;
+    font-weight:700;
+    margin-bottom:7px;
+}
+
+input,
+select,
+textarea{
+    width:100%;
+    padding:13px;
+    border:1px solid #d9deea;
+    border-radius:11px;
+    font-size:15px;
+    background:#fff;
+}
+
+textarea{
+    min-height:90px;
+}
+
+/* ================= BUTTON ================= */
+
+.actions{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+.btn{
+    border:0;
+    background:#4b39df;
+    color:#fff;
+    padding:12px 17px;
+    border-radius:11px;
+    font-weight:800;
+    cursor:pointer;
+}
+
+.btn.green{
+    background:#159765;
+}
+
+.btn.red{
+    background:#d83b3b;
+}
+
+.btn.gray{
+    background:#667085;
+}
+
+.btn.orange{
+    background:#c47a00;
+}
+
+.btn:disabled{
+    opacity:.5;
+    cursor:not-allowed;
+}
+
+/* ================= SEARCH ================= */
+
+.search-box{
+    display:flex;
+    gap:10px;
+}
+
+.search-box input{
+    flex:1;
+}
+
+/* ================= MESSAGE ================= */
 
 .message{
-    margin-top:11px;padding:11px;border-radius:9px;
-    display:none;font-weight:700
+    margin-top:12px;
+    padding:12px;
+    border-radius:10px;
+    display:none;
+    font-weight:700;
 }
-.success{background:#e1f7eb;color:#137b4c}
-.error{background:#ffe4e4;color:#c62828}
-.info{background:#e8efff;color:#3157a6}
+
+.success{
+    background:#e1f7eb;
+    color:#137b4c;
+}
+
+.error{
+    background:#ffe4e4;
+    color:#c62828;
+}
+
+.info{
+    background:#eef2ff;
+    color:#3b35a5;
+}
+
+/* ================= TABLE ================= */
+
+.table-wrap{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:760px;
+}
+
+th{
+    background:#eef1f8;
+    text-align:left;
+    padding:12px;
+}
+
+td{
+    padding:11px;
+    border-bottom:1px solid #e7e9ef;
+    vertical-align:top;
+}
+
+/* ================= STATUS ================= */
+
+.status{
+    display:inline-block;
+    padding:5px 9px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:800;
+}
+
+.active{
+    background:#dff7eb;
+    color:#118454;
+}
+
+.inactive{
+    background:#ffe2e2;
+    color:#c62828;
+}
+
+.pending{
+    background:#fff1c7;
+    color:#9a6a00;
+}
+
+.approved{
+    background:#dff7eb;
+    color:#118454;
+}
+
+.rejected{
+    background:#ffe2e2;
+    color:#c62828;
+}
+
+/* ================= MEMBER ================= */
+
+.member-card{
+    display:none;
+    margin-top:15px;
+    background:#f7f8fc;
+    border-radius:15px;
+    padding:18px;
+}
+
+.member-row{
+    display:flex;
+    justify-content:space-between;
+    gap:15px;
+    padding:9px 0;
+    border-bottom:1px solid #e5e8ef;
+}
+
+.member-row:last-child{
+    border-bottom:0;
+}
+
+/* ================= LEVEL ================= */
+
+.level-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+}
+
+.level{
+    background:#f7f8fc;
+    border-radius:14px;
+    padding:14px;
+    text-align:center;
+}
+
+.level strong{
+    display:block;
+    font-size:20px;
+}
+
+/* ================= NOTICE ================= */
 
 .notice{
-    padding:12px;border-radius:11px;background:#f6f5ff;
-    border-left:4px solid #4b39df;margin-bottom:10px
+    padding:13px;
+    border-left:4px solid #4b39df;
+    background:#f6f5ff;
+    margin-bottom:10px;
+    border-radius:8px;
 }
 
-.deposit-summary{
-    display:grid;grid-template-columns:repeat(3,1fr);
-    gap:10px;margin-bottom:15px
-}
-.deposit-box{
-    background:#f7f8fc;border-radius:13px;padding:14px
-}
-.deposit-box small{color:#737d90}
-.deposit-box b{display:block;font-size:21px;margin-top:5px}
-
-.rate-grid{
-    display:grid;grid-template-columns:repeat(5,1fr);gap:8px
-}
-.rate{
-    background:#f7f8fc;border-radius:10px;padding:10px;text-align:center
-}
-.rate b{display:block;font-size:18px}
+/* ================= MOBILE ================= */
 
 @media(max-width:900px){
-    .stats{grid-template-columns:repeat(2,1fr)}
-    .action-grid{grid-template-columns:1fr}
-    .rate-grid{grid-template-columns:repeat(2,1fr)}
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .grid{
+        grid-template-columns:1fr;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
 }
+
 @media(max-width:600px){
-    .container{padding:12px}
-    .stats{grid-template-columns:1fr 1fr}
-    .form-grid{grid-template-columns:1fr}
-    .deposit-summary{grid-template-columns:1fr}
-    .brand-text h1{font-size:18px}
-    .stat-value{font-size:21px}
+
+    .container{
+        padding:12px;
+    }
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .stat{
+        padding:14px;
+    }
+
+    .stat-value{
+        font-size:22px;
+    }
+
+    .brand-text h1{
+        font-size:19px;
+    }
+
+    .header{
+        padding:12px 14px;
+    }
+
+    .search-box{
+        flex-direction:column;
+    }
+
+    .level-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
 }
+
 </style>
+
 </head>
 
 <body>
 
+<!-- ================= HEADER ================= -->
+
 <header class="header">
+
     <div class="brand">
-        <div class="logo">HM</div>
-        <div class="brand-text">
-            <h1>Hamara Market</h1>
-            <small>Admin Panel • HM000001</small>
+
+        <div class="logo">
+            HM
         </div>
+
+        <div class="brand-text">
+
+            <h1>
+                Hamara Market
+            </h1>
+
+            <small>
+                Admin Panel • HM000001
+            </small>
+
+        </div>
+
     </div>
 
-    <button class="menu-btn" onclick="toggleMenu()">⋮</button>
+    <button
+        class="menu-btn"
+        onclick="toggleMenu()">
 
-    <div class="menu" id="menu">
-        <button onclick="scrollToSection('deposits')">💰 Deposits</button>
-        <button onclick="scrollToSection('withdrawals')">💸 Withdrawals</button>
-        <button onclick="scrollToSection('payouts')">🧾 Payout / Income</button>
-        <button onclick="scrollToSection('reports')">📊 Reports</button>
-        <button onclick="scrollToSection('security')">🔐 Security</button>
-        <button class="logout" onclick="logout()">🚪 Logout</button>
+        ⋮
+
+    </button>
+
+    <div
+        class="menu"
+        id="menu">
+
+        <button onclick="go('deposits')">
+            💰 Deposits
+        </button>
+
+        <button onclick="go('withdrawals')">
+            💸 Withdrawals
+        </button>
+
+        <button onclick="go('videos')">
+            🎬 Videos
+        </button>
+
+        <button onclick="go('reports')">
+            📊 Reports
+        </button>
+
+        <button onclick="go('security')">
+            🔐 Security
+        </button>
+
+        <button
+            class="logout"
+            onclick="logout()">
+
+            🚪 Logout
+
+        </button>
+
     </div>
+
 </header>
+
 
 <main class="container">
 
+
+<!-- ================= COMPANY ================= -->
+
 <div class="company">
-    <strong>Company ID: HM000001</strong><br>
+
+    <strong>
+        Company ID: HM000001
+    </strong>
+
+    <br>
+
     Hamara Market Administration
+
 </div>
 
-<!-- DASHBOARD -->
+
+<!-- ================= STATISTICS ================= -->
+
 <div class="stats">
-    <div class="stat">
-        <div class="stat-icon">👥</div>
-        <div class="stat-title">Total Members</div>
-        <div class="stat-value" id="totalMembers">0</div>
+
+
+<div class="stat">
+
+    <div class="stat-icon">
+        👥
     </div>
 
-    <div class="stat">
-        <div class="stat-icon">🟢</div>
-        <div class="stat-title">Active Members</div>
-        <div class="stat-value" id="activeMembers">0</div>
+    <div class="stat-title">
+        Total Members
     </div>
 
-    <div class="stat">
-        <div class="stat-icon">🆕</div>
-        <div class="stat-title">Today's Registrations</div>
-        <div class="stat-value" id="todayRegistrations">0</div>
+    <div
+        class="stat-value"
+        id="totalMembers">
+
+        0
+
     </div>
 
-    <div class="stat">
-        <div class="stat-icon">💰</div>
-        <div class="stat-title">Total Income</div>
-        <div class="stat-value" id="totalIncome">₹0.00</div>
-    </div>
-
-    <div class="stat">
-        <div class="stat-icon">💳</div>
-        <div class="stat-title">Wallet Balance</div>
-        <div class="stat-value" id="totalWallet">₹0.00</div>
-    </div>
 </div>
 
-<!-- DEPOSIT SUMMARY -->
-<section class="section" id="deposits">
-<h2>💰 Deposit Management</h2>
 
-<div class="deposit-summary">
-    <div class="deposit-box">
-        <small>Today's Total Deposit</small>
-        <b id="todayDeposit">₹0.00</b>
+<div class="stat">
+
+    <div class="stat-icon">
+        🟢
     </div>
-    <div class="deposit-box">
-        <small>Total Approved Deposit</small>
-        <b id="approvedDeposit">₹0.00</b>
+
+    <div class="stat-title">
+        Active Members
     </div>
-    <div class="deposit-box">
-        <small>Pending Deposit</small>
-        <b id="pendingDeposit">₹0.00</b>
+
+    <div
+        class="stat-value"
+        id="activeMembers">
+
+        0
+
     </div>
+
 </div>
 
-<div id="depositMessage" class="message"></div>
 
-<div class="table-wrap">
-<table>
-<thead>
-<tr>
-<th>Member</th>
-<th>Amount</th>
-<th>Status</th>
-<th>Date</th>
-<th>Action</th>
-</tr>
-</thead>
-<tbody id="depositTable">
-<tr><td colspan="5">Loading deposit records...</td></tr>
-</tbody>
-</table>
+<div class="stat">
+
+    <div class="stat-icon">
+        🆕
+    </div>
+
+    <div class="stat-title">
+        Today's Registrations
+    </div>
+
+    <div
+        class="stat-value"
+        id="todayRegistrations">
+
+        0
+
+    </div>
+
 </div>
+
+
+<div class="stat">
+
+    <div class="stat-icon">
+        💰
+    </div>
+
+    <div class="stat-title">
+        Total Income
+    </div>
+
+    <div
+        class="stat-value"
+        id="totalIncome">
+
+        ₹0.00
+
+    </div>
+
+</div>
+
+
+<div class="stat">
+
+    <div class="stat-icon">
+        💳
+    </div>
+
+    <div class="stat-title">
+        Wallet Balance
+    </div>
+
+    <div
+        class="stat-value"
+        id="totalWallet">
+
+        ₹0.00
+
+    </div>
+
+</div>
+
+
+</div>
+
+
+<!-- ================= DEPOSIT MANAGEMENT ================= -->
+
+<section
+    class="section"
+    id="deposits">
+
+<h2>
+    💰 Deposit Management
+</h2>
+
+
+<div class="grid">
+
+
+<div class="card">
+
+    <div class="muted">
+        Today's Total Deposit
+    </div>
+
+    <h2 id="todayDeposit">
+        ₹0.00
+    </h2>
+
+</div>
+
+
+<div class="card">
+
+    <div class="muted">
+        Total Approved Deposit
+    </div>
+
+    <h2 id="approvedDeposit">
+        ₹0.00
+    </h2>
+
+</div>
+
+
+<div class="card">
+
+    <div class="muted">
+        Pending Deposit
+    </div>
+
+    <h2 id="pendingDeposit">
+        ₹0.00
+    </h2>
+
+</div>
+
+
+</div>
+
 
 <br>
 
-<button class="btn gray" onclick="loadDeposits()">🔄 Refresh Deposits</button>
+
+<div class="form-grid">
+
+<div>
+
+<label>
+From date
+</label>
+
+<input
+    type="date"
+    id="depositFrom">
+
+</div>
+
+
+<div>
+
+<label>
+To date
+</label>
+
+<input
+    type="date"
+    id="depositTo">
+
+</div>
+
+</div>
+
+
+<br>
+
+
+<div class="actions">
+
+<button
+    class="btn"
+    onclick="loadDeposits()">
+
+    🔄 Refresh Deposits
+
+</button>
+
+
+<button
+    class="btn gray"
+    onclick="clearDepositFilter()">
+
+    Clear Filter
+
+</button>
+
+</div>
+
+
+<div
+    id="depositMessage"
+    class="message">
+</div>
+
+
+<div
+    class="table-wrap"
+    style="margin-top:15px">
+
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>
+Member
+</th>
+
+<th>
+Amount
+</th>
+
+<th>
+Plan
+</th>
+
+<th>
+Date
+</th>
+
+<th>
+Status
+</th>
+
+<th>
+Action
+</th>
+
+</tr>
+
+</thead>
+
+
+<tbody id="depositTable">
+
+<tr>
+
+<td colspan="6">
+Loading...
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
 </section>
 
-<!-- MEMBER SEARCH -->
+
+<!-- ================= MEMBER SEARCH ================= -->
+
 <section class="section">
-<h2>🔎 Member Search</h2>
+
+<h2>
+    🔎 Member Search
+</h2>
+
 
 <div class="search-box">
-<input id="memberSearch"
-       type="text"
-       placeholder="Mobile Number / Member ID / Email">
-<button class="btn" onclick="searchMember()">Search</button>
-</div>
 
-<div id="memberMessage" class="message"></div>
+<input
+    id="memberSearch"
+    placeholder="Mobile Number / Member ID / Email">
 
-<div id="memberCard" class="member-card">
-<h3>📄 Member Full Details</h3>
 
-<div class="member-row"><strong>Member ID</strong><span id="mMemberId">-</span></div>
-<div class="member-row"><strong>Name</strong><span id="mName">-</span></div>
-<div class="member-row"><strong>Email</strong><span id="mEmail">-</span></div>
-<div class="member-row"><strong>Mobile</strong><span id="mMobile">-</span></div>
-<div class="member-row"><strong>Sponsor</strong><span id="mSponsor">-</span></div>
-<div class="member-row"><strong>Role</strong><span id="mRole">-</span></div>
-<div class="member-row"><strong>Status</strong><span id="mStatus">-</span></div>
-<div class="member-row"><strong>Wallet</strong><span id="mWallet">₹0.00</span></div>
-<div class="member-row"><strong>Total Income</strong><span id="mIncome">₹0.00</span></div>
+<button
+    class="btn"
+    onclick="searchMember()">
 
-<br>
-<button class="btn green" onclick="toggleMemberStatus()">
-Activate / Deactivate
+    Search
+
 </button>
+
 </div>
-</section>
 
-<!-- WITHDRAWAL -->
-<section class="section" id="withdrawals">
-<h2>💸 Withdrawal Management</h2>
 
-<div id="withdrawalMessage" class="message"></div>
-
-<div class="table-wrap">
-<table>
-<thead>
-<tr>
-<th>Member</th>
-<th>Amount</th>
-<th>Method</th>
-<th>Status</th>
-<th>Action</th>
-</tr>
-</thead>
-<tbody id="withdrawalTable">
-<tr><td colspan="5">Loading withdrawals...</td></tr>
-</tbody>
-</table>
+<div
+    id="memberMessage"
+    class="message">
 </div>
+
+
+<div
+    id="memberCard"
+    class="member-card">
+
+
+<h3>
+    📄 Member Full Details
+</h3>
+
+
+<div class="member-row">
+
+<strong>
+Member ID
+</strong>
+
+<span id="mMemberId">
+-
+</span>
+
+</div>
+
+
+<div class="member-row">
+
+<strong>
+Name
+</strong>
+
+<span id="mName">
+-
+</span>
+
+</div>
+
+
+<div class="member-row">
+
+<strong>
+Email
+</strong>
+
+<span id="mEmail">
+-
+</span>
+
+</div>
+
+
+<div class="member-row">
+
+<strong>
+Mobile
+</strong>
+
+<span id="mMobile">
+-
+</span>
+
+</div>
+
+
+<div class="member-row">
+
+<strong>
+Role
+</strong>
+
+<span id="mRole">
+-
+</span>
+
+</div>
+
+
+<div class="member-row">
+
+<strong>
+Status
+</strong>
+
+<span id="mStatus">
+-
+</span>
+
+</div>
+
 
 <br>
-<button class="btn gray" onclick="loadWithdrawals()">🔄 Refresh</button>
+
+
+<button
+    class="btn green"
+    onclick="toggleMemberStatus()">
+
+    Activate / Deactivate
+
+</button>
+
+
+</div>
+
 </section>
 
-<!-- PAYOUT -->
-<section class="section" id="payouts">
-<h2>🧾 Payout / Income Ledger</h2>
+
+<!-- ================= WITHDRAWAL ================= -->
+
+<section
+    class="section"
+    id="withdrawals">
+
+<h2>
+    💸 Withdrawal Management
+</h2>
+
+
+<div class="actions">
+
+<button
+    class="btn gray"
+    onclick="loadWithdrawals()">
+
+    🔄 Refresh
+
+</button>
+
+</div>
+
+
+<div
+    id="withdrawalMessage"
+    class="message">
+</div>
+
+
+<div
+    class="table-wrap"
+    style="margin-top:15px">
+
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>
+Member
+</th>
+
+<th>
+Amount
+</th>
+
+<th>
+Method
+</th>
+
+<th>
+Date
+</th>
+
+<th>
+Status
+</th>
+
+<th>
+Action
+</th>
+
+</tr>
+
+</thead>
+
+
+<tbody id="withdrawalTable">
+
+<tr>
+
+<td colspan="6">
+Loading...
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+
+<!-- ================= PAYOUT LEDGER ================= -->
+
+<section class="section">
+
+<h2>
+    📜 Payout / Income Ledger
+</h2>
+
 
 <div class="notice">
-Referral/level rates are shown for administrative reference. This panel does not automatically execute recruitment-based payouts.
+
+Referral/level rates are shown for administrative
+reference. This dashboard does not automatically
+execute recruitment-based payouts. Any payout
+must be reviewed and recorded according to your
+business rules and applicable law.
+
 </div>
 
-<div class="rate-grid">
-    <div class="rate"><small>Level 1</small><b>₹100</b></div>
-    <div class="rate"><small>Level 2</small><b>₹50</b></div>
-    <div class="rate"><small>Level 3</small><b>₹40</b></div>
-    <div class="rate"><small>Level 4</small><b>₹30</b></div>
-    <div class="rate"><small>Level 5</small><b>₹20</b></div>
-    <div class="rate"><small>Level 6</small><b>₹10</b></div>
-    <div class="rate"><small>Level 7</small><b>₹10</b></div>
-    <div class="rate"><small>Level 8</small><b>₹5</b></div>
-    <div class="rate"><small>Level 9</small><b>₹5</b></div>
-    <div class="rate"><small>Level 10</small><b>₹5</b></div>
+
+<div class="level-grid">
+
+
+<div class="level">
+Level 1
+<strong>₹100</strong>
 </div>
 
-<br>
 
-<div class="table-wrap">
+<div class="level">
+Level 2
+<strong>₹50</strong>
+</div>
+
+
+<div class="level">
+Level 3
+<strong>₹40</strong>
+</div>
+
+
+<div class="level">
+Level 4
+<strong>₹30</strong>
+</div>
+
+
+<div class="level">
+Level 5
+<strong>₹20</strong>
+</div>
+
+
+<div class="level">
+Level 6
+<strong>₹10</strong>
+</div>
+
+
+<div class="level">
+Level 7
+<strong>₹10</strong>
+</div>
+
+
+<div class="level">
+Level 8
+<strong>₹5</strong>
+</div>
+
+
+<div class="level">
+Level 9
+<strong>₹5</strong>
+</div>
+
+
+<div class="level">
+Level 10
+<strong>₹5</strong>
+</div>
+
+
+</div>
+
+
+<div
+    class="table-wrap"
+    style="margin-top:15px">
+
+
 <table>
+
 <thead>
+
 <tr>
-<th>Member</th>
-<th>Amount</th>
-<th>Type</th>
-<th>Description</th>
-<th>Status</th>
+
+<th>
+Member
+</th>
+
+<th>
+Amount
+</th>
+
+<th>
+Type
+</th>
+
+<th>
+Date
+</th>
+
 </tr>
+
 </thead>
-<tbody id="payoutTable">
-<tr><td colspan="5">Loading income ledger...</td></tr>
+
+
+<tbody id="ledgerTable">
+
+<tr>
+
+<td colspan="4">
+Loading...
+</td>
+
+</tr>
+
 </tbody>
+
 </table>
+
 </div>
 
-<br>
-<button class="btn gray" onclick="loadPayoutLedger()">🔄 Refresh Ledger</button>
+
+<button
+    class="btn gray"
+    onclick="loadLedger()">
+
+    🔄 Refresh Ledger
+
+</button>
+
+
 </section>
 
-<!-- VIDEO -->
-<section class="section">
-<h2>🎬 Sponsored Video Management</h2>
+
+<!-- ================= VIDEO MANAGEMENT ================= -->
+
+<section
+    class="section"
+    id="videos">
+
+<h2>
+    🎬 Sponsored Video Management
+</h2>
+
 
 <div class="form-grid">
-<div class="form-group">
-<label>Video Title</label>
-<input id="videoTitle" placeholder="Sponsored Video 01">
-</div>
+
 
 <div class="form-group">
-<label>Reward Amount</label>
-<input id="videoReward" type="number" step="0.01" placeholder="5">
+
+<label>
+Video Title
+</label>
+
+<input
+    id="videoTitle"
+    placeholder="Sponsored Video 01">
+
 </div>
 
-<div class="form-group">
-<label>Video URL</label>
-<input id="videoUrl" placeholder="https://...">
-</div>
 
 <div class="form-group">
-<label>Status</label>
+
+<label>
+Reward Amount
+</label>
+
+<input
+    id="videoReward"
+    type="number"
+    step="0.01"
+    placeholder="5">
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Video URL
+</label>
+
+<input
+    id="videoUrl"
+    placeholder="https://...">
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Status
+</label>
+
 <select id="videoStatus">
-<option value="true">Active</option>
-<option value="false">Inactive</option>
+
+<option value="true">
+Active
+</option>
+
+<option value="false">
+Inactive
+</option>
+
 </select>
+
 </div>
+
+
 </div>
+
 
 <br>
-<button class="btn" onclick="addVideo()">➕ Add Sponsored Video</button>
-<div id="videoMessage" class="message"></div>
+
+
+<button
+    class="btn"
+    onclick="addVideo()">
+
+    ➕ Add Sponsored Video
+
+</button>
+
+
+<div
+    id="videoMessage"
+    class="message">
+</div>
+
+
+<div
+    class="table-wrap"
+    style="margin-top:15px">
+
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>
+Title
+</th>
+
+<th>
+Reward
+</th>
+
+<th>
+URL
+</th>
+
+<th>
+Status
+</th>
+
+<th>
+Action
+</th>
+
+</tr>
+
+</thead>
+
+
+<tbody id="videoTable">
+
+<tr>
+
+<td colspan="5">
+Loading...
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
 </section>
 
-<!-- REWARD -->
+
+<!-- ================= REWARD MANAGEMENT ================= -->
+
 <section class="section">
-<h2>💰 Member Reward Management</h2>
+
+<h2>
+    💰 Member Reward Management
+</h2>
+
 
 <div class="form-grid">
-<div class="form-group">
-<label>Member ID</label>
-<input id="rewardMember" placeholder="HM000002">
-</div>
+
 
 <div class="form-group">
-<label>Reward Amount</label>
-<input id="rewardAmount" type="number" step="0.01" placeholder="5">
+
+<label>
+Member ID
+</label>
+
+<input
+    id="rewardMember"
+    placeholder="HM000002">
+
 </div>
 
+
 <div class="form-group">
-<label>Description</label>
-<input id="rewardDescription" placeholder="Sponsored video reward">
+
+<label>
+Reward Amount
+</label>
+
+<input
+    id="rewardAmount"
+    type="number"
+    step="0.01"
+    placeholder="5">
+
 </div>
+
+
+<div class="form-group">
+
+<label>
+Description
+</label>
+
+<input
+    id="rewardDescription"
+    placeholder="Sponsored video reward">
+
 </div>
+
+
+</div>
+
 
 <br>
-<button class="btn green" onclick="addReward()">💰 Add Reward</button>
-<div id="rewardMessage" class="message"></div>
+
+
+<button
+    class="btn green"
+    onclick="addReward()">
+
+    💰 Add Reward
+
+</button>
+
+
+<div
+    id="rewardMessage"
+    class="message">
+</div>
+
 </section>
 
-<!-- REPORTS -->
-<section class="section" id="reports">
-<h2>📊 Reports</h2>
 
-<div class="action-grid">
+<!-- ================= REPORTS ================= -->
 
-<div class="action">
-<h3>👥 Member Report</h3>
-<p>Total, active and inactive members.</p>
-<button class="btn" onclick="loadMembersReport()">View</button>
+<section
+    class="section"
+    id="reports">
+
+<h2>
+    📊 Reports
+</h2>
+
+
+<div class="grid">
+
+
+<div class="card">
+
+<h3>
+👥 Member Report
+</h3>
+
+<p class="muted">
+Total, active and inactive members.
+</p>
+
+<button
+    class="btn"
+    onclick="loadMembersReport()">
+
+    View
+
+</button>
+
 </div>
 
-<div class="action">
-<h3>💰 Income Report</h3>
-<p>Income and reward ledger.</p>
-<button class="btn" onclick="loadPayoutLedger()">View</button>
+
+<div class="card">
+
+<h3>
+💰 Income Report
+</h3>
+
+<p class="muted">
+Income and reward ledger.
+</p>
+
+<button
+    class="btn"
+    onclick="loadIncomeReport()">
+
+    View
+
+</button>
+
 </div>
 
-<div class="action">
-<h3>💰 Deposit Report</h3>
-<p>Approved, pending and deposit records.</p>
-<button class="btn" onclick="loadDeposits()">View</button>
+
+<div class="card">
+
+<h3>
+💰 Deposit Report
+</h3>
+
+<p class="muted">
+Approved, pending and deposit records.
+</p>
+
+<button
+    class="btn"
+    onclick="loadDepositsReport()">
+
+    View
+
+</button>
+
 </div>
 
-<div class="action">
-<h3>💸 Withdrawal Report</h3>
-<p>Withdrawal requests and status.</p>
-<button class="btn" onclick="loadWithdrawals()">View</button>
-</div>
+
+<div class="card">
+
+<h3>
+💸 Withdrawal Report
+</h3>
+
+<p class="muted">
+Withdrawal requests and status.
+</p>
+
+<button
+    class="btn"
+    onclick="loadWithdrawalReport()">
+
+    View
+
+</button>
 
 </div>
 
-<div id="reportArea" class="table-wrap" style="margin-top:18px"></div>
+
+</div>
+
+
+<div
+    id="reportArea"
+    class="table-wrap"
+    style="margin-top:20px">
+</div>
+
+
 </section>
 
-<!-- NOTIFICATIONS -->
+
+<!-- ================= NOTIFICATIONS ================= -->
+
 <section class="section">
-<h2>🔔 Notifications / Announcements</h2>
 
-<div class="form-group">
-<label>Announcement</label>
-<textarea id="announcement"
-placeholder="Write announcement for members..."></textarea>
-</div>
+<h2>
+    🔔 Notifications / Announcements
+</h2>
+
+
+<textarea
+    id="announcement"
+    placeholder="Write announcement for members...">
+</textarea>
+
 
 <br>
-<button class="btn" onclick="sendAnnouncement()">🔔 Send Announcement</button>
+<br>
 
-<div id="notificationMessage" class="message"></div>
-<div id="notificationsList" style="margin-top:18px"></div>
+
+<button
+    class="btn"
+    onclick="sendAnnouncement()">
+
+    🔔 Send Announcement
+
+</button>
+
+
+<div
+    id="notificationMessage"
+    class="message">
+</div>
+
+
+<div
+    id="notificationsList"
+    style="margin-top:20px">
+</div>
+
+
 </section>
 
-<!-- SECURITY -->
-<section class="section" id="security">
-<h2>🔐 Admin Security</h2>
 
-<div class="action-grid">
-<div class="action">
-<h3>🔒 Session</h3>
-<p>Protected by Supabase Authentication and admin role check.</p>
+<!-- ================= SECURITY ================= -->
+
+<section
+    class="section"
+    id="security">
+
+<h2>
+    🔐 Admin Security
+</h2>
+
+
+<div class="grid">
+
+
+<div class="card">
+
+<h3>
+🔒 Session
+</h3>
+
+<p class="muted">
+
+Protected by Supabase Authentication
+and admin role check.
+
+</p>
+
 </div>
 
-<div class="action">
-<h3>🚪 Logout</h3>
-<p>Sign out completely from the admin account.</p>
-<button class="btn red" onclick="logout()">Logout</button>
+
+<div class="card">
+
+<h3>
+🚪 Logout
+</h3>
+
+<p class="muted">
+
+Sign out completely from the admin account.
+
+</p>
+
+
+<button
+    class="btn red"
+    onclick="logout()">
+
+    Logout
+
+</button>
+
 </div>
 
-<div class="action">
-<h3>🏢 Company</h3>
-<p>Company ID: <strong>HM000001</strong></p>
+
+<div class="card">
+
+<h3>
+🏢 Company
+</h3>
+
+<p class="muted">
+
+Company ID:
+
+<strong>
+HM000001
+</strong>
+
+</p>
+
 </div>
+
+
 </div>
+
 </section>
 
-<div id="globalMessage" class="message"></div>
+
+<div
+    id="globalMessage"
+    class="message">
+</div>
+
 
 </main>
 
+
 <script>
+
+/* =====================================================
+   SUPABASE CONFIGURATION
+===================================================== */
+
 const SUPABASE_URL =
 "https://yaxingstvkaqfmvtyuis.supabase.co";
+
 
 const SUPABASE_PUBLISHABLE_KEY =
 "sb_publishable_3dA1_NPBVCHCzcrf155Qtw_16IUxNDt";
 
-const COMPANY_ID="HM000001";
+
+const COMPANY_ID =
+"HM000001";
+
 
 const supabaseClient =
 window.supabase.createClient(
@@ -539,892 +1730,2302 @@ window.supabase.createClient(
     }
 );
 
-let currentMember=null;
+
+let selectedMember = null;
+
+
+/* =====================================================
+   MENU
+===================================================== */
 
 function toggleMenu(){
-    document.getElementById("menu").classList.toggle("show");
+
+    document
+        .getElementById("menu")
+        .classList.toggle("show");
+
 }
 
-function scrollToSection(id){
-    const el=document.getElementById(id);
-    if(el) el.scrollIntoView({behavior:"smooth"});
-    document.getElementById("menu").classList.remove("show");
-}
 
-function showMessage(id,text,type){
-    const el=document.getElementById(id);
-    if(!el)return;
-    el.className="message "+type;
-    el.textContent=text;
-    el.style.display="block";
-}
+function go(id){
 
-function money(v){
-    return "₹"+Number(v||0).toFixed(2);
-}
+    const element =
+        document.getElementById(id);
 
-function esc(v){
-    return String(v??"-")
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;");
-}
+    if(element){
 
-function firstValue(row,names,def=""){
-    for(const n of names){
-        if(row && row[n]!==undefined && row[n]!==null)
-            return row[n];
-    }
-    return def;
-}
-
-function statusValue(row){
-    return String(firstValue(row,
-        ["status","transaction_status","approval_status","payment_status"],
-        "pending"
-    )).toLowerCase();
-}
-
-function dateValue(row){
-    return firstValue(row,
-        ["created_at","createdAt","transaction_date","date","requested_at"],
-        ""
-    );
-}
-
-function memberValue(row){
-    return firstValue(row,
-        ["member_id","memberId","user_id","profile_id"],
-        "-"
-    );
-}
-
-function amountValue(row){
-    return Number(firstValue(row,
-        ["amount","deposit_amount","requested_amount","total_amount","value"],
-        0
-    ))||0;
-}
-
-/* ================= ADMIN ================= */
-
-async function checkAdmin(){
-    try{
-        const {data,error}=await supabaseClient.auth.getSession();
-
-        if(error || !data?.session?.user){
-            location.href="login.html";
-            return false;
-        }
-
-        const user=data.session.user;
-
-        const {data:profile,error:profileError}=
-            await supabaseClient
-            .from("profiles")
-            .select("id,member_id,name,email,mobile,role,active")
-            .eq("id",user.id)
-            .maybeSingle();
-
-        if(profileError || !profile){
-            await supabaseClient.auth.signOut();
-            location.href="login.html";
-            return false;
-        }
-
-        if(profile.role!=="admin"){
-            await supabaseClient.auth.signOut();
-            alert("Admin access required.");
-            location.href="dashboard.html";
-            return false;
-        }
-
-        if(profile.active===false){
-            await supabaseClient.auth.signOut();
-            location.href="login.html";
-            return false;
-        }
-
-        return true;
-
-    }catch(e){
-        console.error(e);
-        location.href="login.html";
-        return false;
-    }
-}
-
-/* ================= DASHBOARD ================= */
-
-async function loadDashboard(){
-    if(!await checkAdmin())return;
-
-    await loadMemberStats();
-    await loadDeposits();
-    await loadWithdrawals();
-    await loadPayoutLedger();
-    await loadNotifications();
-}
-
-/* ================= MEMBER STATS ================= */
-
-async function loadMemberStats(){
-    try{
-        const {data,error}=await supabaseClient
-            .from("profiles")
-            .select("id,active,created_at,wallet_balance,total_income");
-
-        if(error)throw error;
-
-        const members=data||[];
-
-        document.getElementById("totalMembers").textContent=members.length;
-
-        document.getElementById("activeMembers").textContent=
-            members.filter(x=>x.active!==false).length;
-
-        const today=new Date();
-        today.setHours(0,0,0,0);
-
-        document.getElementById("todayRegistrations").textContent=
-            members.filter(x=>x.created_at &&
-                new Date(x.created_at)>=today).length;
-
-        const wallet=members.reduce(
-            (s,x)=>s+Number(x.wallet_balance||0),0);
-
-        const income=members.reduce(
-            (s,x)=>s+Number(x.total_income||0),0);
-
-        document.getElementById("totalWallet").textContent=money(wallet);
-        document.getElementById("totalIncome").textContent=money(income);
-
-    }catch(e){
-        console.error("Member statistics:",e);
-    }
-}
-
-/* ================= DEPOSITS ================= */
-
-async function loadDeposits(){
-    const table=document.getElementById("depositTable");
-
-    try{
-        const {data,error}=await supabaseClient
-            .from("admin_pending_funds")
-            .select("*")
-            .order("created_at",{ascending:false})
-            .limit(100);
-
-        if(error)throw error;
-
-        const rows=data||[];
-
-        let todayTotal=0;
-        let approvedTotal=0;
-        let pendingTotal=0;
-
-        const today=new Date();
-        today.setHours(0,0,0,0);
-
-        rows.forEach(r=>{
-            const amount=amountValue(r);
-            const st=statusValue(r);
-            const d=dateValue(r);
-
-            if(d && new Date(d)>=today)todayTotal+=amount;
-            if(["approved","completed","success"].includes(st))
-                approvedTotal+=amount;
-            if(["pending","processing","submitted"].includes(st))
-                pendingTotal+=amount;
+        element.scrollIntoView({
+            behavior:"smooth"
         });
 
-        document.getElementById("todayDeposit").textContent=money(todayTotal);
-        document.getElementById("approvedDeposit").textContent=money(approvedTotal);
-        document.getElementById("pendingDeposit").textContent=money(pendingTotal);
+    }
 
-        if(!rows.length){
-            table.innerHTML=
-                `<tr><td colspan="5">No deposit records available.</td></tr>`;
-            return;
+    document
+        .getElementById("menu")
+        .classList.remove("show");
+
+}
+
+
+/* =====================================================
+   MESSAGE
+===================================================== */
+
+function msg(
+    id,
+    text,
+    type="info"
+){
+
+    const element =
+        document.getElementById(id);
+
+    if(!element) return;
+
+    element.className =
+        "message " + type;
+
+    element.textContent =
+        text;
+
+    element.style.display =
+        "block";
+
+}
+
+
+/* =====================================================
+   MONEY FORMAT
+===================================================== */
+
+function money(value){
+
+    return "₹" +
+        Number(value || 0)
+        .toFixed(2);
+
+}
+
+
+/* =====================================================
+   HTML ESCAPE
+===================================================== */
+
+function esc(value){
+
+    return String(
+        value ?? ""
+    ).replace(
+        /[&<>"']/g,
+        function(match){
+
+            const map = {
+
+                "&":"&amp;",
+                "<":"&lt;",
+                ">":"&gt;",
+                '"':"&quot;",
+                "'":"&#039;"
+
+            };
+
+            return map[match];
+
         }
+    );
 
-        table.innerHTML=rows.map((r,i)=>{
-            const st=statusValue(r);
-            const amount=amountValue(r);
-            const d=dateValue(r);
-            const member=memberValue(r);
-            const id=firstValue(r,["id","transaction_id","request_id"],"");
+}
 
-            let action="";
 
-            if(["pending","processing","submitted"].includes(st) && id){
-                action=`
-                    <button class="btn green small"
-                        onclick="approveDeposit('${esc(id)}')">
-                        Approve
-                    </button>
-                    <button class="btn red small"
-                        onclick="rejectDeposit('${esc(id)}')">
-                        Reject
-                    </button>`;
-            }else{
-                action=`<span class="status ${statusClass(st)}">${esc(st)}</span>`;
+/* =====================================================
+   STATUS BADGE
+===================================================== */
+
+function statusBadge(status){
+
+    const value =
+        String(
+            status || "pending"
+        ).toLowerCase();
+
+    return `
+        <span class="status ${value}">
+            ${esc(value)}
+        </span>
+    `;
+
+}
+
+
+/* =====================================================
+   ADMIN CHECK
+===================================================== */
+
+async function checkAdmin(){
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+        .auth
+        .getSession();
+
+
+    if(
+        error ||
+        !data ||
+        !data.session ||
+        !data.session.user
+    ){
+
+        window.location.href =
+            "login.html";
+
+        return false;
+
+    }
+
+
+    const user =
+        data.session.user;
+
+
+    const {
+        data:profile,
+        error:profileError
+    } =
+    await supabaseClient
+        .from("profiles")
+        .select(
+            "id,member_id,name,email,mobile,role,active"
+        )
+        .eq(
+            "id",
+            user.id
+        )
+        .maybeSingle();
+
+
+    if(
+        profileError ||
+        !profile
+    ){
+
+        await supabaseClient
+            .auth
+            .signOut();
+
+        window.location.href =
+            "login.html";
+
+        return false;
+
+    }
+
+
+    if(
+        profile.role !==
+        "admin"
+    ){
+
+        await supabaseClient
+            .auth
+            .signOut();
+
+        alert(
+            "Admin access required."
+        );
+
+        window.location.href =
+            "dashboard.html";
+
+        return false;
+
+    }
+
+
+    if(
+        profile.active === false
+    ){
+
+        await supabaseClient
+            .auth
+            .signOut();
+
+        window.location.href =
+            "login.html";
+
+        return false;
+
+    }
+
+
+    return true;
+
+}
+
+
+/* =====================================================
+   MEMBER STATISTICS
+===================================================== */
+
+async function loadMemberStats(){
+
+    const {
+        data:profiles,
+        error
+    } =
+    await supabaseClient
+        .from("profiles")
+        .select(
+            "id,active,created_at,role"
+        );
+
+
+    if(error){
+
+        console.error(error);
+
+        return;
+
+    }
+
+
+    const members =
+        (profiles || [])
+        .filter(
+            profile =>
+                profile.role !==
+                "admin"
+        );
+
+
+    document.getElementById(
+        "totalMembers"
+    ).textContent =
+        members.length;
+
+
+    const active =
+        members.filter(
+            profile =>
+                profile.active !== false
+        ).length;
+
+
+    document.getElementById(
+        "activeMembers"
+    ).textContent =
+        active;
+
+
+    const start =
+        new Date();
+
+
+    start.setHours(
+        0,
+        0,
+        0,
+        0
+    );
+
+
+    const todayRegistrations =
+        members.filter(
+            profile =>
+                profile.created_at &&
+                new Date(
+                    profile.created_at
+                ) >= start
+        ).length;
+
+
+    document.getElementById(
+        "todayRegistrations"
+    ).textContent =
+        todayRegistrations;
+
+
+    /*
+        Income and wallet.
+    */
+
+    const {
+        data:transactions
+    } =
+    await supabaseClient
+        .from("transactions")
+        .select(
+            "amount,type,status"
+        );
+
+
+    let income = 0;
+
+    let wallet = 0;
+
+
+    (
+        transactions || []
+    ).forEach(
+        transaction => {
+
+            const amount =
+                Number(
+                    transaction.amount ||
+                    0
+                );
+
+
+            if(
+                transaction.type ===
+                "reward" ||
+                transaction.type ===
+                "income"
+            ){
+
+                income += amount;
+
             }
 
-            return `
-            <tr>
-                <td>${esc(member)}</td>
-                <td>${money(amount)}</td>
-                <td><span class="status ${statusClass(st)}">${esc(st)}</span></td>
-                <td>${d?esc(new Date(d).toLocaleString()):"-"}</td>
-                <td>${action}</td>
-            </tr>`;
-        }).join("");
 
-    }catch(e){
-        console.error("Deposit:",e);
-        table.innerHTML=
-            `<tr><td colspan="5">
-            Deposit table could not be loaded. Existing schema/RLS needs verification.
-            </td></tr>`;
-    }
-}
+            if(
+                transaction.type ===
+                "wallet"
+            ){
 
-function statusClass(st){
-    if(["approved","completed","success"].includes(st))return"approved";
-    if(["rejected","failed","cancelled"].includes(st))return"rejected";
-    if(["pending","processing","submitted"].includes(st))return"pending";
-    return"active";
-}
+                wallet += amount;
 
-async function approveDeposit(id){
-    if(!confirm("Approve this deposit?"))return;
+            }
 
-    await changeDepositStatus(id,"approved","");
-}
-
-async function rejectDeposit(id){
-    const reason=prompt("Enter rejection reason:");
-    if(reason===null)return;
-
-    if(!reason.trim()){
-        alert("Rejection reason is required.");
-        return;
-    }
-
-    await changeDepositStatus(id,"rejected",reason.trim());
-}
-
-async function changeDepositStatus(id,status,reason){
-    try{
-        const {data:rows,error:findError}=
-            await supabaseClient
-            .from("admin_pending_funds")
-            .select("*")
-            .eq("id",id)
-            .limit(1);
-
-        if(findError)throw findError;
-
-        const row=rows?.[0];
-        if(!row)throw new Error("Deposit record not found.");
-
-        const keys=Object.keys(row);
-
-        const statusKey=
-            ["status","transaction_status","approval_status","payment_status"]
-            .find(k=>keys.includes(k));
-
-        if(!statusKey)
-            throw new Error("No status column found in admin_pending_funds.");
-
-        const payload={};
-        payload[statusKey]=status;
-
-        if(reason){
-            const reasonKey=
-                ["rejection_reason","reject_reason","reason","remarks"]
-                .find(k=>keys.includes(k));
-            if(reasonKey)payload[reasonKey]=reason;
         }
+    );
 
-        const {error}=await supabaseClient
-            .from("admin_pending_funds")
-            .update(payload)
-            .eq("id",id);
 
-        if(error)throw error;
+    document.getElementById(
+        "totalIncome"
+    ).textContent =
+        money(income);
 
-        showMessage(
-            "depositMessage",
-            status==="approved"
-            ?"Deposit approved successfully."
-            :"Deposit rejected successfully.",
-            "success"
+
+    document.getElementById(
+        "totalWallet"
+    ).textContent =
+        money(wallet);
+
+}
+
+
+/* =====================================================
+   DEPOSIT MANAGEMENT
+===================================================== */
+
+async function loadDeposits(){
+
+    const body =
+        document.getElementById(
+            "depositTable"
         );
 
-        await loadDeposits();
 
-    }catch(e){
-        console.error(e);
-        showMessage(
+    body.innerHTML =
+        `
+        <tr>
+            <td colspan="6">
+                Loading...
+            </td>
+        </tr>
+        `;
+
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+        .from("deposits")
+        .select("*")
+        .order(
+            "created_at",
+            {
+                ascending:false
+            }
+        );
+
+
+    if(error){
+
+        body.innerHTML =
+            `
+            <tr>
+                <td colspan="6">
+                    Deposit table could not be read.
+                    Check Supabase table/RLS.
+                </td>
+            </tr>
+            `;
+
+        msg(
             "depositMessage",
-            "Deposit update failed: "+e.message,
+            error.message,
             "error"
         );
+
+        return;
+
     }
+
+
+    const rows =
+        data || [];
+
+
+    let today =
+        0;
+
+    let approved =
+        0;
+
+    let pending =
+        0;
+
+
+    const now =
+        new Date();
+
+
+    const from =
+        document.getElementById(
+            "depositFrom"
+        ).value;
+
+
+    const to =
+        document.getElementById(
+            "depositTo"
+        ).value;
+
+
+    const filtered =
+        rows.filter(
+            deposit => {
+
+                const date =
+                    deposit.created_at
+                        ? new Date(
+                            deposit.created_at
+                        )
+                        : null;
+
+
+                if(
+                    from &&
+                    date &&
+                    date <
+                    new Date(
+                        from +
+                        "T00:00:00"
+                    )
+                ){
+
+                    return false;
+
+                }
+
+
+                if(
+                    to &&
+                    date &&
+                    date >
+                    new Date(
+                        to +
+                        "T23:59:59"
+                    )
+                ){
+
+                    return false;
+
+                }
+
+
+                return true;
+
+            }
+        );
+
+
+    rows.forEach(
+        deposit => {
+
+            const amount =
+                Number(
+                    deposit.amount ||
+                    0
+                );
+
+
+            const date =
+                deposit.created_at
+                    ? new Date(
+                        deposit.created_at
+                    )
+                    : null;
+
+
+            if(
+                date &&
+                date.toDateString() ===
+                now.toDateString()
+            ){
+
+                today += amount;
+
+            }
+
+
+            const status =
+                String(
+                    deposit.status || ""
+                ).toLowerCase();
+
+
+            if(
+                status ===
+                "approved"
+            ){
+
+                approved +=
+                    amount;
+
+            }
+
+
+            if(
+                status ===
+                "pending"
+            ){
+
+                pending +=
+                    amount;
+
+            }
+
+        }
+    );
+
+
+    document.getElementById(
+        "todayDeposit"
+    ).textContent =
+        money(today);
+
+
+    document.getElementById(
+        "approvedDeposit"
+    ).textContent =
+        money(approved);
+
+
+    document.getElementById(
+        "pendingDeposit"
+    ).textContent =
+        money(pending);
+
+
+    if(
+        !filtered.length
+    ){
+
+        body.innerHTML =
+            `
+            <tr>
+                <td colspan="6">
+                    No deposit records available.
+                </td>
+            </tr>
+            `;
+
+        return;
+
+    }
+
+
+    body.innerHTML =
+        filtered.map(
+            deposit => {
+
+                const status =
+                    String(
+                        deposit.status ||
+                        "pending"
+                    ).toLowerCase();
+
+
+                let action =
+                    "-";
+
+
+                if(
+                    status ===
+                    "pending"
+                ){
+
+                    action =
+                    `
+                    <div class="actions">
+
+                        <button
+                            class="btn green"
+                            onclick="updateDeposit(
+                                '${esc(deposit.id)}',
+                                'approved'
+                            )">
+
+                            Approve
+
+                        </button>
+
+
+                        <button
+                            class="btn red"
+                            onclick="updateDeposit(
+                                '${esc(deposit.id)}',
+                                'rejected'
+                            )">
+
+                            Reject
+
+                        </button>
+
+                    </div>
+                    `;
+
+                }
+
+
+                return `
+
+                <tr>
+
+                    <td>
+                        ${esc(
+                            deposit.member_id ||
+                            deposit.user_id ||
+                            "-"
+                        )}
+                    </td>
+
+                    <td>
+                        ${money(
+                            deposit.amount
+                        )}
+                    </td>
+
+                    <td>
+                        ${esc(
+                            deposit.plan ||
+                            deposit.plan_name ||
+                            "₹899"
+                        )}
+                    </td>
+
+                    <td>
+                        ${
+                            deposit.created_at
+                            ?
+                            new Date(
+                                deposit.created_at
+                            ).toLocaleString()
+                            :
+                            "-"
+                        }
+                    </td>
+
+                    <td>
+                        ${statusBadge(status)}
+                    </td>
+
+                    <td>
+                        ${action}
+                    </td>
+
+                </tr>
+
+                `;
+
+            }
+        ).join("");
+
 }
 
-/* ================= MEMBER SEARCH ================= */
+
+/* =====================================================
+   CLEAR DEPOSIT FILTER
+===================================================== */
+
+function clearDepositFilter(){
+
+    document.getElementById(
+        "depositFrom"
+    ).value = "";
+
+
+    document.getElementById(
+        "depositTo"
+    ).value = "";
+
+
+    loadDeposits();
+
+}
+
+
+/* =====================================================
+   UPDATE DEPOSIT
+===================================================== */
+
+async function updateDeposit(
+    id,
+    status
+){
+
+    if(
+        !confirm(
+            "Change deposit status to " +
+            status +
+            "?"
+        )
+    ){
+
+        return;
+
+    }
+
+
+    const {
+        error
+    } =
+    await supabaseClient
+        .from("deposits")
+        .update({
+            status:status
+        })
+        .eq(
+            "id",
+            id
+        );
+
+
+    if(error){
+
+        msg(
+            "depositMessage",
+            error.message,
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    msg(
+        "depositMessage",
+        "Deposit status updated.",
+        "success"
+    );
+
+
+    await loadDeposits();
+
+    await loadMemberStats();
+
+}
+
+
+/* =====================================================
+   MEMBER SEARCH
+===================================================== */
 
 async function searchMember(){
-    const value=document.getElementById("memberSearch").value.trim();
 
-    if(!value){
-        showMessage(
+    const query =
+        document
+            .getElementById(
+                "memberSearch"
+            )
+            .value
+            .trim();
+
+
+    if(!query){
+
+        msg(
             "memberMessage",
-            "Please enter Member ID, Mobile or Email.",
+            "Enter Member ID, mobile or email.",
             "error"
         );
+
         return;
+
     }
 
-    try{
-        let q=supabaseClient
-            .from("profiles")
-            .select("*");
 
-        if(value.includes("@")){
-            q=q.eq("email",value);
-        }else if(value.toUpperCase().startsWith("HM")){
-            q=q.eq("member_id",value.toUpperCase());
-        }else{
-            q=q.eq("mobile",value.replace(/\D/g,""));
-        }
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+        .from("profiles")
+        .select(
+            "id,member_id,name,email,mobile,role,active"
+        )
+        .or(
+            `member_id.eq.${query},mobile.eq.${query},email.eq.${query}`
+        )
+        .limit(1);
 
-        const {data,error}=await q.maybeSingle();
 
-        if(error)throw error;
+    if(
+        error ||
+        !data ||
+        !data.length
+    ){
 
-        if(!data){
-            document.getElementById("memberCard").style.display="none";
-            showMessage("memberMessage","No member found.","error");
-            return;
-        }
+        document.getElementById(
+            "memberCard"
+        ).style.display =
+            "none";
 
-        currentMember=data;
 
-        document.getElementById("mMemberId").textContent=
-            firstValue(data,["member_id"],"-");
-
-        document.getElementById("mName").textContent=
-            firstValue(data,["name"],"-");
-
-        document.getElementById("mEmail").textContent=
-            firstValue(data,["email"],"-");
-
-        document.getElementById("mMobile").textContent=
-            firstValue(data,["mobile"],"-");
-
-        document.getElementById("mSponsor").textContent=
-            firstValue(data,["sponsor_id","sponsor_member_id","referral_no"],"-");
-
-        document.getElementById("mRole").textContent=
-            firstValue(data,["role"],"member");
-
-        document.getElementById("mStatus").textContent=
-            data.active===false?"Inactive":"Active";
-
-        document.getElementById("mWallet").textContent=
-            money(firstValue(data,["wallet_balance","bonus_wallet"],0));
-
-        document.getElementById("mIncome").textContent=
-            money(firstValue(data,["total_income"],0));
-
-        document.getElementById("memberCard").style.display="block";
-
-        showMessage(
+        msg(
             "memberMessage",
-            "Member found successfully.",
-            "success"
-        );
-
-    }catch(e){
-        console.error(e);
-        showMessage(
-            "memberMessage",
-            "Unable to search member: "+e.message,
+            "Member not found.",
             "error"
         );
+
+        return;
+
     }
+
+
+    selectedMember =
+        data[0];
+
+
+    document.getElementById(
+        "memberCard"
+    ).style.display =
+        "block";
+
+
+    document.getElementById(
+        "mMemberId"
+    ).textContent =
+        selectedMember.member_id ||
+        "-";
+
+
+    document.getElementById(
+        "mName"
+    ).textContent =
+        selectedMember.name ||
+        "-";
+
+
+    document.getElementById(
+        "mEmail"
+    ).textContent =
+        selectedMember.email ||
+        "-";
+
+
+    document.getElementById(
+        "mMobile"
+    ).textContent =
+        selectedMember.mobile ||
+        "-";
+
+
+    document.getElementById(
+        "mRole"
+    ).textContent =
+        selectedMember.role ||
+        "-";
+
+
+    document.getElementById(
+        "mStatus"
+    ).textContent =
+        selectedMember.active === false
+        ?
+        "Inactive"
+        :
+        "Active";
+
+
+    msg(
+        "memberMessage",
+        "Member found.",
+        "success"
+    );
+
 }
+
+
+/* =====================================================
+   MEMBER ACTIVATE / DEACTIVATE
+===================================================== */
 
 async function toggleMemberStatus(){
-    if(!currentMember)return;
 
-    const newStatus=currentMember.active===false;
+    if(!selectedMember){
 
-    if(!confirm(
-        `Do you want to ${newStatus?"activate":"deactivate"} this member?`
-    ))return;
+        return;
 
-    try{
-        const {error}=await supabaseClient
-            .from("profiles")
-            .update({active:newStatus})
-            .eq("id",currentMember.id);
+    }
 
-        if(error)throw error;
 
-        currentMember.active=newStatus;
+    const active =
+        selectedMember.active === false;
 
-        document.getElementById("mStatus").textContent=
-            newStatus?"Active":"Inactive";
 
-        showMessage(
-            "memberMessage",
-            "Member status updated successfully.",
-            "success"
+    const {
+        error
+    } =
+    await supabaseClient
+        .from("profiles")
+        .update({
+            active:active
+        })
+        .eq(
+            "id",
+            selectedMember.id
         );
 
-        await loadMemberStats();
 
-    }catch(e){
-        console.error(e);
-        showMessage(
+    if(error){
+
+        msg(
             "memberMessage",
-            "Unable to update member: "+e.message,
+            error.message,
             "error"
         );
+
+        return;
+
     }
+
+
+    selectedMember.active =
+        active;
+
+
+    document.getElementById(
+        "mStatus"
+    ).textContent =
+        active
+        ?
+        "Active"
+        :
+        "Inactive";
+
+
+    msg(
+        "memberMessage",
+        "Member status updated.",
+        "success"
+    );
+
+
+    loadMemberStats();
+
 }
 
-/* ================= WITHDRAWALS ================= */
+
+/* =====================================================
+   WITHDRAWAL MANAGEMENT
+===================================================== */
 
 async function loadWithdrawals(){
-    const table=document.getElementById("withdrawalTable");
 
-    try{
-        const {data,error}=await supabaseClient
-            .from("withdrawals")
-            .select("*")
-            .order("created_at",{ascending:false})
-            .limit(100);
-
-        if(error)throw error;
-
-        if(!data?.length){
-            table.innerHTML=
-                `<tr><td colspan="5">No withdrawal records available.</td></tr>`;
-            return;
-        }
-
-        table.innerHTML=data.map(w=>{
-            const id=firstValue(w,["id","withdrawal_id"],"");
-            const st=statusValue(w);
-            const member=memberValue(w);
-            const amount=amountValue(w);
-            const method=firstValue(w,
-                ["method","payment_method","channel","payment_channel"],"-");
-
-            let action="";
-
-            if(["pending","processing","submitted"].includes(st) && id){
-                action=`
-                <button class="btn green small"
-                    onclick="updateWithdrawal('${esc(id)}','approved')">
-                    Approve
-                </button>
-                <button class="btn red small"
-                    onclick="updateWithdrawal('${esc(id)}','rejected')">
-                    Reject
-                </button>`;
-            }else{
-                action=`<span class="status ${statusClass(st)}">${esc(st)}</span>`;
-            }
-
-            return `
-            <tr>
-                <td>${esc(member)}</td>
-                <td>${money(amount)}</td>
-                <td>${esc(method)}</td>
-                <td><span class="status ${statusClass(st)}">${esc(st)}</span></td>
-                <td>${action}</td>
-            </tr>`;
-        }).join("");
-
-    }catch(e){
-        console.error(e);
-        table.innerHTML=
-            `<tr><td colspan="5">
-            Withdrawal table could not be loaded: ${esc(e.message)}
-            </td></tr>`;
-    }
-}
-
-async function updateWithdrawal(id,status){
-    if(status==="rejected"){
-        const reason=prompt("Enter rejection reason:");
-        if(reason===null)return;
-        if(!reason.trim()){
-            alert("Rejection reason is required.");
-            return;
-        }
-        await updateWithdrawalStatus(id,status,reason);
-    }else{
-        if(!confirm("Approve this withdrawal?"))return;
-        await updateWithdrawalStatus(id,status,"");
-    }
-}
-
-async function updateWithdrawalStatus(id,status,reason){
-    try{
-        const {data:rows,error:findError}=await supabaseClient
-            .from("withdrawals")
-            .select("*")
-            .eq("id",id)
-            .limit(1);
-
-        if(findError)throw findError;
-
-        const row=rows?.[0];
-        if(!row)throw new Error("Withdrawal record not found.");
-
-        const keys=Object.keys(row);
-        const statusKey=
-            ["status","transaction_status","approval_status","payment_status"]
-            .find(k=>keys.includes(k));
-
-        if(!statusKey)
-            throw new Error("No status column found.");
-
-        const payload={};
-        payload[statusKey]=status;
-
-        if(reason){
-            const reasonKey=
-                ["rejection_reason","reject_reason","reason","remarks"]
-                .find(k=>keys.includes(k));
-            if(reasonKey)payload[reasonKey]=reason;
-        }
-
-        const {error}=await supabaseClient
-            .from("withdrawals")
-            .update(payload)
-            .eq("id",id);
-
-        if(error)throw error;
-
-        showMessage(
-            "withdrawalMessage",
-            "Withdrawal status updated successfully.",
-            "success"
+    const body =
+        document.getElementById(
+            "withdrawalTable"
         );
 
-        await loadWithdrawals();
 
-    }catch(e){
-        console.error(e);
-        showMessage(
+    body.innerHTML =
+        `
+        <tr>
+            <td colspan="6">
+                Loading...
+            </td>
+        </tr>
+        `;
+
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+        .from("withdrawals")
+        .select("*")
+        .order(
+            "created_at",
+            {
+                ascending:false
+            }
+        );
+
+
+    if(error){
+
+        body.innerHTML =
+            `
+            <tr>
+                <td colspan="6">
+                    Withdrawal table could not be read.
+                    Check Supabase table/RLS.
+                </td>
+            </tr>
+            `;
+
+
+        msg(
             "withdrawalMessage",
-            "Withdrawal update failed: "+e.message,
+            error.message,
             "error"
         );
+
+
+        return;
+
     }
-}
 
-/* ================= PAYOUT / LEDGER ================= */
 
-async function loadPayoutLedger(){
-    const table=document.getElementById("payoutTable");
+    if(
+        !data ||
+        !data.length
+    ){
 
-    try{
-        const {data,error}=await supabaseClient
-            .from("income_ledger")
-            .select("*")
-            .limit(100);
-
-        if(error)throw error;
-
-        if(!data?.length){
-            table.innerHTML=
-                `<tr><td colspan="5">No income ledger records available.</td></tr>`;
-            return;
-        }
-
-        table.innerHTML=data.map(r=>{
-            const member=memberValue(r);
-            const amount=amountValue(r);
-            const type=firstValue(r,
-                ["income_type","type","source","category"],"-");
-            const description=firstValue(r,
-                ["description","remarks","narration"],"-");
-            const st=statusValue(r);
-
-            return `
+        body.innerHTML =
+            `
             <tr>
-                <td>${esc(member)}</td>
-                <td>${money(amount)}</td>
-                <td>${esc(type)}</td>
-                <td>${esc(description)}</td>
-                <td><span class="status ${statusClass(st)}">${esc(st)}</span></td>
-            </tr>`;
-        }).join("");
+                <td colspan="6">
+                    No withdrawal records available.
+                </td>
+            </tr>
+            `;
 
-    }catch(e){
-        console.error(e);
-        table.innerHTML=
-            `<tr><td colspan="5">
-            Income ledger could not be loaded: ${esc(e.message)}
-            </td></tr>`;
+        return;
+
     }
+
+
+    body.innerHTML =
+        data.map(
+            withdrawal => {
+
+                const status =
+                    String(
+                        withdrawal.status ||
+                        "pending"
+                    ).toLowerCase();
+
+
+                let action =
+                    "-";
+
+
+                if(
+                    status ===
+                    "pending"
+                ){
+
+                    action =
+                    `
+                    <div class="actions">
+
+                        <button
+                            class="btn green"
+                            onclick="updateWithdrawal(
+                                '${esc(withdrawal.id)}',
+                                'approved'
+                            )">
+
+                            Approve
+
+                        </button>
+
+
+                        <button
+                            class="btn red"
+                            onclick="updateWithdrawal(
+                                '${esc(withdrawal.id)}',
+                                'rejected'
+                            )">
+
+                            Reject
+
+                        </button>
+
+                    </div>
+                    `;
+
+                }
+
+
+                return `
+
+                <tr>
+
+                    <td>
+                        ${esc(
+                            withdrawal.member_id ||
+                            withdrawal.user_id ||
+                            "-"
+                        )}
+                    </td>
+
+                    <td>
+                        ${money(
+                            withdrawal.amount
+                        )}
+                    </td>
+
+                    <td>
+                        ${esc(
+                            withdrawal.method ||
+                            "-"
+                        )}
+                    </td>
+
+                    <td>
+                        ${
+                            withdrawal.created_at
+                            ?
+                            new Date(
+                                withdrawal.created_at
+                            ).toLocaleString()
+                            :
+                            "-"
+                        }
+                    </td>
+
+                    <td>
+                        ${statusBadge(status)}
+                    </td>
+
+                    <td>
+                        ${action}
+                    </td>
+
+                </tr>
+
+                `;
+
+            }
+        ).join("");
+
 }
 
-/* ================= VIDEO ================= */
+
+/* =====================================================
+   UPDATE WITHDRAWAL
+===================================================== */
+
+async function updateWithdrawal(
+    id,
+    status
+){
+
+    if(
+        !confirm(
+            "Change withdrawal status to " +
+            status +
+            "?"
+        )
+    ){
+
+        return;
+
+    }
+
+
+    const {
+        error
+    } =
+    await supabaseClient
+        .from("withdrawals")
+        .update({
+            status:status
+        })
+        .eq(
+            "id",
+            id
+        );
+
+
+    if(error){
+
+        msg(
+            "withdrawalMessage",
+            error.message,
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    msg(
+        "withdrawalMessage",
+        "Withdrawal status updated.",
+        "success"
+    );
+
+
+    loadWithdrawals();
+
+}
+
+
+/* =====================================================
+   INCOME LEDGER
+===================================================== */
+
+async function loadLedger(){
+
+    const body =
+        document.getElementById(
+            "ledgerTable"
+        );
+
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+        .from("transactions")
+        .select(
+            "member_id,amount,type,created_at"
+        )
+        .order(
+            "created_at",
+            {
+                ascending:false
+            }
+        )
+        .limit(100);
+
+
+    if(
+        error ||
+        !data ||
+        !data.length
+    ){
+
+        body.innerHTML =
+            `
+            <tr>
+                <td colspan="4">
+                    No income ledger records available.
+                </td>
+            </tr>
+            `;
+
+        return;
+
+    }
+
+
+    body.innerHTML =
+        data.map(
+            transaction => `
+
+            <tr>
+
+                <td>
+                    ${esc(
+                        transaction.member_id ||
+                        "-"
+                    )}
+                </td>
+
+                <td>
+                    ${money(
+                        transaction.amount
+                    )}
+                </td>
+
+                <td>
+                    ${esc(
+                        transaction.type ||
+                        "-"
+                    )}
+                </td>
+
+                <td>
+                    ${
+                        transaction.created_at
+                        ?
+                        new Date(
+                            transaction.created_at
+                        ).toLocaleString()
+                        :
+                        "-"
+                    }
+                </td>
+
+            </tr>
+
+            `
+        ).join("");
+
+}
+
+
+/* =====================================================
+   ADD SPONSORED VIDEO
+===================================================== */
 
 async function addVideo(){
-    const title=document.getElementById("videoTitle").value.trim();
-    const reward=Number(document.getElementById("videoReward").value);
-    const url=document.getElementById("videoUrl").value.trim();
-    const active=document.getElementById("videoStatus").value==="true";
 
-    if(!title){
-        showMessage("videoMessage","Video title is required.","error");
-        return;
-    }
+    const title =
+        document.getElementById(
+            "videoTitle"
+        ).value.trim();
 
-    try{
-        const {error}=await supabaseClient
-            .from("videos")
-            .insert({
-                company_id:COMPANY_ID,
-                title:title,
-                reward:reward,
-                video_url:url,
-                active:active
-            });
 
-        if(error)throw error;
-
-        showMessage(
-            "videoMessage",
-            "Sponsored video added successfully.",
-            "success"
+    const reward =
+        Number(
+            document.getElementById(
+                "videoReward"
+            ).value
         );
 
-        document.getElementById("videoTitle").value="";
-        document.getElementById("videoReward").value="";
-        document.getElementById("videoUrl").value="";
 
-    }catch(e){
-        console.error(e);
-        showMessage(
+    const url =
+        document.getElementById(
+            "videoUrl"
+        ).value.trim();
+
+
+    const active =
+        document.getElementById(
+            "videoStatus"
+        ).value ===
+        "true";
+
+
+    if(
+        !title ||
+        !url ||
+        !Number.isFinite(reward)
+    ){
+
+        msg(
             "videoMessage",
-            "Video could not be saved: "+e.message,
+            "Enter video title, reward and URL.",
             "error"
         );
+
+        return;
+
     }
+
+
+    const {
+        error
+    } =
+    await supabaseClient
+        .from("sponsored_videos")
+        .insert({
+
+            title:title,
+
+            reward_amount:reward,
+
+            video_url:url,
+
+            active:active
+
+        });
+
+
+    if(error){
+
+        msg(
+            "videoMessage",
+            error.message,
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    msg(
+        "videoMessage",
+        "Sponsored video added.",
+        "success"
+    );
+
+
+    document.getElementById(
+        "videoTitle"
+    ).value = "";
+
+
+    document.getElementById(
+        "videoReward"
+    ).value = "";
+
+
+    document.getElementById(
+        "videoUrl"
+    ).value = "";
+
+
+    loadVideos();
+
 }
 
-/* ================= REWARD ================= */
+
+/* =====================================================
+   LOAD VIDEOS
+===================================================== */
+
+async function loadVideos(){
+
+    const body =
+        document.getElementById(
+            "videoTable"
+        );
+
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+        .from("sponsored_videos")
+        .select("*")
+        .order(
+            "created_at",
+            {
+                ascending:false
+            }
+        );
+
+
+    if(
+        error ||
+        !data ||
+        !data.length
+    ){
+
+        body.innerHTML =
+            `
+            <tr>
+                <td colspan="5">
+                    No sponsored videos available.
+                </td>
+            </tr>
+            `;
+
+        return;
+
+    }
+
+
+    body.innerHTML =
+        data.map(
+            video => `
+
+            <tr>
+
+                <td>
+                    ${esc(
+                        video.title
+                    )}
+                </td>
+
+                <td>
+                    ${money(
+                        video.reward_amount
+                    )}
+                </td>
+
+                <td>
+
+                    <a
+                        href="${esc(video.video_url)}"
+                        target="_blank">
+
+                        Open
+
+                    </a>
+
+                </td>
+
+                <td>
+
+                    ${statusBadge(
+                        video.active === false
+                        ?
+                        "inactive"
+                        :
+                        "active"
+                    )}
+
+                </td>
+
+                <td>
+
+                    <button
+                        class="btn gray"
+                        onclick="toggleVideo(
+                            '${esc(video.id)}',
+                            ${video.active === false}
+                        )">
+
+                        ${
+                            video.active === false
+                            ?
+                            "Activate"
+                            :
+                            "Deactivate"
+                        }
+
+                    </button>
+
+                </td>
+
+            </tr>
+
+            `
+        ).join("");
+
+}
+
+
+/* =====================================================
+   TOGGLE VIDEO
+===================================================== */
+
+async function toggleVideo(
+    id,
+    active
+){
+
+    const {
+        error
+    } =
+    await supabaseClient
+        .from("sponsored_videos")
+        .update({
+            active:active
+        })
+        .eq(
+            "id",
+            id
+        );
+
+
+    if(error){
+
+        msg(
+            "videoMessage",
+            error.message,
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    loadVideos();
+
+}
+
+
+/* =====================================================
+   ADD REWARD
+===================================================== */
 
 async function addReward(){
-    const memberId=document.getElementById("rewardMember").value.trim();
-    const amount=Number(document.getElementById("rewardAmount").value);
-    const description=document.getElementById("rewardDescription").value.trim();
 
-    if(!memberId || !amount){
-        showMessage(
+    const member_id =
+        document.getElementById(
+            "rewardMember"
+        ).value.trim();
+
+
+    const amount =
+        Number(
+            document.getElementById(
+                "rewardAmount"
+            ).value
+        );
+
+
+    const description =
+        document.getElementById(
+            "rewardDescription"
+        ).value.trim();
+
+
+    if(
+        !member_id ||
+        !Number.isFinite(amount) ||
+        amount <= 0
+    ){
+
+        msg(
             "rewardMessage",
-            "Member ID and amount are required.",
+            "Enter valid member ID and reward amount.",
             "error"
         );
+
         return;
+
     }
 
-    try{
-        const {data:member,error:memberError}=
-            await supabaseClient
-            .from("profiles")
-            .select("member_id")
-            .eq("member_id",memberId.toUpperCase())
-            .maybeSingle();
 
-        if(memberError)throw memberError;
-        if(!member){
-            showMessage("rewardMessage","Member not found.","error");
-            return;
-        }
+    const {
+        error
+    } =
+    await supabaseClient
+        .from("transactions")
+        .insert({
 
-        const {error}=await supabaseClient
-            .from("transactions")
-            .insert({
-                company_id:COMPANY_ID,
-                member_id:memberId.toUpperCase(),
-                amount:amount,
-                type:"reward",
-                description:description,
-                status:"completed"
-            });
+            member_id:member_id,
 
-        if(error)throw error;
+            amount:amount,
 
-        showMessage(
+            type:"reward",
+
+            status:"approved",
+
+            description:description
+
+        });
+
+
+    if(error){
+
+        msg(
             "rewardMessage",
-            "Reward recorded successfully.",
-            "success"
-        );
-
-        document.getElementById("rewardMember").value="";
-        document.getElementById("rewardAmount").value="";
-        document.getElementById("rewardDescription").value="";
-
-    }catch(e){
-        console.error(e);
-        showMessage(
-            "rewardMessage",
-            "Reward could not be recorded: "+e.message,
+            error.message,
             "error"
         );
+
+        return;
+
     }
+
+
+    msg(
+        "rewardMessage",
+        "Reward recorded successfully.",
+        "success"
+    );
+
+
+    loadMemberStats();
+
+    loadLedger();
+
 }
 
-/* ================= REPORTS ================= */
+
+/* =====================================================
+   MEMBER REPORT
+===================================================== */
 
 async function loadMembersReport(){
-    const area=document.getElementById("reportArea");
 
-    try{
-        const {data,error}=await supabaseClient
-            .from("profiles")
-            .select("*")
-            .order("created_at",{ascending:false});
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+        .from("profiles")
+        .select(
+            "member_id,name,email,mobile,role,active,created_at"
+        )
+        .order(
+            "created_at",
+            {
+                ascending:false
+            }
+        );
 
-        if(error)throw error;
 
-        area.innerHTML=`
-        <table>
-        <thead>
-        <tr>
-        <th>Member ID</th>
-        <th>Name</th>
-        <th>Mobile</th>
-        <th>Email</th>
-        <th>Status</th>
-        </tr>
-        </thead>
-        <tbody>
-        ${(data||[]).map(m=>`
-        <tr>
-        <td>${esc(firstValue(m,["member_id"],"-"))}</td>
-        <td>${esc(firstValue(m,["name"],"-"))}</td>
-        <td>${esc(firstValue(m,["mobile"],"-"))}</td>
-        <td>${esc(firstValue(m,["email"],"-"))}</td>
-        <td>${m.active===false?"Inactive":"Active"}</td>
-        </tr>`).join("")}
-        </tbody>
-        </table>`;
+    if(error){
 
-    }catch(e){
-        area.innerHTML=`<p>Member report failed: ${esc(e.message)}</p>`;
+        document.getElementById(
+            "reportArea"
+        ).innerHTML =
+            esc(error.message);
+
+        return;
+
     }
+
+
+    document.getElementById(
+        "reportArea"
+    ).innerHTML =
+
+    `
+
+    <table>
+
+    <thead>
+
+    <tr>
+
+        <th>
+            Member ID
+        </th>
+
+        <th>
+            Name
+        </th>
+
+        <th>
+            Email
+        </th>
+
+        <th>
+            Mobile
+        </th>
+
+        <th>
+            Status
+        </th>
+
+        <th>
+            Joined
+        </th>
+
+    </tr>
+
+    </thead>
+
+
+    <tbody>
+
+    ${
+        (data || [])
+        .map(
+            profile => `
+
+            <tr>
+
+                <td>
+                    ${esc(
+                        profile.member_id
+                    )}
+                </td>
+
+                <td>
+                    ${esc(
+                        profile.name
+                    )}
+                </td>
+
+                <td>
+                    ${esc(
+                        profile.email
+                    )}
+                </td>
+
+                <td>
+                    ${esc(
+                        profile.mobile
+                    )}
+                </td>
+
+                <td>
+                    ${statusBadge(
+                        profile.active === false
+                        ?
+                        "inactive"
+                        :
+                        "active"
+                    )}
+                </td>
+
+                <td>
+                    ${
+                        profile.created_at
+                        ?
+                        new Date(
+                            profile.created_at
+                        ).toLocaleDateString()
+                        :
+                        "-"
+                    }
+                </td>
+
+            </tr>
+
+            `
+        )
+        .join("")
+    }
+
+    </tbody>
+
+    </table>
+
+    `;
+
 }
 
-/* ================= ANNOUNCEMENTS ================= */
+
+/* =====================================================
+   INCOME REPORT
+===================================================== */
+
+async function loadIncomeReport(){
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+        .from("transactions")
+        .select("*")
+        .order(
+            "created_at",
+            {
+                ascending:false
+            }
+        );
+
+
+    if(error){
+
+        document.getElementById(
+            "reportArea"
+        ).innerHTML =
+            esc(error.message);
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        "reportArea"
+    ).innerHTML =
+
+    `
+
+    <table>
+
+    <thead>
+
+    <tr>
+
+        <th>
+            Member
+        </th>
+
+        <th>
+            Amount
+        </th>
+
+        <th>
+            Type
+        </th>
+
+        <th>
+            Status
+        </th>
+
+        <th>
+            Date
+        </th>
+
+    </tr>
+
+    </thead>
+
+
+    <tbody>
+
+    ${
+        (data || [])
+        .map(
+            transaction => `
+
+            <tr>
+
+                <td>
+                    ${esc(
+                        transaction.member_id
+                    )}
+                </td>
+
+                <td>
+                    ${money(
+                        transaction.amount
+                    )}
+                </td>
+
+                <td>
+                    ${esc(
+                        transaction.type
+                    )}
+                </td>
+
+                <td>
+                    ${statusBadge(
+                        transaction.status
+                    )}
+                </td>
+
+                <td>
+                    ${
+                        transaction.created_at
+                        ?
+                        new Date(
+                            transaction.created_at
+                        ).toLocaleString()
+                        :
+                        "-"
+                    }
+                </td>
+
+            </tr>
+
+            `
+        )
+        .join("")
+    }
+
+    </tbody>
+
+    </table>
+
+    `;
+
+}
+
+
+/* =====================================================
+   DEPOSIT REPORT
+===================================================== */
+
+async function loadDepositsReport(){
+
+    await loadDeposits();
+
+
+    const source =
+        document.querySelector(
+            "#depositTable"
+        );
+
+
+    if(!source){
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        "reportArea"
+    ).innerHTML =
+
+        source
+        .parentElement
+        .outerHTML;
+
+}
+
+
+/* =====================================================
+   WITHDRAWAL REPORT
+===================================================== */
+
+async function loadWithdrawalReport(){
+
+    await loadWithdrawals();
+
+
+    const source =
+        document.querySelector(
+            "#withdrawalTable"
+        );
+
+
+    if(!source){
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        "reportArea"
+    ).innerHTML =
+
+        source
+        .parentElement
+        .outerHTML;
+
+}
+
+
+/* =====================================================
+   SEND ANNOUNCEMENT
+===================================================== */
 
 async function sendAnnouncement(){
-    const text=document.getElementById("announcement").value.trim();
 
-    if(!text){
-        showMessage(
+    const message =
+        document.getElementById(
+            "announcement"
+        ).value.trim();
+
+
+    if(!message){
+
+        msg(
             "notificationMessage",
-            "Please write an announcement.",
+            "Write an announcement first.",
             "error"
         );
+
         return;
+
     }
 
-    try{
-        const {error}=await supabaseClient
-            .from("admin_notifications")
-            .insert({
-                company_id:COMPANY_ID,
-                message:text,
-                active:true
-            });
 
-        if(error)throw error;
+    const {
+        data:userData
+    } =
+    await supabaseClient
+        .auth
+        .getUser();
 
-        showMessage(
+
+    const admin_id =
+        userData &&
+        userData.user
+        ?
+        userData.user.id
+        :
+        null;
+
+
+    const {
+        error
+    } =
+    await supabaseClient
+        .from("notifications")
+        .insert({
+
+            message:message,
+
+            admin_id:admin_id
+
+        });
+
+
+    if(error){
+
+        msg(
             "notificationMessage",
-            "Announcement saved successfully.",
-            "success"
-        );
-
-        document.getElementById("announcement").value="";
-        await loadNotifications();
-
-    }catch(e){
-        console.error(e);
-        showMessage(
-            "notificationMessage",
-            "Announcement could not be saved: "+e.message,
+            error.message,
             "error"
         );
+
+        return;
+
     }
+
+
+    document.getElementById(
+        "announcement"
+    ).value = "";
+
+
+    msg(
+        "notificationMessage",
+        "Announcement sent.",
+        "success"
+    );
+
+
+    loadNotifications();
+
 }
+
+
+/* =====================================================
+   LOAD NOTIFICATIONS
+===================================================== */
 
 async function loadNotifications(){
-    const area=document.getElementById("notificationsList");
 
-    try{
-        const {data,error}=await supabaseClient
-            .from("admin_notifications")
-            .select("*")
-            .order("created_at",{ascending:false})
-            .limit(20);
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+        .from("notifications")
+        .select("*")
+        .order(
+            "created_at",
+            {
+                ascending:false
+            }
+        )
+        .limit(20);
 
-        if(error)throw error;
 
-        if(!data?.length){
-            area.innerHTML="<p>No announcements available.</p>";
-            return;
-        }
+    const box =
+        document.getElementById(
+            "notificationsList"
+        );
 
-        area.innerHTML=data.map(n=>`
-            <div class="notice">
-                🔔 ${esc(firstValue(n,["message","notification","text"],"-"))}
-                <br>
-                <small>${esc(dateValue(n))}</small>
-            </div>
-        `).join("");
 
-    }catch(e){
-        console.error(e);
-        area.innerHTML=
-            `<p>Notifications could not be loaded: ${esc(e.message)}</p>`;
+    if(
+        error ||
+        !data ||
+        !data.length
+    ){
+
+        box.innerHTML =
+            "No announcements available.";
+
+        return;
+
     }
+
+
+    box.innerHTML =
+        data.map(
+            notification => `
+
+            <div class="notice">
+
+                <strong>
+                    🔔 Announcement
+                </strong>
+
+                <br>
+
+                ${esc(
+                    notification.message
+                )}
+
+                <br>
+
+                <small>
+
+                    ${
+                        notification.created_at
+                        ?
+                        new Date(
+                            notification.created_at
+                        ).toLocaleString()
+                        :
+                        ""
+                    }
+
+                </small>
+
+            </div>
+
+            `
+        ).join("");
+
 }
 
-/* ================= LOGOUT ================= */
+
+/* =====================================================
+   LOGOUT
+===================================================== */
 
 async function logout(){
-    if(!confirm("Are you sure you want to logout?"))return;
 
-    try{
-        await supabaseClient.auth.signOut();
-    }catch(e){
-        console.error("Logout error:",e);
+    if(
+        !confirm(
+            "Are you sure you want to logout?"
+        )
+    ){
+
+        return;
+
     }
 
-    window.location.href="login.html";
+
+    await supabaseClient
+        .auth
+        .signOut();
+
+
+    window.location.href =
+        "login.html";
+
 }
 
-/* ================= START ================= */
+
+/* =====================================================
+   LOAD DASHBOARD
+===================================================== */
+
+async function loadDashboard(){
+
+    const allowed =
+        await checkAdmin();
+
+
+    if(!allowed){
+
+        return;
+
+    }
+
+
+    await loadMemberStats();
+
+    await loadDeposits();
+
+    await loadWithdrawals();
+
+    await loadLedger();
+
+    await loadVideos();
+
+    await loadNotifications();
+
+}
+
+
+/* =====================================================
+   START
+===================================================== */
 
 loadDashboard();
+
 </script>
 
 </body>
