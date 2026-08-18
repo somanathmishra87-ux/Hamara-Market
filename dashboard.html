@@ -1,1055 +1,1664 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<meta name="viewport"
+      content="width=device-width,initial-scale=1.0">
+
 <title>Hamara Market - Member Dashboard</title>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
+
+/* =========================================================
+   GLOBAL
+   ========================================================= */
+
 *{
-  box-sizing:border-box;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
 }
 
 body{
-  margin:0;
-  font-family:Arial,Helvetica,sans-serif;
-  background:#f5f7fb;
-  color:#202538;
-  padding-bottom:78px;
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f5f7fb;
+    color:#202538;
+    padding-bottom:82px;
 }
 
+
+/* =========================================================
+   TOP HEADER
+   ========================================================= */
+
 .top{
-  background:linear-gradient(135deg,#4637d8,#5b45ed);
-  color:#fff;
-  padding:20px 18px 28px;
-  border-radius:0 0 30px 30px;
+    background:linear-gradient(135deg,#4637d8,#5b45ed);
+    color:#fff;
+    padding:20px 18px 30px;
+    border-radius:0 0 30px 30px;
 }
 
 .topbar{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
 }
 
 .brand{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  font-size:22px;
-  font-weight:800;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:22px;
+    font-weight:800;
 }
 
 .hm{
-  width:45px;
-  height:45px;
-  border-radius:13px;
-  background:#fff;
-  color:#493bd8;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:900;
-  font-size:18px;
+    width:45px;
+    height:45px;
+    border-radius:13px;
+    background:#fff;
+    color:#493bd8;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:900;
+    font-size:18px;
 }
 
 .menu{
-  font-size:28px;
-  cursor:pointer;
-  width:42px;
-  height:42px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border-radius:50%;
+    position:relative;
 }
 
-.menu:active{
-  background:#ffffff22;
+.menu-btn{
+    width:42px;
+    height:42px;
+    border:0;
+    background:transparent;
+    color:#fff;
+    font-size:30px;
+    cursor:pointer;
+    line-height:1;
 }
+
+
+/* =========================================================
+   DROPDOWN MENU
+   ========================================================= */
+
+.menu-box{
+    display:none;
+    position:absolute;
+    right:0;
+    top:48px;
+    width:190px;
+    background:#fff;
+    border-radius:14px;
+    box-shadow:0 12px 35px rgba(0,0,0,.20);
+    overflow:hidden;
+    z-index:100;
+}
+
+.menu-box.show{
+    display:block;
+}
+
+.menu-user{
+    padding:13px 15px;
+    border-bottom:1px solid #eceef4;
+    color:#6f7788;
+    font-size:12px;
+}
+
+.menu-user strong{
+    display:block;
+    color:#202538;
+    font-size:14px;
+    margin-top:4px;
+}
+
+.logout-btn{
+    width:100%;
+    border:0;
+    background:#fff;
+    padding:14px 15px;
+    text-align:left;
+    color:#d32f2f;
+    font-size:15px;
+    font-weight:800;
+    cursor:pointer;
+}
+
+.logout-btn:hover{
+    background:#fff4f4;
+}
+
+
+/* =========================================================
+   MEMBER INFORMATION
+   ========================================================= */
 
 .member{
-  margin-top:18px;
-  font-size:15px;
-  line-height:1.8;
+    margin-top:18px;
+    font-size:15px;
+    line-height:1.8;
 }
 
 .member strong{
-  font-size:20px;
+    font-size:20px;
 }
 
+
+/* =========================================================
+   BALANCE CARD
+   ========================================================= */
+
 .card{
-  background:#fff;
-  margin:-13px 14px 14px;
-  border-radius:22px;
-  padding:19px;
-  box-shadow:0 8px 28px #26376b14;
+    background:#fff;
+    margin:-13px 14px 14px;
+    border-radius:22px;
+    padding:19px;
+    box-shadow:0 8px 28px rgba(38,55,107,.08);
 }
 
 .balance{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  text-align:center;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    text-align:center;
 }
 
 .balance>div+div{
-  border-left:1px solid #e5e7ef;
+    border-left:1px solid #e5e7ef;
 }
 
 .label{
-  color:#737b8e;
-  font-size:14px;
+    color:#737b8e;
+    font-size:14px;
 }
 
 .amount{
-  font-size:24px;
-  font-weight:800;
-  margin-top:7px;
+    font-size:24px;
+    font-weight:800;
+    margin-top:7px;
 }
 
+
+/* =========================================================
+   STATISTICS
+   ========================================================= */
+
 .stats{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
-  margin-top:18px;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin-top:18px;
 }
 
 .stat{
-  background:#f7f8fc;
-  border-radius:14px;
-  padding:13px 8px;
-  text-align:center;
+    background:#f7f8fc;
+    border-radius:14px;
+    padding:13px 8px;
+    text-align:center;
 }
 
 .stat b{
-  display:block;
-  font-size:17px;
-  margin-top:5px;
+    display:block;
+    font-size:17px;
+    margin-top:5px;
 }
 
+
+/* =========================================================
+   PROGRESS
+   ========================================================= */
+
 .progress{
-  height:10px;
-  background:#e7e9f1;
-  border-radius:20px;
-  overflow:hidden;
-  margin:13px 0 8px;
+    height:10px;
+    background:#e7e9f1;
+    border-radius:20px;
+    overflow:hidden;
+    margin:13px 0 8px;
 }
 
 .bar{
-  height:100%;
-  width:0%;
-  background:linear-gradient(90deg,#4637d8,#6b57ef);
-  transition:width .3s ease;
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg,#4637d8,#6b57ef);
+    transition:width .3s ease;
 }
 
+.progress-text{
+    color:#737b8e;
+    font-size:14px;
+}
+
+
+/* =========================================================
+   SECTIONS
+   ========================================================= */
+
 .section{
-  padding:4px 14px;
+    padding:4px 14px;
 }
 
 .title{
-  font-size:19px;
-  font-weight:800;
-  margin:14px 0;
+    font-size:19px;
+    font-weight:800;
+    margin:14px 0;
 }
 
+
+/* =========================================================
+   VIDEOS
+   ========================================================= */
+
 .video{
-  background:#fff;
-  border-radius:18px;
-  padding:14px;
-  margin-bottom:10px;
-  display:flex;
-  align-items:center;
-  gap:13px;
-  box-shadow:0 5px 18px #26376b0b;
+    background:#fff;
+    border-radius:18px;
+    padding:14px;
+    margin-bottom:10px;
+    display:flex;
+    align-items:center;
+    gap:13px;
+    box-shadow:0 5px 18px rgba(38,55,107,.07);
 }
 
 .play{
-  width:48px;
-  height:48px;
-  min-width:48px;
-  border-radius:14px;
-  background:#eeeafe;
-  color:#4b3bd8;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:21px;
+    width:48px;
+    height:48px;
+    flex-shrink:0;
+    border-radius:14px;
+    background:#eeeafe;
+    color:#4b3bd8;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:21px;
 }
 
 .vtext{
-  flex:1;
+    flex:1;
+    min-width:0;
 }
 
 .vtext b{
-  display:block;
-  margin-bottom:5px;
+    display:block;
+    margin-bottom:5px;
 }
 
 .vtext small{
-  color:#7a8292;
+    color:#7a8292;
 }
 
 .watch{
-  border:0;
-  background:#493bd8;
-  color:#fff;
-  border-radius:11px;
-  padding:10px 13px;
-  font-weight:700;
-  cursor:pointer;
+    border:0;
+    background:#493bd8;
+    color:#fff;
+    border-radius:11px;
+    padding:10px 13px;
+    font-weight:700;
+    cursor:pointer;
+    white-space:nowrap;
 }
 
 .watch.completed{
-  background:#168b5a;
+    background:#168b5a;
 }
 
+
+/* =========================================================
+   QUICK ACTIONS
+   ========================================================= */
+
 .actions{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
 }
 
 .action{
-  background:#fff;
-  border:0;
-  border-radius:16px;
-  padding:16px 8px;
-  text-align:center;
-  font-weight:700;
-  box-shadow:0 5px 18px #26376b0b;
-  cursor:pointer;
+    background:#fff;
+    border:0;
+    border-radius:16px;
+    padding:16px 8px;
+    text-align:center;
+    font-weight:700;
+    box-shadow:0 5px 18px rgba(38,55,107,.07);
+    cursor:pointer;
 }
 
 .icon{
-  font-size:24px;
-  display:block;
-  margin-bottom:7px;
+    font-size:24px;
+    display:block;
+    margin-bottom:7px;
 }
 
+
+/* =========================================================
+   NOTICE
+   ========================================================= */
+
+.notice{
+    font-size:12px;
+    color:#7c8495;
+    text-align:center;
+    padding:8px 20px;
+    line-height:1.5;
+}
+
+
+/* =========================================================
+   BOTTOM NAVIGATION
+   ========================================================= */
+
 .nav{
-  position:fixed;
-  bottom:0;
-  left:0;
-  right:0;
-  height:70px;
-  background:#fff;
-  border-top:1px solid #e4e6ed;
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  z-index:5;
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    height:70px;
+    background:#fff;
+    border-top:1px solid #e4e6ed;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    z-index:50;
 }
 
 .nav a{
-  text-decoration:none;
-  color:#6d7484;
-  text-align:center;
-  padding-top:10px;
-  font-size:12px;
+    text-decoration:none;
+    color:#6d7484;
+    text-align:center;
+    padding-top:10px;
+    font-size:12px;
 }
 
 .nav a.active{
-  color:#493bd8;
-  font-weight:800;
+    color:#493bd8;
+    font-weight:800;
 }
 
 .nav span{
-  display:block;
-  font-size:22px;
-  margin-bottom:3px;
+    display:block;
+    font-size:22px;
+    margin-bottom:3px;
 }
 
-.notice{
-  font-size:12px;
-  color:#7c8495;
-  text-align:center;
-  padding:8px 20px;
+
+/* =========================================================
+   LOADING SCREEN
+   ========================================================= */
+
+.loading{
+    position:fixed;
+    inset:0;
+    background:#f5f7fb;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:9999;
+    flex-direction:column;
 }
 
-/* LOGOUT MENU */
-
-.logout-menu{
-  display:none;
-  position:absolute;
-  right:14px;
-  top:72px;
-  width:190px;
-  background:#fff;
-  border-radius:15px;
-  box-shadow:0 8px 30px #00000025;
-  z-index:20;
-  overflow:hidden;
+.spinner{
+    width:42px;
+    height:42px;
+    border:4px solid #dddff0;
+    border-top-color:#493bd8;
+    border-radius:50%;
+    animation:spin .8s linear infinite;
 }
 
-.logout-menu.show{
-  display:block;
+.loading-text{
+    margin-top:14px;
+    color:#69748b;
+    font-weight:700;
 }
 
-.logout-menu button{
-  width:100%;
-  border:0;
-  background:#fff;
-  padding:15px;
-  text-align:left;
-  font-size:15px;
-  font-weight:700;
-  color:#d62828;
-  cursor:pointer;
+@keyframes spin{
+    to{
+        transform:rotate(360deg);
+    }
 }
 
-.logout-menu button:active{
-  background:#f5f5f5;
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media(max-width:520px){
+
+    .video{
+        gap:10px;
+    }
+
+    .watch{
+        padding:10px 11px;
+    }
+
 }
 
-/* LOGOUT CONFIRM BOX */
 
-.logout-overlay{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:#00000066;
-  z-index:100;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-}
-
-.logout-overlay.show{
-  display:flex;
-}
-
-.logout-box{
-  width:100%;
-  max-width:360px;
-  background:#fff;
-  border-radius:20px;
-  padding:25px;
-  text-align:center;
-  box-shadow:0 15px 45px #00000035;
-}
-
-.logout-box h3{
-  margin:0 0 10px;
-  font-size:21px;
-}
-
-.logout-box p{
-  color:#737b8e;
-  font-size:14px;
-  margin-bottom:22px;
-}
-
-.logout-buttons{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-}
-
-.logout-buttons button{
-  border:0;
-  border-radius:11px;
-  padding:12px;
-  font-weight:700;
-  cursor:pointer;
-}
-
-.cancel-btn{
-  background:#eef0f5;
-  color:#333;
-}
-
-.confirm-btn{
-  background:#d62828;
-  color:#fff;
-}
+/* =========================================================
+   DESKTOP
+   ========================================================= */
 
 @media(min-width:700px){
 
-  body{
-    max-width:520px;
-    margin:auto;
-  }
+    body{
+        max-width:520px;
+        margin:auto;
+    }
 
-  .nav{
-    max-width:520px;
-    margin:auto;
-  }
+    .nav{
+        max-width:520px;
+        margin:auto;
+    }
 
-  .top{
-    border-radius:0 0 30px 30px;
-  }
+    .top{
+        border-radius:0 0 30px 30px;
+    }
+
 }
+
 </style>
+
 </head>
+
 
 <body>
 
-<header class="top">
 
-  <div class="topbar">
+<!-- =====================================================
+     LOADING
+     ===================================================== -->
 
-    <div class="brand">
-      <div class="hm">HM</div>
-      Hamara Market
+<div
+    id="loading"
+    class="loading">
+
+    <div class="spinner"></div>
+
+    <div class="loading-text">
+        Loading your account...
     </div>
 
-    <div class="menu" onclick="toggleMenu()">⋮</div>
+</div>
 
-  </div>
 
-  <!-- MEMBER INFORMATION -->
-  <div class="member">
 
-    Member ID:
-    <strong id="memberId">Loading...</strong>
+<!-- =====================================================
+     TOP
+     ===================================================== -->
 
-    <br>
+<header class="top">
 
-    Welcome,
-    <strong id="userName">Member</strong>
+    <div class="topbar">
 
-  </div>
+        <div class="brand">
 
-  <!-- LOGOUT MENU -->
-  <div class="logout-menu" id="logoutMenu">
+            <div class="hm">
+                HM
+            </div>
 
-    <button onclick="openLogoutConfirm()">
-      🚪 Logout
-    </button>
+            Hamara Market
 
-  </div>
+        </div>
+
+
+        <!-- MENU -->
+
+        <div class="menu">
+
+            <button
+                class="menu-btn"
+                id="menuBtn"
+                type="button">
+
+                ⋮
+
+            </button>
+
+
+            <div
+                class="menu-box"
+                id="menuBox">
+
+                <div class="menu-user">
+
+                    Logged in as
+
+                    <strong id="menuMemberId">
+                        Member
+                    </strong>
+
+                </div>
+
+
+                <button
+                    class="logout-btn"
+                    id="logoutBtn"
+                    type="button">
+
+                    ⎋ &nbsp; Logout
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- MEMBER DETAILS -->
+
+    <div class="member">
+
+        Member ID:
+
+        <strong id="memberId">
+            Loading...
+        </strong>
+
+        <br>
+
+        Welcome,
+
+        <strong id="userName">
+            Member
+        </strong>
+
+    </div>
 
 </header>
 
 
+
+<!-- =====================================================
+     BALANCE
+     ===================================================== -->
+
 <section class="card">
 
-  <div class="balance">
+    <div class="balance">
 
-    <div>
-      <div class="label">Total Income</div>
-      <div class="amount" id="total">₹0.00</div>
+        <div>
+
+            <div class="label">
+                Total Income
+            </div>
+
+            <div
+                class="amount"
+                id="total">
+
+                ₹0.00
+
+            </div>
+
+        </div>
+
+
+        <div>
+
+            <div class="label">
+                Wallet Balance
+            </div>
+
+            <div
+                class="amount"
+                id="wallet">
+
+                ₹0.00
+
+            </div>
+
+        </div>
+
     </div>
 
-    <div>
-      <div class="label">Wallet Balance</div>
-      <div class="amount" id="wallet">₹0.00</div>
+
+    <div class="stats">
+
+        <div class="stat">
+
+            <span class="label">
+                Today's Videos
+            </span>
+
+            <b id="watched">
+                0 / 10
+            </b>
+
+        </div>
+
+
+        <div class="stat">
+
+            <span class="label">
+                Per Video
+            </span>
+
+            <b>
+                ₹5
+            </b>
+
+        </div>
+
+
+        <div class="stat">
+
+            <span class="label">
+                Today's Income
+            </span>
+
+            <b id="today">
+                ₹0.00
+            </b>
+
+        </div>
+
     </div>
 
-  </div>
 
+    <div class="progress">
 
-  <div class="stats">
+        <div
+            class="bar"
+            id="bar">
 
-    <div class="stat">
-      <span class="label">Today's Videos</span>
-      <b id="watched">0 / 10</b>
+        </div>
+
     </div>
 
-    <div class="stat">
-      <span class="label">Per Video</span>
-      <b>₹5</b>
+
+    <div
+        class="progress-text"
+        id="progressText">
+
+        0 of 10 eligible videos completed today
+
     </div>
-
-    <div class="stat">
-      <span class="label">Today's Income</span>
-      <b id="today">₹0.00</b>
-    </div>
-
-  </div>
-
-
-  <div class="progress">
-    <div class="bar" id="bar"></div>
-  </div>
-
-  <div class="label" id="progressText">
-    0 of 10 eligible videos completed today
-  </div>
 
 </section>
 
 
+
+<!-- =====================================================
+     VIDEOS
+     ===================================================== -->
+
+<div
+    class="section"
+    id="videosSection">
+
+    <div class="title">
+
+        Today's Sponsored Videos
+
+    </div>
+
+
+    <div id="videos">
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     QUICK ACTIONS
+     ===================================================== -->
+
 <div class="section">
 
-  <div class="title">
-    Today's Sponsored Videos
-  </div>
+    <div class="title">
 
-  <div id="videos"></div>
+        Quick Actions
+
+    </div>
+
+
+    <div class="actions">
+
+
+        <button
+            class="action"
+            type="button"
+            onclick="showWithdrawal()">
+
+            <span class="icon">
+                💰
+            </span>
+
+            Withdrawal
+
+        </button>
+
+
+        <button
+            class="action"
+            type="button"
+            onclick="showReport()">
+
+            <span class="icon">
+                ☆
+            </span>
+
+            Report
+
+        </button>
+
+
+        <button
+            class="action"
+            type="button"
+            onclick="showProfile()">
+
+            <span class="icon">
+                ♙
+            </span>
+
+            Profile
+
+        </button>
+
+
+    </div>
 
 </div>
 
 
-<div class="section">
 
-  <div class="title">
-    Quick Actions
-  </div>
-
-  <div class="actions">
-
-    <button
-      class="action"
-      onclick="alert('Withdrawal section will be connected to a secure payment system.')"
-    >
-      <span class="icon">💰</span>
-      Withdrawal
-    </button>
-
-
-    <button
-      class="action"
-      onclick="alert('Income report will be available here.')"
-    >
-      <span class="icon">☆</span>
-      Report
-    </button>
-
-
-    <button
-      class="action"
-      onclick="alert('Profile section will be available here.')"
-    >
-      <span class="icon">◯</span>
-      Profile
-    </button>
-
-  </div>
-
-</div>
-
+<!-- =====================================================
+     NOTICE
+     ===================================================== -->
 
 <p class="notice">
-  Daily viewing window: 12:00 AM – 11:59 PM.
-  Reward figures shown here are demo values until a secure backend
-  and verified payment system are connected.
+
+    Daily viewing window:
+    12:00 AM – 11:59 PM.
+
+    Reward figures shown here are demo values until
+    a secure backend and verified payment system are connected.
+
 </p>
 
 
+
+<!-- =====================================================
+     BOTTOM NAV
+     ===================================================== -->
+
 <nav class="nav">
 
-  <a class="active" href="dashboard.html">
-    <span>⌂</span>
-    Home
-  </a>
+
+    <a
+        class="active"
+        href="dashboard.html">
+
+        <span>
+            ⌂
+        </span>
+
+        Home
+
+    </a>
 
 
-  <a href="#" onclick="scrollToVideos();return false">
-    <span>◷</span>
-    Videos
-  </a>
+    <a
+        href="#"
+        onclick="scrollToVideos();return false">
+
+        <span>
+            ◷
+        </span>
+
+        Videos
+
+    </a>
 
 
-  <a
-    href="#"
-    onclick="alert('Withdrawal section will be connected later.');return false"
-  >
-    <span>₹</span>
-    Withdraw
-  </a>
+    <a
+        href="#"
+        onclick="showWithdrawal();return false">
+
+        <span>
+            ₹
+        </span>
+
+        Withdraw
+
+    </a>
 
 
-  <a
-    href="#"
-    onclick="alert('Profile section will be connected later.');return false"
-  >
-    <span>♙</span>
-    Profile
-  </a>
+    <a
+        href="#"
+        onclick="showProfile();return false">
+
+        <span>
+            ♙
+        </span>
+
+        Profile
+
+    </a>
+
 
 </nav>
 
 
-<!-- LOGOUT CONFIRMATION -->
-
-<div class="logout-overlay" id="logoutOverlay">
-
-  <div class="logout-box">
-
-    <h3>Logout?</h3>
-
-    <p>
-      Are you sure you want to logout from your member account?
-    </p>
-
-    <div class="logout-buttons">
-
-      <button
-        class="cancel-btn"
-        onclick="closeLogoutConfirm()"
-      >
-        Cancel
-      </button>
-
-      <button
-        class="confirm-btn"
-        onclick="memberLogout()"
-      >
-        Logout
-      </button>
-
-    </div>
-
-  </div>
-
-</div>
-
 
 <script>
 
-/* ============================================================
-   MEMBER ID / MEMBER NAME
-   ============================================================ */
+/* =========================================================
+   SUPABASE CONFIGURATION
+   ========================================================= */
 
-function getMemberData(){
+const SUPABASE_URL =
+    "https://yaxingstvkaqfmvtyuis.supabase.co";
 
-  let memberId = "";
-  let memberName = "";
 
-  /*
-    We check several possible storage names so that
-    this dashboard can work with the existing login system.
-  */
+const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_3dA1_NPBVCHCzcrf155Qtw_16IUxNDt";
 
-  const possibleMemberKeys = [
-    "hm_member_id",
-    "member_id",
-    "memberId",
-    "memberID",
-    "currentMemberId",
-    "current_member_id",
-    "loggedInMemberId",
-    "logged_in_member_id"
-  ];
 
-  const possibleNameKeys = [
-    "hm_member_name",
-    "member_name",
-    "memberName",
-    "userName",
-    "user_name",
-    "currentMemberName",
-    "current_member_name",
-    "loggedInMemberName"
-  ];
+/* =========================================================
+   SUPABASE CLIENT
+   ========================================================= */
 
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY,
+        {
+            auth:{
+                persistSession:true,
+                autoRefreshToken:true,
+                detectSessionInUrl:true
+            }
+        }
+    );
 
-  /* Check sessionStorage first */
 
-  for(const key of possibleMemberKeys){
+/* =========================================================
+   GLOBAL MEMBER DATA
+   ========================================================= */
 
-    const value = sessionStorage.getItem(key);
+let currentUser = null;
 
-    if(value && value.trim()){
-      memberId = value.trim();
-      break;
-    }
-
-  }
-
-
-  /* Then localStorage */
-
-  if(!memberId){
-
-    for(const key of possibleMemberKeys){
-
-      const value = localStorage.getItem(key);
-
-      if(value && value.trim()){
-        memberId = value.trim();
-        break;
-      }
-
-    }
-
-  }
-
-
-  /* Member Name */
-
-  for(const key of possibleNameKeys){
-
-    const value = sessionStorage.getItem(key);
-
-    if(value && value.trim()){
-      memberName = value.trim();
-      break;
-    }
-
-  }
-
-
-  if(!memberName){
-
-    for(const key of possibleNameKeys){
-
-      const value = localStorage.getItem(key);
-
-      if(value && value.trim()){
-        memberName = value.trim();
-        break;
-      }
-
-    }
-
-  }
-
-
-  return {
-    memberId:memberId,
-    memberName:memberName
-  };
-
-}
-
-
-/* ============================================================
-   DISPLAY MEMBER INFORMATION
-   ============================================================ */
-
-function loadMember(){
-
-  const data = getMemberData();
-
-  const memberIdElement =
-    document.getElementById("memberId");
-
-  const nameElement =
-    document.getElementById("userName");
-
-
-  if(data.memberId){
-
-    memberIdElement.textContent =
-      data.memberId;
-
-  }else{
-
-    memberIdElement.textContent =
-      "Member ID";
-
-  }
-
-
-  if(data.memberName){
-
-    nameElement.textContent =
-      data.memberName;
-
-  }else{
-
-    nameElement.textContent =
-      "Member";
-
-  }
-
-}
-
-
-/* Load member information */
-
-loadMember();
-
-
-/* ============================================================
-   LOGOUT MENU
-   ============================================================ */
-
-function toggleMenu(){
-
-  const menu =
-    document.getElementById("logoutMenu");
-
-  menu.classList.toggle("show");
-
-}
-
-
-/* ============================================================
-   LOGOUT CONFIRMATION
-   ============================================================ */
-
-function openLogoutConfirm(){
-
-  document
-    .getElementById("logoutMenu")
-    .classList.remove("show");
-
-  document
-    .getElementById("logoutOverlay")
-    .classList.add("show");
-
-}
-
-
-function closeLogoutConfirm(){
-
-  document
-    .getElementById("logoutOverlay")
-    .classList.remove("show");
-
-}
-
-
-/* ============================================================
-   MEMBER LOGOUT
-   IMPORTANT:
-   ADMIN SESSION / ADMIN STORAGE IS NOT TOUCHED
-   ============================================================ */
-
-function memberLogout(){
-
-  /*
-    Only member-related local/session storage is removed.
-    Admin data is intentionally NOT removed.
-  */
-
-  const memberKeys = [
-
-    "hm_member_id",
-    "member_id",
-    "memberId",
-    "memberID",
-    "currentMemberId",
-    "current_member_id",
-    "loggedInMemberId",
-    "logged_in_member_id",
-
-    "hm_member_name",
-    "member_name",
-    "memberName",
-    "userName",
-    "user_name",
-    "currentMemberName",
-    "current_member_name",
-    "loggedInMemberName",
-
-    "member_session",
-    "member_logged_in",
-    "memberLogin",
-    "member_loggedin"
-
-  ];
-
-
-  /* Remove only member keys from sessionStorage */
-
-  memberKeys.forEach(function(key){
-
-    sessionStorage.removeItem(key);
-
-  });
-
-
-  /* Remove only member keys from localStorage */
-
-  memberKeys.forEach(function(key){
-
-    localStorage.removeItem(key);
-
-  });
-
-
-  /*
-    Do NOT call Supabase auth.signOut() here.
-    That could affect an Admin session if the same
-    browser session is being used.
-  */
-
-
-  window.location.href =
-    "login.html";
-
-}
-
-
-/* ============================================================
-   CLOSE MENU WHEN CLICKING OUTSIDE
-   ============================================================ */
-
-document.addEventListener("click",function(event){
-
-  const menu =
-    document.getElementById("logoutMenu");
-
-  const menuButton =
-    document.querySelector(".menu");
-
-
-  if(
-    menu.classList.contains("show") &&
-    !menu.contains(event.target) &&
-    !menuButton.contains(event.target)
-  ){
-
-    menu.classList.remove("show");
-
-  }
-
-});
-
-
-/* ============================================================
-   SPONSORED VIDEOS
-   ============================================================ */
-
-const videos =
-  document.getElementById("videos");
+let currentProfile = null;
 
 let watched = 0;
 
 
+/* =========================================================
+   VIDEO LIST
+   ========================================================= */
+
 const videoNames = [
 
-  "Sponsored Video 01",
-  "Sponsored Video 02",
-  "Sponsored Video 03",
-  "Sponsored Video 04",
-  "Sponsored Video 05",
-  "Sponsored Video 06",
-  "Sponsored Video 07",
-  "Sponsored Video 08",
-  "Sponsored Video 09",
-  "Sponsored Video 10"
+    "Sponsored Video 01",
+    "Sponsored Video 02",
+    "Sponsored Video 03",
+    "Sponsored Video 04",
+    "Sponsored Video 05",
+    "Sponsored Video 06",
+    "Sponsored Video 07",
+    "Sponsored Video 08",
+    "Sponsored Video 09",
+    "Sponsored Video 10"
 
 ];
 
 
-videoNames.forEach(function(name,i){
+/* =========================================================
+   LOAD MEMBER ACCOUNT
+   ========================================================= */
 
-  const el =
-    document.createElement("div");
+async function loadMemberAccount(){
 
-  el.className =
-    "video";
+    try{
 
+        /* -----------------------------------------------
+           GET CURRENT SESSION
+           ----------------------------------------------- */
 
-  el.innerHTML = `
-
-    <div class="play">
-      ▶
-    </div>
-
-    <div class="vtext">
-
-      <b>${name}</b>
-
-      <small>
-        Eligible reward: ₹5
-      </small>
-
-    </div>
-
-    <button
-      class="watch"
-      id="w${i}"
-    >
-      Watch
-    </button>
-
-  `;
+        const {
+            data,
+            error
+        } =
+            await supabaseClient
+            .auth
+            .getSession();
 
 
-  videos.appendChild(el);
+        if(error){
+
+            console.error(
+                "Session error:",
+                error
+            );
+
+            goToLogin();
+
+            return;
+
+        }
 
 
-  document
-    .getElementById("w"+i)
-    .onclick = function(){
+        /* -----------------------------------------------
+           NO LOGIN SESSION
+           ----------------------------------------------- */
 
-      if(el.dataset.done)
+        if(
+            !data ||
+            !data.session ||
+            !data.session.user
+        ){
+
+            goToLogin();
+
+            return;
+
+        }
+
+
+        currentUser =
+            data.session.user;
+
+
+        console.log(
+            "Logged-in Auth User:",
+            currentUser.id
+        );
+
+
+        /* -----------------------------------------------
+           LOAD PROFILE OF EXACT LOGGED-IN USER
+           ----------------------------------------------- */
+
+        const {
+            data:profile,
+            error:profileError
+        } =
+            await supabaseClient
+            .from("profiles")
+            .select(
+                "id,member_id,name,mobile,email,role,active"
+            )
+            .eq(
+                "id",
+                currentUser.id
+            )
+            .maybeSingle();
+
+
+        if(profileError){
+
+            console.error(
+                "Profile loading error:",
+                profileError
+            );
+
+            alert(
+                "Unable to load your member profile."
+            );
+
+            await supabaseClient
+            .auth
+            .signOut();
+
+            goToLogin();
+
+            return;
+
+        }
+
+
+        /* -----------------------------------------------
+           PROFILE NOT FOUND
+           ----------------------------------------------- */
+
+        if(!profile){
+
+            alert(
+                "Member profile not found."
+            );
+
+            await supabaseClient
+            .auth
+            .signOut();
+
+            goToLogin();
+
+            return;
+
+        }
+
+
+        currentProfile =
+            profile;
+
+
+        console.log(
+            "Loaded Profile:",
+            currentProfile
+        );
+
+
+        /* -----------------------------------------------
+           ADMIN PROTECTION
+           ----------------------------------------------- */
+
+        const role =
+            String(
+                currentProfile.role || ""
+            )
+            .trim()
+            .toLowerCase();
+
+
+        if(role === "admin"){
+
+            window.location.href =
+                "admin-dashboard.html";
+
+            return;
+
+        }
+
+
+        /* -----------------------------------------------
+           ONLY MEMBER CAN USE THIS DASHBOARD
+           ----------------------------------------------- */
+
+        if(role !== "member"){
+
+            alert(
+                "This account does not have a valid member role."
+            );
+
+            await supabaseClient
+            .auth
+            .signOut();
+
+            goToLogin();
+
+            return;
+
+        }
+
+
+        /* -----------------------------------------------
+           DISPLAY ACTUAL MEMBER DATA
+           ----------------------------------------------- */
+
+        const actualMemberId =
+            currentProfile.member_id ||
+            "Member ID";
+
+
+        const actualName =
+            currentProfile.name ||
+            "Member";
+
+
+        document.getElementById(
+            "memberId"
+        ).textContent =
+            actualMemberId;
+
+
+        document.getElementById(
+            "userName"
+        ).textContent =
+            actualName;
+
+
+        document.getElementById(
+            "menuMemberId"
+        ).textContent =
+            actualMemberId;
+
+
+        /* -----------------------------------------------
+           HIDE LOADING SCREEN
+           ----------------------------------------------- */
+
+        document.getElementById(
+            "loading"
+        ).style.display =
+            "none";
+
+
+        /* -----------------------------------------------
+           CREATE VIDEOS
+           ----------------------------------------------- */
+
+        createVideos();
+
+
+        updateDashboard();
+
+
+    }catch(error){
+
+        console.error(
+            "Dashboard error:",
+            error
+        );
+
+
+        alert(
+            "Unable to load member dashboard."
+        );
+
+
+        goToLogin();
+
+    }
+
+}
+
+
+/* =========================================================
+   CREATE VIDEOS
+   ========================================================= */
+
+function createVideos(){
+
+    const videos =
+        document.getElementById(
+            "videos"
+        );
+
+
+    videos.innerHTML = "";
+
+
+    videoNames.forEach(
+        function(name,index){
+
+            const el =
+                document.createElement(
+                    "div"
+                );
+
+
+            el.className =
+                "video";
+
+
+            el.innerHTML = `
+
+                <div class="play">
+                    ▶
+                </div>
+
+                <div class="vtext">
+
+                    <b>
+                        ${name}
+                    </b>
+
+                    <small>
+                        Eligible reward: ₹5
+                    </small>
+
+                </div>
+
+                <button
+                    class="watch"
+                    id="w${index}"
+                    type="button">
+
+                    Watch
+
+                </button>
+
+            `;
+
+
+            videos.appendChild(el);
+
+
+            document
+            .getElementById(
+                "w" + index
+            )
+            .addEventListener(
+                "click",
+                function(){
+
+                    completeVideo(
+                        el,
+                        index
+                    );
+
+                }
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   COMPLETE VIDEO
+   ========================================================= */
+
+function completeVideo(
+    element,
+    index
+){
+
+    if(
+        element.dataset.done === "1"
+    ){
+
         return;
 
+    }
 
-      el.dataset.done =
+
+    element.dataset.done =
         "1";
 
 
-      watched++;
+    watched++;
 
 
-      this.textContent =
+    const button =
+        document.getElementById(
+            "w" + index
+        );
+
+
+    button.textContent =
         "Completed";
 
 
-      this.classList.add(
+    button.classList.add(
         "completed"
-      );
+    );
 
 
-      update();
-
-    };
-
-});
-
-
-/* ============================================================
-   UPDATE DASHBOARD
-   ============================================================ */
-
-function update(){
-
-  const income =
-    watched * 5;
-
-
-  document
-    .getElementById("watched")
-    .textContent =
-      watched + " / 10";
-
-
-  document
-    .getElementById("today")
-    .textContent =
-      "₹" + income.toFixed(2);
-
-
-  document
-    .getElementById("wallet")
-    .textContent =
-      "₹" + income.toFixed(2);
-
-
-  document
-    .getElementById("total")
-    .textContent =
-      "₹" + income.toFixed(2);
-
-
-  document
-    .getElementById("bar")
-    .style.width =
-      (watched * 10) + "%";
-
-
-  document
-    .getElementById("progressText")
-    .textContent =
-      watched +
-      " of 10 eligible videos completed today";
+    updateDashboard();
 
 }
 
 
-/* ============================================================
-   VIDEO NAVIGATION
-   ============================================================ */
+/* =========================================================
+   UPDATE DASHBOARD
+   ========================================================= */
+
+function updateDashboard(){
+
+    const income =
+        watched * 5;
+
+
+    document.getElementById(
+        "watched"
+    ).textContent =
+        watched + " / 10";
+
+
+    document.getElementById(
+        "today"
+    ).textContent =
+        "₹" +
+        income.toFixed(2);
+
+
+    document.getElementById(
+        "wallet"
+    ).textContent =
+        "₹" +
+        income.toFixed(2);
+
+
+    document.getElementById(
+        "total"
+    ).textContent =
+        "₹" +
+        income.toFixed(2);
+
+
+    document.getElementById(
+        "bar"
+    ).style.width =
+        (watched * 10) + "%";
+
+
+    document.getElementById(
+        "progressText"
+    ).textContent =
+        watched +
+        " of 10 eligible videos completed today";
+
+}
+
+
+/* =========================================================
+   LOGOUT
+   ========================================================= */
+
+async function logoutMember(){
+
+    const confirmLogout =
+        confirm(
+            "Are you sure you want to logout?"
+        );
+
+
+    if(!confirmLogout){
+
+        return;
+
+    }
+
+
+    const logoutButton =
+        document.getElementById(
+            "logoutBtn"
+        );
+
+
+    logoutButton.disabled =
+        true;
+
+
+    logoutButton.textContent =
+        "Logging out...";
+
+
+    try{
+
+        const {
+            error
+        } =
+            await supabaseClient
+            .auth
+            .signOut();
+
+
+        if(error){
+
+            console.error(
+                "Logout error:",
+                error
+            );
+
+            alert(
+                "Logout failed. Please try again."
+            );
+
+
+            logoutButton.disabled =
+                false;
+
+
+            logoutButton.textContent =
+                "⎋  Logout";
+
+
+            return;
+
+        }
+
+
+        /* -----------------------------------------------
+           REMOVE LOCAL SESSION DATA
+           ----------------------------------------------- */
+
+        try{
+
+            localStorage.removeItem(
+                "supabase.auth.token"
+            );
+
+        }catch(e){}
+
+
+        window.location.replace(
+            "login.html"
+        );
+
+
+    }catch(error){
+
+        console.error(
+            "Logout exception:",
+            error
+        );
+
+
+        alert(
+            "Unable to logout."
+        );
+
+
+        logoutButton.disabled =
+            false;
+
+
+        logoutButton.textContent =
+            "⎋  Logout";
+
+    }
+
+}
+
+
+/* =========================================================
+   MENU OPEN / CLOSE
+   ========================================================= */
+
+document
+.getElementById(
+    "menuBtn"
+)
+.addEventListener(
+    "click",
+    function(event){
+
+        event.stopPropagation();
+
+
+        document
+        .getElementById(
+            "menuBox"
+        )
+        .classList.toggle(
+            "show"
+        );
+
+    }
+);
+
+
+/* =========================================================
+   CLOSE MENU WHEN OUTSIDE CLICK
+   ========================================================= */
+
+document.addEventListener(
+    "click",
+    function(event){
+
+        const menu =
+            document.getElementById(
+                "menuBox"
+            );
+
+
+        const menuButton =
+            document.getElementById(
+                "menuBtn"
+            );
+
+
+        if(
+            !menu.contains(event.target) &&
+            event.target !== menuButton
+        ){
+
+            menu.classList.remove(
+                "show"
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   LOGOUT BUTTON
+   ========================================================= */
+
+document
+.getElementById(
+    "logoutBtn"
+)
+.addEventListener(
+    "click",
+    logoutMember
+);
+
+
+/* =========================================================
+   GO TO LOGIN
+   ========================================================= */
+
+function goToLogin(){
+
+    window.location.replace(
+        "login.html"
+    );
+
+}
+
+
+/* =========================================================
+   VIDEOS NAVIGATION
+   ========================================================= */
 
 function scrollToVideos(){
 
-  window.scrollTo({
-
-    top:360,
-
-    behavior:"smooth"
-
-  });
+    document
+    .getElementById(
+        "videosSection"
+    )
+    .scrollIntoView({
+        behavior:"smooth"
+    });
 
 }
+
+
+/* =========================================================
+   WITHDRAWAL
+   ========================================================= */
+
+function showWithdrawal(){
+
+    alert(
+        "Withdrawal section will be connected to the secure payment system."
+    );
+
+}
+
+
+/* =========================================================
+   REPORT
+   ========================================================= */
+
+function showReport(){
+
+    alert(
+        "Income report section will be available here."
+    );
+
+}
+
+
+/* =========================================================
+   PROFILE
+   ========================================================= */
+
+function showProfile(){
+
+    if(!currentProfile){
+
+        alert(
+            "Profile is loading..."
+        );
+
+        return;
+
+    }
+
+
+    alert(
+        "Member ID: " +
+        (currentProfile.member_id || "") +
+        "\n\nName: " +
+        (currentProfile.name || "") +
+        "\n\nMobile: " +
+        (currentProfile.mobile || "") +
+        "\n\nEmail: " +
+        (currentProfile.email || "")
+    );
+
+}
+
+
+/* =========================================================
+   START DASHBOARD
+   ========================================================= */
+
+loadMemberAccount();
+
+
+/* =========================================================
+   AUTH STATE CHANGE
+   ========================================================= */
+
+supabaseClient
+.auth
+.onAuthStateChange(
+    function(event,session){
+
+        console.log(
+            "Auth state:",
+            event
+        );
+
+
+        if(
+            event === "SIGNED_OUT"
+        ){
+
+            goToLogin();
+
+        }
+
+    }
+);
 
 </script>
 
 </body>
+
 </html>
