@@ -9,6 +9,8 @@
 
 <title>Hamara Market - Member Registration</title>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
 
 *{
@@ -252,9 +254,10 @@ button:disabled{
 
   <a
     href="login.html"
-    class="login-btn"
-  >
+    class="login-btn">
+
     Login
+
   </a>
 
 </header>
@@ -302,9 +305,10 @@ Sponsor ID
 <div
   id="sponsorStatus"
   class="status"
-  style="color:#13753c"
->
+  style="color:#13753c">
+
 ✓ Company Sponsor
+
 </div>
 
 
@@ -435,9 +439,10 @@ Password
 
 <span
   class="eye"
-  onclick="togglePassword('password',this)"
->
+  onclick="togglePassword('password',this)">
+
 👁
+
 </span>
 
 </div>
@@ -467,9 +472,10 @@ Confirm Password
 
 <span
   class="eye"
-  onclick="togglePassword('confirmPassword',this)"
->
+  onclick="togglePassword('confirmPassword',this)">
+
 👁
+
 </span>
 
 </div>
@@ -482,9 +488,10 @@ Confirm Password
 
 <button
   type="submit"
-  id="registerBtn"
->
+  id="registerBtn">
+
 Create Member Account
+
 </button>
 
 
@@ -494,8 +501,8 @@ Create Member Account
 
 <div
   id="message"
-  class="message"
->
+  class="message">
+
 </div>
 
 
@@ -537,7 +544,9 @@ Create Member Account
 
 
 <div class="footer">
+
 © Hamara Market
+
 </div>
 
 
@@ -575,6 +584,16 @@ const COMPANY_NAME =
 "Hamara Market";
 
 
+/* =========================================================
+   SUPABASE CLIENT
+   ========================================================= */
+
+const supabaseClient =
+window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY
+);
+
 
 /* =========================================================
    ELEMENTS
@@ -598,7 +617,6 @@ document.getElementById(
 );
 
 
-
 /* =========================================================
    COMPANY SPONSOR
    ========================================================= */
@@ -620,6 +638,20 @@ function setCompany(){
 }
 
 
+/* =========================================================
+   CLEAR SPONSOR
+   ========================================================= */
+
+function clearSponsor(){
+
+  sponsorNameInput.value =
+    "";
+
+  sponsorStatus.textContent =
+    "";
+
+}
+
 
 /* =========================================================
    URL REFERRAL
@@ -639,26 +671,6 @@ const urlSponsor =
 .toUpperCase();
 
 
-if(
-  urlSponsor
-){
-
-  sponsorIdInput.value =
-    urlSponsor;
-
-  sponsorNameInput.value =
-    "";
-
-  sponsorStatus.textContent =
-    "Checking Sponsor...";
-
-  sponsorStatus.style.color =
-    "#666";
-
-}
-
-
-
 /* =========================================================
    CHECK SPONSOR
    ========================================================= */
@@ -675,7 +687,9 @@ async function checkSponsor(){
     id;
 
 
-  /* COMPANY */
+  /* -----------------------------------------------
+     COMPANY SPONSOR
+     ----------------------------------------------- */
 
   if(
     id === COMPANY_ID
@@ -688,12 +702,15 @@ async function checkSponsor(){
   }
 
 
+  /* -----------------------------------------------
+     EMPTY
+     ----------------------------------------------- */
+
   if(
     !id
   ){
 
-    sponsorNameInput.value =
-      "";
+    clearSponsor();
 
     sponsorStatus.textContent =
       "Enter Sponsor ID";
@@ -718,60 +735,184 @@ async function checkSponsor(){
 
   try{
 
-    const response =
-      await fetch(
-        EDGE_FUNCTION_URL,
+    /* =================================================
+       IMPORTANT
+
+       Directly call the secure SQL function:
+
+       check_sponsor
+
+       This is the same function already used
+       by the registration Edge Function.
+
+       It returns the verified sponsor record.
+       ================================================= */
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient
+      .rpc(
+        "check_sponsor",
         {
-          method:"POST",
-
-          headers:{
-            "Content-Type":
-              "application/json",
-
-            "apikey":
-              SUPABASE_ANON_KEY
-          },
-
-          body:JSON.stringify({
-
-            action:
-              "check_sponsor",
-
-            sponsor_id:
-              id
-
-          })
+          p_member_id:
+            id
         }
       );
 
 
-    /*
-      The registration Edge Function may not
-      expose a separate sponsor-check action.
-
-      Therefore, for non-company sponsors,
-      the registration request itself will
-      perform the final secure sponsor check.
-    */
+    console.log(
+      "Sponsor lookup:",
+      data,
+      error
+    );
 
 
-    /*
-      Keep the entered sponsor ID visible.
-      We don't falsely mark it verified here.
-    */
+    if(error){
+
+      console.error(
+        "Sponsor RPC error:",
+        error
+      );
+
+      sponsorNameInput.value =
+        "";
+
+      sponsorStatus.textContent =
+        "Unable to verify Sponsor ID.";
+
+      sponsorStatus.style.color =
+        "#c62828";
+
+      return false;
+
+    }
+
+
+    /* -----------------------------------------------
+       NO SPONSOR FOUND
+       ----------------------------------------------- */
+
+    if(
+      !data ||
+      (
+        Array.isArray(data) &&
+        data.length === 0
+      )
+    ){
+
+      sponsorNameInput.value =
+        "";
+
+      sponsorStatus.textContent =
+        "❌ Invalid Sponsor ID";
+
+      sponsorStatus.style.color =
+        "#c62828";
+
+      return false;
+
+    }
+
+
+    /* -----------------------------------------------
+       GET FIRST ROW
+
+       RPC can return an array or object.
+       ----------------------------------------------- */
+
+    let sponsor = null;
+
+
+    if(
+      Array.isArray(data)
+    ){
+
+      sponsor =
+        data[0] || null;
+
+    }else if(
+      data &&
+      typeof data === "object"
+    ){
+
+      sponsor =
+        data;
+
+    }
+
+
+    if(!sponsor){
+
+      sponsorNameInput.value =
+        "";
+
+      sponsorStatus.textContent =
+        "❌ Invalid Sponsor ID";
+
+      sponsorStatus.style.color =
+        "#c62828";
+
+      return false;
+
+    }
+
+
+    /* -----------------------------------------------
+       FIND SPONSOR NAME
+
+       The SQL function normally returns name.
+
+       We also support common alternate
+       column names so the page remains
+       compatible with the existing function.
+       ----------------------------------------------- */
+
+    const sponsorName =
+      sponsor.name ||
+      sponsor.full_name ||
+      sponsor.member_name ||
+      "";
+
+
+    if(!sponsorName){
+
+      sponsorNameInput.value =
+        "";
+
+      sponsorStatus.textContent =
+        "✓ Sponsor verified, but name is unavailable.";
+
+      sponsorStatus.style.color =
+        "#c47b00";
+
+      /*
+        Sponsor is still considered valid because
+        the SQL function returned a sponsor record.
+      */
+
+      return true;
+
+    }
+
+
+    /* -----------------------------------------------
+       DISPLAY SPONSOR NAME
+       ----------------------------------------------- */
+
+    sponsorNameInput.value =
+      String(
+        sponsorName
+      );
+
 
     sponsorStatus.textContent =
-      "✓ Sponsor ID entered";
+      "✓ Sponsor verified";
 
     sponsorStatus.style.color =
       "#13753c";
 
-
-    /*
-      Return true so the final secure
-      registration function can perform
-      the authoritative sponsor validation.
-    */
 
     return true;
 
@@ -779,24 +920,26 @@ async function checkSponsor(){
   }catch(error){
 
     console.error(
-      "Sponsor check error:",
+      "Sponsor lookup exception:",
       error
     );
 
 
+    sponsorNameInput.value =
+      "";
+
     sponsorStatus.textContent =
-      "Sponsor will be verified during registration";
+      "Unable to verify Sponsor ID.";
 
     sponsorStatus.style.color =
-      "#666";
+      "#c62828";
 
 
-    return true;
+    return false;
 
   }
 
 }
-
 
 
 /* =========================================================
@@ -813,13 +956,20 @@ sponsorIdInput.addEventListener(
     sponsorIdInput.value =
       sponsorIdInput.value
         .toUpperCase()
-        .replace(/\s/g,"");
+        .replace(
+          /\s/g,
+          ""
+        );
 
 
     clearTimeout(
       sponsorTimer
     );
 
+
+    /*
+      Wait 500ms after typing stops.
+    */
 
     sponsorTimer =
       setTimeout(
@@ -830,6 +980,24 @@ sponsorIdInput.addEventListener(
   }
 );
 
+
+/* =========================================================
+   SPONSOR BLUR
+   ========================================================= */
+
+sponsorIdInput.addEventListener(
+  "blur",
+  function(){
+
+    clearTimeout(
+      sponsorTimer
+    );
+
+
+    checkSponsor();
+
+  }
+);
 
 
 /* =========================================================
@@ -871,7 +1039,6 @@ function togglePassword(
 }
 
 
-
 /* =========================================================
    MESSAGE
    ========================================================= */
@@ -897,7 +1064,6 @@ function showMessage(
       : "message";
 
 
-
   box.scrollIntoView({
     behavior:"smooth",
     block:"nearest"
@@ -906,424 +1072,440 @@ function showMessage(
 }
 
 
-
 /* =========================================================
    REGISTRATION
    ========================================================= */
 
 document
-  .getElementById(
-    "registrationForm"
-  )
-  .addEventListener(
-    "submit",
-    async function(event){
-
-      event.preventDefault();
-
-
-      const button =
-        document.getElementById(
-          "registerBtn"
-        );
-
-
-      /* ===============================================
-         INPUTS
-         =============================================== */
-
-      const name =
-        document
-          .getElementById(
-            "name"
-          )
-          .value
-          .trim();
-
-
-      const address =
-        document
-          .getElementById(
-            "address"
-          )
-          .value
-          .trim();
-
-
-      const mobile =
-        document
-          .getElementById(
-            "mobile"
-          )
-          .value
-          .trim();
-
-
-      const email =
-        document
-          .getElementById(
-            "email"
-          )
-          .value
-          .trim();
-
-
-      const password =
-        document
-          .getElementById(
-            "password"
-          )
-          .value;
-
-
-      const confirmPassword =
-        document
-          .getElementById(
-            "confirmPassword"
-          )
-          .value;
-
-
-      const sponsorId =
-        sponsorIdInput.value
-          .trim()
-          .toUpperCase();
-
-
-
-      /* ===============================================
-         VALIDATION
-         =============================================== */
-
-      if(
-        name.length < 2
-      ){
-
-        showMessage(
-          "Please enter your full name.",
-          "error"
-        );
-
-        return;
-
-      }
-
-
-      if(
-        address.length < 2
-      ){
-
-        showMessage(
-          "Please enter your address.",
-          "error"
-        );
-
-        return;
-
-      }
-
-
-      if(
-        !/^\d{10}$/.test(
-          mobile
-        )
-      ){
-
-        showMessage(
-          "Enter a valid 10 digit mobile number.",
-          "error"
-        );
-
-        return;
-
-      }
-
-
-      if(
-        password.length < 8
-      ){
-
-        showMessage(
-          "Password must contain at least 8 characters.",
-          "error"
-        );
-
-        return;
-
-      }
-
-
-      if(
-        password !==
-        confirmPassword
-      ){
-
-        showMessage(
-          "Passwords do not match.",
-          "error"
-        );
-
-        return;
-
-      }
-
-
-      /*
-        Email is optional.
-
-        Only validate it when the member
-        actually enters an email address.
-      */
-
-      if(
-        email &&
-        !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
-          email
-        )
-      ){
-
-        showMessage(
-          "Please enter a valid email address or leave it blank.",
-          "error"
-        );
-
-        return;
-
-      }
-
-
-      if(
-        !sponsorId
-      ){
-
-        showMessage(
-          "Sponsor ID is required.",
-          "error"
-        );
-
-        return;
-
-      }
-
-
-
-      /* ===============================================
-         LOCK BUTTON
-         =============================================== */
-
-      button.disabled =
-        true;
-
-      button.textContent =
-        "Creating Account...";
-
-
-      showMessage(
-        "Please wait. Creating your member account...",
-        "success"
+.getElementById(
+  "registrationForm"
+)
+.addEventListener(
+  "submit",
+  async function(event){
+
+    event.preventDefault();
+
+
+    const button =
+      document.getElementById(
+        "registerBtn"
       );
 
+
+    /* ===============================================
+       INPUTS
+       =============================================== */
+
+    const name =
+      document
+      .getElementById(
+        "name"
+      )
+      .value
+      .trim();
+
+
+    const address =
+      document
+      .getElementById(
+        "address"
+      )
+      .value
+      .trim();
+
+
+    const mobile =
+      document
+      .getElementById(
+        "mobile"
+      )
+      .value
+      .trim();
+
+
+    const email =
+      document
+      .getElementById(
+        "email"
+      )
+      .value
+      .trim();
+
+
+    const password =
+      document
+      .getElementById(
+        "password"
+      )
+      .value;
+
+
+    const confirmPassword =
+      document
+      .getElementById(
+        "confirmPassword"
+      )
+      .value;
+
+
+    const sponsorId =
+      sponsorIdInput.value
+      .trim()
+      .toUpperCase();
+
+
+    /* ===============================================
+       BASIC VALIDATION
+       =============================================== */
+
+    if(
+      name.length < 2
+    ){
+
+      showMessage(
+        "Please enter your full name.",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    if(
+      address.length < 2
+    ){
+
+      showMessage(
+        "Please enter your address.",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    if(
+      !/^\d{10}$/.test(
+        mobile
+      )
+    ){
+
+      showMessage(
+        "Enter a valid 10 digit mobile number.",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    if(
+      password.length < 8
+    ){
+
+      showMessage(
+        "Password must contain at least 8 characters.",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    if(
+      password !==
+      confirmPassword
+    ){
+
+      showMessage(
+        "Passwords do not match.",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    if(
+      email &&
+      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
+        email
+      )
+    ){
+
+      showMessage(
+        "Please enter a valid email address or leave it blank.",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    if(
+      !sponsorId
+    ){
+
+      showMessage(
+        "Sponsor ID is required.",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    /* ===============================================
+       FINAL SPONSOR VALIDATION
+       =============================================== */
+
+    button.disabled =
+      true;
+
+    button.textContent =
+      "Checking Sponsor...";
+
+
+    const sponsorValid =
+      await checkSponsor();
+
+
+    if(
+      !sponsorValid
+    ){
+
+      button.disabled =
+        false;
+
+      button.textContent =
+        "Create Member Account";
+
+      showMessage(
+        "Please enter a valid Sponsor ID.",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    /* ===============================================
+       START REGISTRATION
+       =============================================== */
+
+    button.textContent =
+      "Creating Account...";
+
+
+    showMessage(
+      "Please wait. Creating your member account...",
+      "success"
+    );
+
+
+    try{
+
+      /* =============================================
+         SEND TO EXISTING EDGE FUNCTION
+         ============================================= */
+
+      const response =
+        await fetch(
+          EDGE_FUNCTION_URL,
+          {
+
+            method:
+              "POST",
+
+            headers:
+              {
+
+                "Content-Type":
+                  "application/json",
+
+                "apikey":
+                  SUPABASE_ANON_KEY,
+
+                "Authorization":
+                  "Bearer " +
+                  SUPABASE_ANON_KEY
+
+              },
+
+            body:
+              JSON.stringify(
+                {
+
+                  name:
+                    name,
+
+                  address:
+                    address,
+
+                  mobile:
+                    mobile,
+
+                  email:
+                    email,
+
+                  password:
+                    password,
+
+                  sponsor_id:
+                    sponsorId
+
+                }
+              )
+
+          }
+        );
+
+
+      /* =============================================
+         RESPONSE
+         ============================================= */
+
+      let result;
 
 
       try{
 
-
-        /* =============================================
-           SEND REGISTRATION TO EDGE FUNCTION
-           ============================================= */
-
-        const response =
-          await fetch(
-            EDGE_FUNCTION_URL,
-            {
-
-              method:
-                "POST",
-
-              headers:
-                {
-
-                  "Content-Type":
-                    "application/json",
-
-                  "apikey":
-                    SUPABASE_ANON_KEY,
-
-                  "Authorization":
-                    "Bearer " +
-                    SUPABASE_ANON_KEY
-
-                },
-
-              body:
-                JSON.stringify(
-                  {
-
-                    name:
-                      name,
-
-                    address:
-                      address,
-
-                    mobile:
-                      mobile,
-
-                    email:
-                      email,
-
-                    password:
-                      password,
-
-                    sponsor_id:
-                      sponsorId
-
-                  }
-                )
-
-            }
-          );
-
-
-
-        /* =============================================
-           READ RESPONSE
-           ============================================= */
-
-        let result;
-
-
-        try{
-
-          result =
-            await response.json();
-
-        }catch(
-          parseError
-        ){
-
-          throw new Error(
-            "Server returned an invalid response."
-          );
-
-        }
-
-
-
-        console.log(
-          "Registration response:",
-          result
-        );
-
-
-
-        /* =============================================
-           SERVER ERROR
-           ============================================= */
-
-        if(
-          !response.ok ||
-          !result.success
-        ){
-
-          throw new Error(
-            result.message ||
-            "Registration failed. Please try again."
-          );
-
-        }
-
-
-
-        /* =============================================
-           SUCCESS
-           ============================================= */
-
-        const memberId =
-          result.member_id ||
-          "";
-
-
-        let successText =
-          "Registration successful!";
-
-
-        if(
-          memberId
-        ){
-
-          successText +=
-            " Your Member ID is " +
-            memberId +
-            ".";
-
-        }
-
-
-        successText +=
-          " Your account is currently inactive and will be activated by Admin. Please login after activation.";
-
-
-        showMessage(
-          successText,
-          "success"
-        );
-
-
-
-        /* =============================================
-           CLEAR FORM
-           ============================================= */
-
-        document
-          .getElementById(
-            "registrationForm"
-          )
-          .reset();
-
-
-        setCompany();
-
-
-        button.textContent =
-          "Registration Complete";
-
-
-        /*
-          Keep button disabled after successful
-          registration to prevent duplicate
-          submission.
-        */
-
+        result =
+          await response.json();
 
       }catch(
-        error
+        parseError
       ){
 
         console.error(
-          "Registration error:",
-          error
+          "Response parse error:",
+          parseError
         );
 
-
-        showMessage(
-          error instanceof Error
-            ? error.message
-            : "Registration failed. Please try again.",
-          "error"
+        throw new Error(
+          "Server returned an invalid response."
         );
-
-
-        button.disabled =
-          false;
-
-        button.textContent =
-          "Create Member Account";
 
       }
 
-    }
-  );
 
+      console.log(
+        "Registration response:",
+        result
+      );
+
+
+      /* =============================================
+         SERVER ERROR
+         ============================================= */
+
+      if(
+        !response.ok ||
+        !result.success
+      ){
+
+        throw new Error(
+          result.message ||
+          "Registration failed. Please try again."
+        );
+
+      }
+
+
+      /* =============================================
+         SUCCESS
+         ============================================= */
+
+      const memberId =
+        result.member_id ||
+        "";
+
+
+      let successText =
+        "Registration successful!";
+
+
+      if(
+        memberId
+      ){
+
+        successText +=
+          " Your Member ID is " +
+          memberId +
+          ".";
+
+      }
+
+
+      successText +=
+        " Your account is currently inactive and will be activated by Admin. Please login after activation.";
+
+
+      showMessage(
+        successText,
+        "success"
+      );
+
+
+      /* =============================================
+         CLEAR FORM
+         ============================================= */
+
+      document
+      .getElementById(
+        "registrationForm"
+      )
+      .reset();
+
+
+      setCompany();
+
+
+      button.textContent =
+        "Registration Complete";
+
+
+      /*
+        Keep disabled so the same registration
+        is not accidentally submitted twice.
+      */
+
+
+    }catch(error){
+
+      console.error(
+        "Registration error:",
+        error
+      );
+
+
+      showMessage(
+        error instanceof Error
+          ? error.message
+          : "Registration failed. Please try again.",
+        "error"
+      );
+
+
+      button.disabled =
+        false;
+
+      button.textContent =
+        "Create Member Account";
+
+    }
+
+  }
+);
 
 
 /* =========================================================
@@ -1331,27 +1513,26 @@ document
    ========================================================= */
 
 document
-  .getElementById(
-    "mobile"
-  )
-  .addEventListener(
-    "input",
-    function(){
+.getElementById(
+  "mobile"
+)
+.addEventListener(
+  "input",
+  function(){
 
-      this.value =
-        this.value
-          .replace(
-            /\D/g,
-            ""
-          )
-          .slice(
-            0,
-            10
-          );
+    this.value =
+      this.value
+      .replace(
+        /\D/g,
+        ""
+      )
+      .slice(
+        0,
+        10
+      );
 
-    }
-  );
-
+  }
+);
 
 
 /* =========================================================
@@ -1359,14 +1540,27 @@ document
    ========================================================= */
 
 if(
-  !urlSponsor
+  urlSponsor
 ){
 
-  setCompany();
+  sponsorIdInput.value =
+    urlSponsor;
+
+  sponsorNameInput.value =
+    "";
+
+  sponsorStatus.textContent =
+    "Checking Sponsor...";
+
+  sponsorStatus.style.color =
+    "#666";
+
+
+  checkSponsor();
 
 }else{
 
-  checkSponsor();
+  setCompany();
 
 }
 
