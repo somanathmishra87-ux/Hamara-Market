@@ -233,65 +233,6 @@ input:focus{
     color:#d22f2f;
 }
 
-.modal{
-    display:none;
-    position:fixed;
-    inset:0;
-    background:rgba(10,25,55,.55);
-    z-index:9999;
-    align-items:center;
-    justify-content:center;
-    padding:20px;
-}
-
-.modal-card{
-    width:100%;
-    max-width:430px;
-    background:#fff;
-    border-radius:22px;
-    padding:28px 24px;
-    box-shadow:0 20px 60px rgba(0,0,0,.25);
-}
-
-.modal-card h2{
-    text-align:center;
-    color:#173b9e;
-    margin:0 0 8px;
-}
-
-.modal-help{
-    text-align:center;
-    color:#69748b;
-    font-size:14px;
-    line-height:1.5;
-    margin-bottom:20px;
-}
-
-.modal-btn{
-    width:100%;
-    border:0;
-    border-radius:12px;
-    padding:14px;
-    margin-top:18px;
-    background:#2463df;
-    color:white;
-    font-weight:800;
-    font-size:16px;
-    cursor:pointer;
-}
-
-.close-btn{
-    width:100%;
-    border:1px solid #d9deea;
-    border-radius:12px;
-    padding:13px;
-    margin-top:10px;
-    background:#fff;
-    color:#2456b8;
-    font-weight:700;
-    cursor:pointer;
-}
-
 @media(max-width:520px){
 
     .header{
@@ -361,6 +302,7 @@ input:focus{
 </header>
 
 
+
 <main class="wrap">
 
 <section class="card">
@@ -378,13 +320,15 @@ input:focus{
 
 
 <label for="loginId">
-    Email / Mobile Number
+    Mobile Number
 </label>
 
 <input
     id="loginId"
-    type="text"
-    placeholder="Enter Email or Mobile Number"
+    type="tel"
+    inputmode="numeric"
+    maxlength="10"
+    placeholder="Enter registered 10-digit mobile"
     autocomplete="username"
     required
 >
@@ -400,7 +344,7 @@ input:focus{
 <input
     id="password"
     type="password"
-    placeholder="Password"
+    placeholder="Enter your password"
     autocomplete="current-password"
     required
 >
@@ -433,7 +377,7 @@ Remember me
 <a
     class="forgot"
     href="#"
-    onclick="openForgot(event)">
+    onclick="showForgotMessage(event)">
 
     Forgot Password?
 
@@ -479,7 +423,7 @@ Remember me
 
     Hamara Market • Digital Rewards Platform<br>
 
-    Members: Email / Mobile Login
+    Members: Mobile Number + Password Login
 
 </p>
 
@@ -496,73 +440,11 @@ Remember me
 
 
 
-<!-- =====================================================
-     FORGOT PASSWORD
-     ===================================================== -->
-
-<div
-    class="modal"
-    id="forgotModal">
-
-<div class="modal-card">
-
-<h2>
-    Forgot Password?
-</h2>
-
-<p class="modal-help">
-
-    Enter your registered email address.
-    A password reset link will be sent to you.
-
-</p>
-
-
-<label for="forgotId">
-    Registered Email
-</label>
-
-<input
-    id="forgotId"
-    type="email"
-    placeholder="Enter registered email"
->
-
-
-<button
-    class="modal-btn"
-    onclick="startPasswordRecovery()">
-
-    Send Reset Link
-
-</button>
-
-
-<button
-    class="close-btn"
-    onclick="closeForgot()">
-
-    Cancel
-
-</button>
-
-
-<div
-    id="forgotMessage"
-    class="message">
-</div>
-
-</div>
-
-</div>
-
-
-
 <script>
 
 
 /* =====================================================
-   SUPABASE
+   SUPABASE CONFIGURATION
    ===================================================== */
 
 const SUPABASE_URL =
@@ -588,37 +470,24 @@ const supabaseClient =
 
 
 /* =====================================================
-   EDGE FUNCTION NAME
-   ===================================================== */
-
-const EDGE_FUNCTION_NAME =
-    "rapid-action";
-
-
-/* =====================================================
    PASSWORD SHOW / HIDE
    ===================================================== */
 
 function togglePassword(){
 
     const password =
-        document.getElementById(
-            "password"
-        );
+        document.getElementById("password");
 
 
     if(
-        password.type ===
-        "password"
+        password.type === "password"
     ){
 
-        password.type =
-            "text";
+        password.type = "text";
 
     }else{
 
-        password.type =
-            "password";
+        password.type = "password";
 
     }
 
@@ -641,8 +510,7 @@ function showLoginMessage(
 
 
     message.className =
-        "message " +
-        type;
+        "message " + type;
 
 
     message.textContent =
@@ -652,13 +520,11 @@ function showLoginMessage(
 
 
 /* =====================================================
-   LOGIN FORM
+   MOBILE NUMBER LOGIN
    ===================================================== */
 
 document
-.getElementById(
-    "loginForm"
-)
+.getElementById("loginForm")
 .addEventListener(
     "submit",
     async function(event){
@@ -668,32 +534,69 @@ document
 
         const loginId =
             document
-            .getElementById(
-                "loginId"
-            )
+            .getElementById("loginId")
             .value
             .trim();
 
 
         const password =
             document
-            .getElementById(
-                "password"
-            )
+            .getElementById("password")
             .value;
 
 
         const button =
             document
-            .getElementById(
-                "loginBtn"
+            .getElementById("loginBtn");
+
+
+        /*
+          Remove all non-numeric characters.
+        */
+
+        const mobile =
+            loginId.replace(
+                /\D/g,
+                ""
             );
 
 
-        showLoginMessage(
-            "",
-            ""
-        );
+        /*
+          Validate mobile.
+        */
+
+        if(
+            !/^[0-9]{10}$/.test(
+                mobile
+            )
+        ){
+
+            showLoginMessage(
+                "❌ Please enter a valid 10-digit mobile number.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        /*
+          Validate password.
+        */
+
+        if(
+            !password
+        ){
+
+            showLoginMessage(
+                "❌ Please enter your password.",
+                "error"
+            );
+
+            return;
+
+        }
 
 
         button.disabled =
@@ -704,84 +607,47 @@ document
             "Checking...";
 
 
+        showLoginMessage(
+            "",
+            ""
+        );
+
+
         try{
 
-
             /* =================================================
-               EMAIL LOGIN
+               IMPORTANT
 
-               Admin login remains normal Supabase Auth.
+               Registration creates Auth email like:
+
+               member.9776333087@auth.hamaramarket.local
+
+               So we create the SAME email here
+               directly from the mobile number.
+
+               No profiles.email lookup.
+               No Edge Function.
+               No SQL required.
                ================================================= */
 
-            if(
-                loginId.includes("@")
-            ){
-
-                const {
-                    data,
-                    error
-                } =
-                    await supabaseClient
-                    .auth
-                    .signInWithPassword(
-                        {
-
-                            email:
-                                loginId,
-
-                            password:
-                                password
-
-                        }
-                    );
+            const authEmail =
+                `member.${mobile}@auth.hamaramarket.local`;
 
 
-                if(error){
-
-                    throw error;
-
-                }
-
-
-                await loadProfileAndRedirect(
-                    data.user,
-                    button
-                );
+            console.log(
+                "Mobile:",
+                mobile
+            );
 
 
-                return;
-
-            }
+            console.log(
+                "Auth Email:",
+                authEmail
+            );
 
 
             /* =================================================
-               MOBILE NUMBER
-               ================================================= */
-
-            const mobile =
-                loginId.replace(
-                    /\D/g,
-                    ""
-                );
-
-
-            if(
-                !/^\d{10}$/.test(
-                    mobile
-                )
-            ){
-
-                throw new Error(
-                    "Please enter a valid 10-digit mobile number."
-                );
-
-            }
-
-
-            /* =================================================
-               CALL RAPID-ACTION
-
-               This avoids profiles RLS problem.
+               SUPABASE AUTH LOGIN
                ================================================= */
 
             const {
@@ -789,188 +655,60 @@ document
                 error
             } =
                 await supabaseClient
-                .functions
-                .invoke(
-                    EDGE_FUNCTION_NAME,
-                    {
-                        body:
-                            {
-                                action:
-                                    "member_login",
+                .auth
+                .signInWithPassword({
 
-                                mobile:
-                                    mobile,
+                    email:
+                        authEmail,
 
-                                password:
-                                    password
-                            }
-                    }
-                );
+                    password:
+                        password
 
+                });
+
+
+            /* =================================================
+               AUTH ERROR
+               ================================================= */
 
             if(error){
 
                 console.error(
-                    "Edge Function error:",
+                    "AUTH LOGIN ERROR:",
                     error
                 );
 
 
-                throw new Error(
-                    "Unable to connect to member login service."
-                );
+                throw error;
 
             }
-
-
-            console.log(
-                "Member Login Response:",
-                data
-            );
 
 
             if(
                 !data ||
-                data.success !== true
+                !data.user
             ){
 
                 throw new Error(
-                    data?.message ||
-                    "Login failed."
+                    "Login was not completed."
                 );
 
             }
 
 
             /* =================================================
-               SET SUPABASE SESSION
-
-               Edge Function returned access token
-               and refresh token.
+               LOGIN SUCCESS
                ================================================= */
-
-            const {
-                error:sessionError
-            } =
-                await supabaseClient
-                .auth
-                .setSession(
-                    {
-
-                        access_token:
-                            data.access_token,
-
-                        refresh_token:
-                            data.refresh_token
-
-                    }
-                );
-
-
-            if(sessionError){
-
-                console.error(
-                    "Session error:",
-                    sessionError
-                );
-
-
-                throw new Error(
-                    "Login session could not be created."
-                );
-
-            }
-
-
-            /* =================================================
-               MEMBER PROFILE
-
-               Use profile information returned
-               from Edge Function.
-               ================================================= */
-
-            const profile =
-                data.profile;
-
-
-            if(!profile){
-
-                throw new Error(
-                    "Member profile could not be loaded."
-                );
-
-            }
-
-
-            const userRole =
-                String(
-                    profile.role ||
-                    "member"
-                )
-                .trim()
-                .toLowerCase();
-
-
-            let dashboardURL =
-                "dashboard.html";
-
-
-            if(
-                userRole ===
-                "admin"
-            ){
-
-                dashboardURL =
-                    "admin-dashboard.html";
-
-            }
-
-
-            /* =================================================
-               SUCCESS MESSAGE
-               ================================================= */
-
-            if(
-                profile.active ===
-                false
-            ){
-
-                showLoginMessage(
-                    "✅ Login successful. Your account is currently inactive. Opening Member Dashboard...",
-                    "success"
-                );
-
-            }else{
-
-                showLoginMessage(
-                    "✅ Login successful. Opening Member Dashboard...",
-                    "success"
-                );
-
-            }
-
 
             console.log(
-                "Member ID:",
-                profile.member_id
+                "Auth User ID:",
+                data.user.id
             );
 
 
-            console.log(
-                "Member Name:",
-                profile.name
-            );
-
-
-            console.log(
-                "Member Mobile:",
-                profile.mobile
-            );
-
-
-            console.log(
-                "Member Active:",
-                profile.active
+            showLoginMessage(
+                "✅ Login successful. Opening Member Dashboard...",
+                "success"
             );
 
 
@@ -978,15 +716,27 @@ document
                 "Login Successful";
 
 
-            /* =================================================
-               OPEN DASHBOARD
-               ================================================= */
+            /*
+              IMPORTANT:
+
+              We are NOT checking profiles.active
+              during this TEST phase.
+
+              Your current member has:
+
+              member_id = HM000008
+              active = false
+              role = member
+
+              We will handle Admin approval later.
+            */
+
 
             setTimeout(
                 function(){
 
                     window.location.href =
-                        dashboardURL;
+                        "dashboard.html";
 
                 },
                 800
@@ -996,17 +746,72 @@ document
         }catch(error){
 
             console.error(
-                "LOGIN ERROR:",
+                "MEMBER LOGIN ERROR:",
                 error
             );
 
 
+            let message =
+                "Login failed. Please check your mobile number and password.";
+
+
+            if(
+                error &&
+                error.message
+            ){
+
+                const errorText =
+                    String(
+                        error.message
+                    ).toLowerCase();
+
+
+                if(
+                    errorText.includes(
+                        "invalid login credentials"
+                    )
+                ){
+
+                    message =
+                        "❌ Invalid mobile number or password.";
+
+                }
+
+                else if(
+                    errorText.includes(
+                        "email not confirmed"
+                    )
+                ){
+
+                    message =
+                        "❌ This member account is not confirmed.";
+
+                }
+
+                else if(
+                    errorText.includes(
+                        "user not found"
+                    )
+                ){
+
+                    message =
+                        "❌ Member account not found.";
+
+                }
+
+                else{
+
+                    message =
+                        "❌ " +
+                        error.message;
+
+                }
+
+            }
+
+
             showLoginMessage(
-                "❌ " +
-                (
-                    error.message ||
-                    "Login failed."
-                ),
+                message,
                 "error"
             );
 
@@ -1025,272 +830,28 @@ document
 
 
 /* =====================================================
-   EMAIL LOGIN PROFILE REDIRECT
-   ===================================================== */
-
-async function loadProfileAndRedirect(
-    user,
-    button
-){
-
-    if(!user){
-
-        throw new Error(
-            "User account not found."
-        );
-
-    }
-
-
-    const {
-        data:profile,
-        error
-    } =
-        await supabaseClient
-        .from("profiles")
-        .select(
-            "member_id,name,mobile,role,active"
-        )
-        .eq(
-            "id",
-            user.id
-        )
-        .maybeSingle();
-
-
-    if(error){
-
-        console.error(
-            "PROFILE ERROR:",
-            error
-        );
-
-
-        throw new Error(
-            "Failed to load account profile."
-        );
-
-    }
-
-
-    if(!profile){
-
-        throw new Error(
-            "Account profile not found."
-        );
-
-    }
-
-
-    const userRole =
-        String(
-            profile.role ||
-            "member"
-        )
-        .trim()
-        .toLowerCase();
-
-
-    let dashboardURL =
-        "dashboard.html";
-
-
-    if(
-        userRole ===
-        "admin"
-    ){
-
-        dashboardURL =
-            "admin-dashboard.html";
-
-    }
-
-
-    showLoginMessage(
-        "✅ Login successful. Opening dashboard...",
-        "success"
-    );
-
-
-    button.textContent =
-        "Login Successful";
-
-
-    setTimeout(
-        function(){
-
-            window.location.href =
-                dashboardURL;
-
-        },
-        800
-    );
-
-}
-
-
-/* =====================================================
    FORGOT PASSWORD
+
+   Current registration system uses an internal
+   Auth email, so normal email password recovery
+   is not being used in this TEST version.
    ===================================================== */
 
-function openForgot(event){
+function showForgotMessage(event){
 
     event.preventDefault();
 
 
-    document.getElementById(
-        "forgotModal"
-    ).style.display =
-        "flex";
-
-
-    document.getElementById(
-        "forgotId"
-    ).value =
-        "";
-
-
-    document.getElementById(
-        "forgotMessage"
-    ).textContent =
-        "";
-
-
-    document.getElementById(
-        "forgotId"
-    ).focus();
-
-}
-
-
-function closeForgot(){
-
-    document.getElementById(
-        "forgotModal"
-    ).style.display =
-        "none";
+    showLoginMessage(
+        "ℹ️ Password reset will be added after member login testing is complete.",
+        ""
+    );
 
 }
 
 
 /* =====================================================
-   PASSWORD RESET
-   ===================================================== */
-
-async function startPasswordRecovery(){
-
-    const email =
-        document.getElementById(
-            "forgotId"
-        )
-        .value
-        .trim();
-
-
-    const message =
-        document.getElementById(
-            "forgotMessage"
-        );
-
-
-    if(!email){
-
-        message.className =
-            "message error";
-
-
-        message.textContent =
-            "Please enter your registered email.";
-
-
-        return;
-
-    }
-
-
-    if(!email.includes("@")){
-
-        message.className =
-            "message error";
-
-
-        message.textContent =
-            "Please enter your registered email address.";
-
-
-        return;
-
-    }
-
-
-    message.className =
-        "message";
-
-
-    message.textContent =
-        "Sending reset link...";
-
-
-    try{
-
-        const redirectURL =
-            "https://somanathmishra87-ux.github.io/Hamara-Market/reset-password.html";
-
-
-        const {
-            error
-        } =
-            await supabaseClient
-            .auth
-            .resetPasswordForEmail(
-                email,
-                {
-                    redirectTo:
-                        redirectURL
-                }
-            );
-
-
-        if(error){
-
-            throw error;
-
-        }
-
-
-        message.className =
-            "message success";
-
-
-        message.textContent =
-            "✅ Reset link sent. Please check your Email Inbox or Spam folder.";
-
-
-    }catch(error){
-
-        console.error(
-            error
-        );
-
-
-        message.className =
-            "message error";
-
-
-        message.textContent =
-            "❌ " +
-            (
-                error.message ||
-                "Unable to send reset link."
-            );
-
-    }
-
-}
-
-
-/* =====================================================
-   EXISTING SESSION
+   EXISTING SESSION CHECK
    ===================================================== */
 
 async function checkExistingSession(){
@@ -1312,8 +873,13 @@ async function checkExistingSession(){
         ){
 
             console.log(
-                "Existing session found."
+                "Existing member session found."
             );
+
+            /*
+              For now we do not automatically redirect.
+              User can press Login normally.
+            */
 
         }
 
