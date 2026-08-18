@@ -229,9 +229,7 @@ button:disabled{
 
   <div class="brand">
 
-    <div class="logo">
-      H
-    </div>
+    <div class="logo">H</div>
 
     <div class="brand-name">
       Hamara Market
@@ -447,11 +445,15 @@ class="message"
 
 <br>
 
-• Email ID is optional.
+• Email ID is optional and is NOT used for Member Authentication.
 
 <br>
 
 • Mobile Number is mandatory.
+
+<br>
+
+• Member authentication uses Mobile Number + Password.
 
 <br>
 
@@ -463,7 +465,6 @@ class="message"
 <div class="footer">
 © Hamara Market
 </div>
-
 
 </div>
 </div>
@@ -672,17 +673,10 @@ async function checkSponsor(){
     );
 
 
-    const data =
-      result.data;
-
-    const error =
-      result.error;
-
-
     if(
-      error ||
-      !data ||
-      data.length === 0
+      result.error ||
+      !result.data ||
+      result.data.length === 0
     ){
 
       sponsorStatus.textContent =
@@ -697,7 +691,7 @@ async function checkSponsor(){
 
 
     const sponsor =
-      data[0];
+      result.data[0];
 
 
     sponsorNameInput.value =
@@ -829,35 +823,22 @@ function showMessage(
 
 
 /* =========================================================
-   CREATE INTERNAL AUTH EMAIL
-   =========================================================
-
-   Member email is optional.
-
-   Supabase Auth requires an email OR phone for
-   password based signup.
-
-   We therefore create a private deterministic
-   Auth email from the member mobile number.
-
-   The actual member email, if supplied, is stored
-   separately in the member profile.
-
-   This is NOT shown as the member's email.
-
-   Later Mobile OTP Forgot Password can be added
-   separately.
+   MOBILE CLEANUP
    ========================================================= */
 
-function createAuthEmail(mobile){
+document
+.getElementById("mobile")
+.addEventListener(
+  "input",
+  function(){
 
-  return (
-    "member." +
-    mobile +
-    "@auth.hamaramarket.local"
-  );
+    this.value =
+      this.value
+        .replace(/\D/g,"")
+        .slice(0,10);
 
-}
+  }
+);
 
 
 /* =========================================================
@@ -865,9 +846,7 @@ function createAuthEmail(mobile){
    ========================================================= */
 
 document
-.getElementById(
-  "registrationForm"
-)
+.getElementById("registrationForm")
 .addEventListener(
   "submit",
   async function(event){
@@ -997,7 +976,7 @@ document
 
 
     /* =====================================================
-       BUTTON LOCK
+       LOCK BUTTON
        ===================================================== */
 
     button.disabled =
@@ -1042,35 +1021,19 @@ document
 
 
       /* ===================================================
-         INTERNAL AUTH EMAIL
+         MEMBER AUTHENTICATION
 
          IMPORTANT:
-         The member's real email remains optional.
-
-         Auth email is generated from mobile number.
-         =================================================== */
-
-      const authEmail =
-        createAuthEmail(
-          mobile
-        );
-
-
-      /* ===================================================
-         SUPABASE AUTH SIGNUP
-
-         We deliberately use EMAIL AUTH here instead
-         of PHONE AUTH.
-
-         This avoids:
-         "Phone signups are disabled"
+         - EMAIL IS NOT SENT
+         - EMAIL IS NOT USED FOR AUTH
+         - MOBILE + PASSWORD ARE USED
          =================================================== */
 
       const authResult =
         await supabaseClient.auth.signUp({
 
-          email:
-            authEmail,
+          phone:
+            "+91" + mobile,
 
           password:
             password,
@@ -1091,11 +1054,8 @@ document
               sponsor_id:
                 sponsorId,
 
-              member_email:
-                email || null,
-
-              auth_type:
-                "mobile-password"
+              optional_email:
+                email || null
 
             }
 
@@ -1113,21 +1073,39 @@ document
 
       if(authError){
 
-        /*
-         * Convert common duplicate errors
-         * into a user friendly message.
-         */
+        console.error(
+          "Auth registration error:",
+          authError
+        );
+
+
+        /* ================================================
+           FRIENDLY PHONE AUTH ERROR
+           ================================================ */
 
         if(
           authError.message &&
           (
             authError.message
               .toLowerCase()
-              .includes("already registered") ||
-            authError.message
-              .toLowerCase()
-              .includes("already been registered")
+              .includes("phone") ||
+            authError.code ===
+              "phone_provider_disabled"
           )
+        ){
+
+          throw new Error(
+            "Member mobile registration is disabled in Supabase. Please enable Phone authentication for Members."
+          );
+
+        }
+
+
+        if(
+          authError.message &&
+          authError.message
+            .toLowerCase()
+            .includes("already")
         ){
 
           throw new Error(
@@ -1137,7 +1115,10 @@ document
         }
 
 
-        throw authError;
+        throw new Error(
+          authError.message ||
+          "Member account could not be created."
+        );
 
       }
 
@@ -1156,8 +1137,6 @@ document
 
       /* ===================================================
          CREATE MEMBER PROFILE
-
-         Existing SQL RPC is preserved.
          =================================================== */
 
       const profileResult =
@@ -1184,24 +1163,16 @@ document
         );
 
 
-      const profileError =
-        profileResult.error;
-
-
-      const profileData =
-        profileResult.data;
-
-
-      if(profileError){
+      if(profileResult.error){
 
         console.error(
           "Profile creation error:",
-          profileError
+          profileResult.error
         );
 
 
         throw new Error(
-          profileError.message ||
+          profileResult.error.message ||
           "Member profile could not be created."
         );
 
@@ -1209,11 +1180,15 @@ document
 
 
       /* ===================================================
-         MEMBER ID
+         GET MEMBER ID
          =================================================== */
 
       let memberId =
         "";
+
+
+      const profileData =
+        profileResult.data;
 
 
       if(
