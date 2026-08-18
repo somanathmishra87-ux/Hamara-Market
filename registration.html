@@ -829,6 +829,38 @@ function showMessage(
 
 
 /* =========================================================
+   CREATE INTERNAL AUTH EMAIL
+   =========================================================
+
+   Member email is optional.
+
+   Supabase Auth requires an email OR phone for
+   password based signup.
+
+   We therefore create a private deterministic
+   Auth email from the member mobile number.
+
+   The actual member email, if supplied, is stored
+   separately in the member profile.
+
+   This is NOT shown as the member's email.
+
+   Later Mobile OTP Forgot Password can be added
+   separately.
+   ========================================================= */
+
+function createAuthEmail(mobile){
+
+  return (
+    "member." +
+    mobile +
+    "@auth.hamaramarket.local"
+  );
+
+}
+
+
+/* =========================================================
    REGISTRATION
    ========================================================= */
 
@@ -885,7 +917,9 @@ document
       ).value;
 
 
-    /* VALIDATION */
+    /* =====================================================
+       VALIDATION
+       ===================================================== */
 
     if(name.length < 2){
 
@@ -962,7 +996,9 @@ document
     }
 
 
-    /* BUTTON LOCK */
+    /* =====================================================
+       BUTTON LOCK
+       ===================================================== */
 
     button.disabled =
       true;
@@ -982,7 +1018,9 @@ document
       }
 
 
-      /* CHECK SPONSOR */
+      /* ===================================================
+         CHECK SPONSOR
+         =================================================== */
 
       const sponsorValid =
         await checkSponsor();
@@ -1003,18 +1041,36 @@ document
           .toUpperCase();
 
 
-      /* =================================================
-         MOBILE AUTH REGISTRATION
+      /* ===================================================
+         INTERNAL AUTH EMAIL
 
-         EMAIL IS NOT USED FOR AUTH.
-         EMAIL IS ONLY STORED IN PROFILE IF PROVIDED.
-         ================================================= */
+         IMPORTANT:
+         The member's real email remains optional.
+
+         Auth email is generated from mobile number.
+         =================================================== */
+
+      const authEmail =
+        createAuthEmail(
+          mobile
+        );
+
+
+      /* ===================================================
+         SUPABASE AUTH SIGNUP
+
+         We deliberately use EMAIL AUTH here instead
+         of PHONE AUTH.
+
+         This avoids:
+         "Phone signups are disabled"
+         =================================================== */
 
       const authResult =
         await supabaseClient.auth.signUp({
 
-          phone:
-            "+91" + mobile,
+          email:
+            authEmail,
 
           password:
             password,
@@ -1035,8 +1091,11 @@ document
               sponsor_id:
                 sponsorId,
 
-              email:
-                email || null
+              member_email:
+                email || null,
+
+              auth_type:
+                "mobile-password"
 
             }
 
@@ -1053,6 +1112,30 @@ document
 
 
       if(authError){
+
+        /*
+         * Convert common duplicate errors
+         * into a user friendly message.
+         */
+
+        if(
+          authError.message &&
+          (
+            authError.message
+              .toLowerCase()
+              .includes("already registered") ||
+            authError.message
+              .toLowerCase()
+              .includes("already been registered")
+          )
+        ){
+
+          throw new Error(
+            "This mobile number is already registered."
+          );
+
+        }
+
 
         throw authError;
 
@@ -1071,11 +1154,11 @@ document
       }
 
 
-      /* =================================================
+      /* ===================================================
          CREATE MEMBER PROFILE
 
-         This calls the SQL function created earlier.
-         ================================================= */
+         Existing SQL RPC is preserved.
+         =================================================== */
 
       const profileResult =
         await supabaseClient.rpc(
@@ -1125,9 +1208,9 @@ document
       }
 
 
-      /* =================================================
-         SUCCESS
-         ================================================= */
+      /* ===================================================
+         MEMBER ID
+         =================================================== */
 
       let memberId =
         "";
@@ -1154,6 +1237,10 @@ document
 
       }
 
+
+      /* ===================================================
+         SUCCESS
+         =================================================== */
 
       if(memberId){
 
