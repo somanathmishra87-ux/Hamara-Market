@@ -490,7 +490,9 @@ Remember me
 
 
 
-<!-- FORGOT PASSWORD -->
+<!-- =====================================================
+     FORGOT PASSWORD
+     ===================================================== -->
 
 <div
     class="modal"
@@ -605,10 +607,15 @@ function togglePassword(){
    LOGIN MESSAGE
    ===================================================== */
 
-function showLoginMessage(text,type){
+function showLoginMessage(
+    text,
+    type
+){
 
     const message =
-        document.getElementById("loginMessage");
+        document.getElementById(
+            "loginMessage"
+        );
 
     message.className =
         "message " + type;
@@ -620,7 +627,7 @@ function showLoginMessage(text,type){
 
 
 /* =====================================================
-   LOGIN
+   LOGIN FORM
    ===================================================== */
 
 document
@@ -650,7 +657,10 @@ document
             .getElementById("loginBtn");
 
 
-        showLoginMessage("","");
+        showLoginMessage(
+            "",
+            ""
+        );
 
 
         button.disabled = true;
@@ -673,9 +683,11 @@ document
                     .auth
                     .signInWithPassword({
 
-                        email:loginId,
+                        email:
+                            loginId,
 
-                        password:password
+                        password:
+                            password
 
                     });
 
@@ -700,22 +712,25 @@ document
             /* =================================================
                MOBILE LOGIN
                
-               IMPORTANT:
-               Registration creates this internal Auth email:
-
-               member.9876543210@auth.hamaramarket.local
-
-               Therefore mobile login directly uses the same
-               internal Auth email.
-
-               No profiles.email dependency.
+               Registration creates:
+               
+               member.XXXXXXXXXX@auth.hamaramarket.local
+               
+               So we do NOT need profiles.email.
                ================================================= */
 
             const mobile =
-                loginId.replace(/\D/g,"");
+                loginId.replace(
+                    /\D/g,
+                    ""
+                );
 
 
-            if(!/^[0-9]{10}$/.test(mobile)){
+            if(
+                !/^[0-9]{10}$/.test(
+                    mobile
+                )
+            ){
 
                 throw new Error(
                     "Please enter a valid 10-digit mobile number."
@@ -724,17 +739,18 @@ document
             }
 
 
-            /*
+            /* =================================================
+               FIND MEMBER PROFILE
+               ================================================= */
 
-               First check whether this mobile exists.
-
-            */
-
-            const {data:profile,error:profileError} =
+            const {
+                data:profile,
+                error:profileError
+            } =
                 await supabaseClient
                 .from("profiles")
                 .select(
-                    "id,member_id,name,mobile,role,active,email"
+                    "id,member_id,mobile,role,active,email"
                 )
                 .eq(
                     "mobile",
@@ -751,7 +767,7 @@ document
                 );
 
                 throw new Error(
-                    "Unable to check this mobile number."
+                    "Unable to find member account."
                 );
 
             }
@@ -766,47 +782,45 @@ document
             }
 
 
-            /*
-              IMPORTANT:
+            /* =================================================
+               IMPORTANT
 
-              DO NOT CHECK profile.active HERE.
+               DO NOT BLOCK INACTIVE MEMBER.
 
-              Inactive members are allowed to LOGIN.
+               Inactive member is allowed to login.
 
-              Admin activation will be used for
-              rewards/withdrawal/other restricted
-              features later.
-            */
-
-
-            let authEmail;
+               Admin can activate the account later.
+               ================================================= */
 
 
             /*
-              If member supplied a real email during
-              registration, allow mobile login through
-              the internal email because the registration
-              function created Auth using internal email
-              when email was blank.
+               Registration Edge Function creates
+               this internal Auth email:
+
+               member.mobile@auth.hamaramarket.local
             */
 
-            authEmail =
+            const authEmail =
                 `member.${mobile}@auth.hamaramarket.local`;
 
 
-            /*
-              Login using the same Auth email created
-              by rapid-action during registration.
-            */
+            /* =================================================
+               SIGN IN WITH INTERNAL AUTH EMAIL
+               ================================================= */
 
-            const {data,error} =
+            const {
+                data,
+                error
+            } =
                 await supabaseClient
                 .auth
                 .signInWithPassword({
 
-                    email:authEmail,
+                    email:
+                        authEmail,
 
-                    password:password
+                    password:
+                        password
 
                 });
 
@@ -818,10 +832,26 @@ document
                     error
                 );
 
-                throw error;
+                throw new Error(
+                    error.message ||
+                    "Invalid mobile number or password."
+                );
 
             }
 
+
+            if(!data.user){
+
+                throw new Error(
+                    "Login account was not found."
+                );
+
+            }
+
+
+            /* =================================================
+               LOAD PROFILE AND REDIRECT
+               ================================================= */
 
             await loadProfileAndRedirect(
                 data.user,
@@ -859,7 +889,7 @@ document
 
 
 /* =====================================================
-   LOAD PROFILE AND REDIRECT
+   LOAD PROFILE AND OPEN DASHBOARD
    ===================================================== */
 
 async function loadProfileAndRedirect(
@@ -867,11 +897,14 @@ async function loadProfileAndRedirect(
     button
 ){
 
-    const {data:profile,error} =
+    const {
+        data:profile,
+        error
+    } =
         await supabaseClient
         .from("profiles")
         .select(
-            "member_id,name,mobile,role,active,email"
+            "member_id,name,mobile,role,active"
         )
         .eq(
             "id",
@@ -914,31 +947,24 @@ async function loadProfileAndRedirect(
     }
 
 
-    /*
-      =====================================================
-      IMPORTANT
+    /* =====================================================
+       IMPORTANT
 
-      ACTIVE STATUS IS NOT CHECKED HERE.
+       INACTIVE ACCOUNT IS NOT BLOCKED.
 
-      Therefore:
+       We intentionally DO NOT write:
 
-      active = true  -> Login allowed
-      active = false -> Login allowed
+       if(profile.active === false)
 
-      The member can enter dashboard even when inactive.
-
-      Later dashboard can show:
-
-      "Account Status: Inactive"
-
-      and restricted features can remain locked.
-      =====================================================
-    */
+       because you want inactive members
+       to be able to login and view dashboard.
+       ===================================================== */
 
 
     const userRole =
         String(
-            profile.role || "member"
+            profile.role ||
+            "member"
         )
         .trim()
         .toLowerCase();
@@ -948,7 +974,10 @@ async function loadProfileAndRedirect(
         "dashboard.html";
 
 
-    if(userRole === "admin"){
+    if(
+        userRole ===
+        "admin"
+    ){
 
         dashboardURL =
             "admin-dashboard.html";
@@ -959,6 +988,12 @@ async function loadProfileAndRedirect(
     console.log(
         "Logged-in Member ID:",
         profile.member_id
+    );
+
+
+    console.log(
+        "Logged-in Mobile:",
+        profile.mobile
     );
 
 
@@ -980,17 +1015,44 @@ async function loadProfileAndRedirect(
     );
 
 
-    showLoginMessage(
-        userRole === "admin"
-            ? "✅ Admin login successful. Opening Admin Dashboard..."
-            : "✅ Login successful. Opening Member Dashboard...",
-        "success"
-    );
+    if(
+        userRole ===
+        "admin"
+    ){
+
+        showLoginMessage(
+            "✅ Admin login successful. Opening Admin Dashboard...",
+            "success"
+        );
+
+    }else{
+
+        if(profile.active === false){
+
+            showLoginMessage(
+                "✅ Login successful. Your account is currently inactive. Opening Member Dashboard...",
+                "success"
+            );
+
+        }else{
+
+            showLoginMessage(
+                "✅ Login successful. Opening Member Dashboard...",
+                "success"
+            );
+
+        }
+
+    }
 
 
     button.textContent =
         "Login Successful";
 
+
+    /* =====================================================
+       OPEN DASHBOARD
+       ===================================================== */
 
     setTimeout(
         function(){
@@ -1135,7 +1197,6 @@ async function startPasswordRecovery(){
     }catch(error){
 
         console.error(
-            "PASSWORD RESET ERROR:",
             error
         );
 
