@@ -5,21 +5,18 @@
 
 <meta charset="UTF-8">
 
-<meta
-  name="viewport"
-  content="width=device-width,initial-scale=1.0"
->
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
 <title>Hamara Market - Member Dashboard</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-
 <style>
 
-/* =========================================================
+/* =====================================================
    GLOBAL
-   ========================================================= */
+===================================================== */
 
 *{
   box-sizing:border-box;
@@ -31,597 +28,1041 @@ html{
 
 body{
   margin:0;
+  background:#f7f7fb;
+  color:#222;
   font-family:Arial,Helvetica,sans-serif;
-  background:#f5f7fb;
-  color:#202538;
-  padding-bottom:82px;
+  padding-bottom:95px;
+}
+
+button{
+  font-family:inherit;
+}
+
+.hidden{
+  display:none !important;
 }
 
 
-/* =========================================================
+/* =====================================================
    TOP HEADER
-   ========================================================= */
+===================================================== */
 
 .top{
+
   background:
     linear-gradient(
       135deg,
-      #4637d8,
-      #5b45ed
+      #4637bd,
+      #5d50d7
     );
 
   color:#fff;
 
   padding:
-    20px
+    22px
     18px
-    34px;
+    92px;
 
   border-radius:
     0
     0
-    30px
-    30px;
+    42px
+    42px;
+
 }
 
-
-.topbar{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-
-.brand{
-  display:flex;
-  align-items:center;
-  gap:10px;
-
-  font-size:22px;
-  font-weight:800;
-}
-
-
-.hm{
-  width:45px;
-  height:45px;
-
-  border-radius:13px;
-
-  background:#fff;
-  color:#493bd8;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  font-weight:900;
-  font-size:18px;
-}
-
-
-.menu{
-  font-size:30px;
-  line-height:1;
-}
-
-
-.member{
-  margin-top:18px;
-
-  font-size:15px;
-
-  line-height:1.8;
-}
-
-
-.member strong{
-  font-size:20px;
-}
-
-
-.status-active{
-  color:#55ef63;
-  font-weight:900;
-}
-
-
-.status-inactive{
-  color:#ff9b9b;
-  font-weight:900;
-}
-
-
-.member-extra{
-  margin-top:3px;
-
-  font-size:14px;
-
-  line-height:1.7;
-}
-
-
-.retop-date{
-  color:#ffffff;
-  font-weight:700;
-}
-
-
-.expire{
-  color:#55ef63;
-  font-weight:900;
-}
-
-
-.expire.expired{
-  color:#ff7777;
-}
-
-
-/* =========================================================
-   MAIN CARD
-   ========================================================= */
-
-.card{
-  background:#fff;
-
-  margin:
-    -13px
-    14px
-    14px;
-
-  border-radius:22px;
-
-  padding:19px;
-
-  box-shadow:
-    0 8px 28px
-    rgba(38,55,107,.08);
-}
-
-
-/* =========================================================
-   BALANCE
-   ========================================================= */
-
-.balance{
-  display:grid;
-
-  grid-template-columns:
-    1fr
-    1fr;
-
-  text-align:center;
-}
-
-
-.balance>div+div{
-  border-left:
-    1px solid
-    #e5e7ef;
-}
-
-
-.label{
-  color:#737b8e;
-  font-size:14px;
-}
-
-
-.amount{
-  font-size:24px;
-
-  font-weight:800;
-
-  margin-top:7px;
-}
-
-
-/* =========================================================
-   THREE STAT BOXES
-   ========================================================= */
-
-.stats{
-  display:grid;
-
-  grid-template-columns:
-    repeat(3,1fr);
-
-  gap:10px;
-
-  margin-top:18px;
-}
-
-
-.stat{
-  background:#f7f8fc;
-
-  border-radius:14px;
-
-  padding:
-    13px
-    8px;
-
-  text-align:center;
-
-  min-height:105px;
+.toprow{
 
   display:flex;
 
-  flex-direction:column;
+  justify-content:
+    space-between;
 
-  align-items:center;
+  align-items:
+    flex-start;
 
-  justify-content:center;
+  max-width:760px;
+
+  margin:auto;
+
 }
 
+.logo{
 
-.stat b{
-  display:block;
-
-  font-size:17px;
-
-  margin-top:7px;
-}
-
-
-.stat-title{
-  color:#737b8e;
-
-  font-size:14px;
-
-  line-height:1.35;
-}
-
-
-/* =========================================================
-   RE-TOPUP CARD
-   ========================================================= */
-
-.retop-card{
-  background:
-    linear-gradient(
-      135deg,
-      #f4f1ff,
-      #faf9ff
-    );
-
-  border:
-    1px solid
-    #ddd8ff;
-
-  border-radius:15px;
-
-  padding:12px 8px;
-
-  text-align:center;
-
-  min-height:105px;
-
-  display:flex;
-
-  flex-direction:column;
-
-  align-items:center;
-
-  justify-content:center;
-
-  cursor:pointer;
-}
-
-
-.retop-icon{
-  font-size:25px;
-
-  margin-bottom:3px;
-}
-
-
-.retop-title{
-  color:#493bd8;
-
-  font-size:14px;
-
-  font-weight:900;
-
-  line-height:1.2;
-}
-
-
-.retop-date-small{
-  color:#555d70;
-
-  font-size:12px;
-
-  margin-top:5px;
-
-  font-weight:700;
-}
-
-
-.retop-button{
-  margin-top:6px;
-
-  border:0;
-
-  background:#493bd8;
-
-  color:#fff;
-
-  border-radius:8px;
-
-  padding:6px 9px;
-
-  font-size:11px;
-
-  font-weight:800;
-
-  cursor:pointer;
-}
-
-
-.retop-button:disabled{
-  background:#c9cad2;
-
-  color:#70727b;
-
-  cursor:not-allowed;
-}
-
-
-/* =========================================================
-   PROGRESS
-   ========================================================= */
-
-.progress{
-  height:10px;
-
-  background:#e7e9f1;
-
-  border-radius:20px;
-
-  overflow:hidden;
-
-  margin:
-    13px
-    0
-    8px;
-}
-
-
-.bar{
-  height:100%;
-
-  width:0%;
-
-  background:
-    linear-gradient(
-      90deg,
-      #4637d8,
-      #6b57ef
-    );
-
-  transition:
-    width .3s ease;
-}
-
-
-.progress-text{
-  font-size:13px;
-
-  color:#737b8e;
-
-  text-align:center;
-}
-
-
-/* =========================================================
-   SECTION
-   ========================================================= */
-
-.section{
-  padding:
-    4px
-    14px;
-}
-
-
-.title{
-  font-size:20px;
-
-  font-weight:800;
-
-  margin:
-    16px
-    0
-    14px;
-}
-
-
-/* =========================================================
-   VIDEO CARD
-   ========================================================= */
-
-.video{
-  background:#fff;
-
-  border-radius:18px;
-
-  padding:14px;
-
-  margin-bottom:10px;
-
-  display:flex;
-
-  align-items:center;
-
-  gap:13px;
-
-  box-shadow:
-    0 5px 18px
-    rgba(38,55,107,.06);
-}
-
-
-.play{
-  width:48px;
-
-  height:48px;
-
-  flex-shrink:0;
-
-  border-radius:14px;
-
-  background:#eeeafe;
-
-  color:#4b3bd8;
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:center;
-
-  font-size:21px;
-}
-
-
-.vtext{
-  flex:1;
-
-  min-width:0;
-}
-
-
-.vtext b{
-  display:block;
-
-  margin-bottom:5px;
-
-  font-size:16px;
-}
-
-
-.vtext small{
-  color:#7a8292;
-
-  font-size:13px;
-}
-
-
-.watch{
-  border:0;
-
-  background:#493bd8;
-
-  color:#fff;
-
-  border-radius:11px;
-
-  padding:
-    10px
-    13px;
-
-  font-weight:700;
-
-  cursor:pointer;
-}
-
-
-.watch.completed{
-  background:#168b5a;
-}
-
-
-/* =========================================================
-   QUICK ACTIONS
-   ========================================================= */
-
-.actions{
-  display:grid;
-
-  grid-template-columns:
-    repeat(3,1fr);
-
-  gap:10px;
-}
-
-
-.action{
-  background:#fff;
-
-  border:0;
+  width:58px;
+  height:58px;
 
   border-radius:16px;
 
-  padding:
-    16px
-    8px;
+  background:#fff;
 
-  text-align:center;
+  display:grid;
 
-  font-weight:700;
+  place-items:center;
 
-  box-shadow:
-    0 5px 18px
-    rgba(38,55,107,.06);
+  color:#4637bd;
 
-  cursor:pointer;
+  font-weight:900;
+
+  font-size:23px;
+
+  border:3px solid #eee;
+
+  flex-shrink:0;
+
 }
 
+.info{
 
-.icon{
-  font-size:24px;
+  flex:1;
 
-  display:block;
+  margin-left:14px;
 
-  margin-bottom:7px;
 }
 
+.id{
 
-/* =========================================================
-   INFORMATION BOX
-   ========================================================= */
+  font-size:18px;
 
-.info-box{
-  margin:
-    16px
-    0;
+  font-weight:800;
 
-  padding:14px;
+  line-height:1.4;
 
-  border-radius:14px;
+}
 
-  background:#f4f6ff;
+.status-active{
 
-  border:
-    1px solid
-    #e0e4ff;
+  color:#58f06a;
 
-  color:#626b80;
+  font-weight:800;
+
+}
+
+.status-inactive{
+
+  color:#ffdf5d;
+
+  font-weight:800;
+
+}
+
+.name{
+
+  font-size:20px;
+
+  font-weight:800;
+
+  margin-top:5px;
+
+  text-transform:uppercase;
+
+}
+
+.date-line{
 
   font-size:13px;
 
-  line-height:1.6;
+  margin-top:5px;
+
+  opacity:.95;
+
+}
+
+.menu-button{
+
+  width:44px;
+
+  height:44px;
+
+  border:0;
+
+  background:transparent;
+
+  color:#fff;
+
+  font-size:32px;
+
+  cursor:pointer;
+
+}
+
+
+/* =====================================================
+   TOP MENU
+===================================================== */
+
+.menu-box{
+
+  position:fixed;
+
+  top:75px;
+
+  right:15px;
+
+  width:210px;
+
+  background:#fff;
+
+  border-radius:16px;
+
+  box-shadow:
+    0 12px 35px
+    rgba(0,0,0,.22);
+
+  padding:8px;
+
+  z-index:100;
+
+  display:none;
+
+}
+
+.menu-box.show{
+  display:block;
+}
+
+.menu-box button{
+
+  width:100%;
+
+  border:0;
+
+  background:#fff;
+
+  padding:13px 12px;
+
+  text-align:left;
+
+  border-radius:10px;
+
+  font-size:15px;
+
+  font-weight:700;
+
+  cursor:pointer;
+
+}
+
+.menu-box button:hover{
+
+  background:#f2f3fa;
+
+}
+
+.menu-box .logout{
+
+  color:#d62828;
+
+}
+
+
+/* =====================================================
+   MAIN
+===================================================== */
+
+.main{
+
+  max-width:760px;
+
+  margin:
+    -60px auto
+    100px;
+
+  padding:
+    0 14px;
+
+  position:relative;
+
+}
+
+
+/* =====================================================
+   WHITE CARD
+===================================================== */
+
+.white{
+
+  background:#fff;
+
+  border-radius:25px;
+
+  box-shadow:
+    0 5px 22px
+    rgba(0,0,0,.08);
+
+  overflow:hidden;
+
+}
+
+
+/* =====================================================
+   SUMMARY
+===================================================== */
+
+.summary{
+
+  display:grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  padding:
+    23px
+    15px;
 
   text-align:center;
+
+  border-bottom:
+    1px solid #e5e5e5;
+
+}
+
+.summary-box{
+
+  padding:0 8px;
+
+}
+
+.summary-box:first-child{
+
+  border-right:
+    1px solid #ddd;
+
+}
+
+.label{
+
+  color:#777;
+
+  font-size:16px;
+
+}
+
+.amount{
+
+  font-size:26px;
+
+  font-weight:900;
+
+  margin-top:7px;
+
+  margin-bottom:12px;
+
+}
+
+.sub{
+
+  font-size:15px;
+
+  color:#666;
+
+  font-weight:700;
+
+  margin-top:6px;
+
 }
 
 
-.inactive-box{
-  background:#fff3f3;
+/* =====================================================
+   THREE CARDS
+===================================================== */
 
-  border-color:#ffd0d0;
+.three{
 
-  color:#a14343;
+  display:grid;
+
+  grid-template-columns:
+    repeat(3,1fr);
+
+  text-align:center;
+
+  border-bottom:
+    1px solid #ddd;
+
+}
+
+.three > div{
+
+  padding:
+    18px
+    5px;
+
+}
+
+.three > div:not(:last-child){
+
+  border-right:
+    1px solid #eee;
+
+}
+
+.purple{
+
+  color:#6a46d8;
+
+  font-weight:800;
+
+  font-size:15px;
+
+  line-height:1.35;
+
+}
+
+.smallamount{
+
+  font-size:22px;
+
+  font-weight:900;
+
+  margin-top:7px;
+
 }
 
 
-/* =========================================================
+/* =====================================================
+   WALLET ALLOCATION
+===================================================== */
+
+.wallet-section{
+
+  padding:18px;
+
+  border-bottom:
+    1px solid #eee;
+
+}
+
+.wallet-title{
+
+  font-size:18px;
+
+  font-weight:900;
+
+  margin-bottom:13px;
+
+  color:#252b40;
+
+}
+
+.wallet-grid{
+
+  display:grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap:12px;
+
+}
+
+.wallet-card{
+
+  border-radius:17px;
+
+  padding:17px 10px;
+
+  text-align:center;
+
+  background:#f5f5fb;
+
+}
+
+.wallet-card.retop{
+
+  background:#eeeaff;
+
+}
+
+.wallet-card.balance{
+
+  background:#eef8f2;
+
+}
+
+.wallet-card .wallet-icon{
+
+  font-size:28px;
+
+  margin-bottom:5px;
+
+}
+
+.wallet-card .wallet-name{
+
+  font-size:14px;
+
+  font-weight:800;
+
+  color:#60677a;
+
+}
+
+.wallet-card .wallet-money{
+
+  font-size:24px;
+
+  font-weight:900;
+
+  margin-top:5px;
+
+  color:#202538;
+
+}
+
+.wallet-card .daily{
+
+  font-size:12px;
+
+  font-weight:700;
+
+  margin-top:5px;
+
+  color:#6b7280;
+
+}
+
+
+/* =====================================================
+   RE-TOPUP MAIN CARD
+===================================================== */
+
+.retopup-main{
+
+  margin:
+    18px;
+
+  padding:
+    20px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #f0ecff,
+      #f8f7ff
+    );
+
+  border:
+    1px solid #e4ddff;
+
+  border-radius:20px;
+
+  text-align:center;
+
+}
+
+.retopup-main .big-icon{
+
+  font-size:42px;
+
+}
+
+.retopup-main h3{
+
+  margin:
+    7px
+    0;
+
+  color:#493bd8;
+
+}
+
+.retopup-main p{
+
+  margin:
+    5px
+    0;
+
+  color:#666;
+
+  font-size:14px;
+
+}
+
+.retopup-amount{
+
+  font-size:28px;
+
+  font-weight:900;
+
+  margin-top:8px;
+
+  color:#2b246f;
+
+}
+
+
+/* =====================================================
+   TILES
+===================================================== */
+
+.tiles{
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(3,1fr);
+
+  border-top:
+    1px solid #eee;
+
+}
+
+.tile{
+
+  min-height:130px;
+
+  padding:
+    17px
+    7px;
+
+  text-align:center;
+
+  border-right:
+    1px solid #eee;
+
+}
+
+.tile:nth-child(3n){
+
+  border-right:0;
+
+}
+
+.icon{
+
+  font-size:31px;
+
+  margin-bottom:7px;
+
+}
+
+.tile .money{
+
+  font-size:16px;
+
+  margin-bottom:5px;
+
+  font-weight:800;
+
+}
+
+.tile b{
+
+  display:block;
+
+  font-size:13px;
+
+  line-height:1.4;
+
+}
+
+
+/* =====================================================
+   PAGE SECTIONS
+===================================================== */
+
+.page-section{
+
+  display:none;
+
+  margin-top:18px;
+
+}
+
+.page-section.active{
+
+  display:block;
+
+}
+
+.section-title{
+
+  font-size:22px;
+
+  font-weight:900;
+
+  margin:
+    20px
+    5px
+    13px;
+
+  color:#24293b;
+
+}
+
+
+/* =====================================================
+   PIN PAGE
+===================================================== */
+
+.panel{
+
+  background:#fff;
+
+  border-radius:20px;
+
+  padding:20px;
+
+  box-shadow:
+    0 5px 20px
+    rgba(0,0,0,.07);
+
+}
+
+.pin-icon{
+
+  text-align:center;
+
+  font-size:45px;
+
+}
+
+.pin-title{
+
+  text-align:center;
+
+  font-size:21px;
+
+  font-weight:900;
+
+  margin:8px 0;
+
+}
+
+.pin-text{
+
+  text-align:center;
+
+  color:#6b7280;
+
+  line-height:1.6;
+
+  font-size:14px;
+
+}
+
+.pin-button{
+
+  width:100%;
+
+  border:0;
+
+  background:#4d3bd1;
+
+  color:#fff;
+
+  padding:14px;
+
+  border-radius:12px;
+
+  font-size:16px;
+
+  font-weight:800;
+
+  margin-top:15px;
+
+  cursor:pointer;
+
+}
+
+
+/* =====================================================
+   WITHDRAWAL
+===================================================== */
+
+.action-card{
+
+  background:#fff;
+
+  border-radius:20px;
+
+  padding:22px;
+
+  box-shadow:
+    0 5px 20px
+    rgba(0,0,0,.07);
+
+  text-align:center;
+
+}
+
+.action-card .big{
+
+  font-size:48px;
+
+}
+
+.action-card h3{
+
+  margin:8px 0;
+
+}
+
+.action-card p{
+
+  color:#6b7280;
+
+  line-height:1.6;
+
+  font-size:14px;
+
+}
+
+.action-button{
+
+  border:0;
+
+  background:#4d3bd1;
+
+  color:#fff;
+
+  padding:13px 25px;
+
+  border-radius:11px;
+
+  font-weight:800;
+
+  cursor:pointer;
+
+}
+
+
+/* =====================================================
+   REPORT
+===================================================== */
+
+.report-row{
+
+  background:#fff;
+
+  border-radius:15px;
+
+  padding:17px;
+
+  margin-bottom:10px;
+
+  box-shadow:
+    0 4px 15px
+    rgba(0,0,0,.05);
+
+  display:flex;
+
+  justify-content:
+    space-between;
+
+  gap:10px;
+
+}
+
+.report-label{
+
+  color:#6d7484;
+
+  font-size:14px;
+
+}
+
+.report-value{
+
+  font-weight:900;
+
+}
+
+
+/* =====================================================
+   PROFILE
+===================================================== */
+
+.profile-card{
+
+  background:#fff;
+
+  border-radius:22px;
+
+  padding:20px;
+
+  box-shadow:
+    0 5px 20px
+    rgba(0,0,0,.07);
+
+}
+
+.profile-head{
+
+  text-align:center;
+
+  padding-bottom:17px;
+
+  border-bottom:
+    1px solid #eee;
+
+}
+
+.profile-avatar{
+
+  width:76px;
+
+  height:76px;
+
+  margin:auto;
+
+  border-radius:50%;
+
+  background:
+    linear-gradient(
+      135deg,
+      #4637bd,
+      #695ce2
+    );
+
+  color:#fff;
+
+  display:grid;
+
+  place-items:center;
+
+  font-size:28px;
+
+  font-weight:900;
+
+}
+
+.profile-head h2{
+
+  margin:
+    10px 0 4px;
+
+  font-size:21px;
+
+}
+
+.profile-head p{
+
+  margin:0;
+
+  color:#777;
+
+}
+
+.profile-details{
+
+  margin-top:12px;
+
+}
+
+.profile-row{
+
+  display:flex;
+
+  justify-content:
+    space-between;
+
+  gap:15px;
+
+  padding:
+    12px
+    0;
+
+  border-bottom:
+    1px solid #eee;
+
+}
+
+.profile-row:last-child{
+
+  border-bottom:0;
+
+}
+
+.profile-row .left{
+
+  color:#707789;
+
+  font-size:14px;
+
+}
+
+.profile-row .right{
+
+  text-align:right;
+
+  font-weight:800;
+
+  font-size:14px;
+
+  max-width:60%;
+
+  word-break:break-word;
+
+}
+
+.profile-logout{
+
+  width:100%;
+
+  margin-top:17px;
+
+  border:0;
+
+  background:#ffe9e9;
+
+  color:#d62828;
+
+  padding:14px;
+
+  border-radius:12px;
+
+  font-weight:900;
+
+  font-size:15px;
+
+  cursor:pointer;
+
+}
+
+
+/* =====================================================
+   LOADING
+===================================================== */
+
+.loading{
+
+  text-align:center;
+
+  color:#777;
+
+  padding:20px;
+
+}
+
+
+/* =====================================================
+   NOTICE
+===================================================== */
+
+.notice{
+
+  font-size:12px;
+
+  color:#7c8495;
+
+  text-align:center;
+
+  padding:
+    15px
+    20px;
+
+  line-height:1.6;
+
+}
+
+
+/* =====================================================
    BOTTOM NAVIGATION - 5 TABS
-   ========================================================= */
+===================================================== */
 
-.nav{
+.bottom{
+
   position:fixed;
 
   bottom:0;
@@ -630,275 +1071,252 @@ body{
 
   right:0;
 
-  height:78px;
+  height:82px;
 
   background:#fff;
 
   border-top:
-    1px solid
-    #e4e6ed;
+    1px solid #ddd;
 
   display:grid;
 
   grid-template-columns:
     repeat(5,1fr);
 
-  z-index:1000;
+  z-index:90;
 
   box-shadow:
-    0 -3px 15px
-    rgba(0,0,0,.04);
+    0 -4px 15px
+    rgba(0,0,0,.06);
+
 }
 
-
-.nav button{
-  border:0;
-
-  background:#fff;
-
-  color:#6d7484;
-
-  text-align:center;
-
-  padding-top:8px;
-
-  font-size:11px;
-
-  cursor:pointer;
-
-  font-family:Arial,Helvetica,sans-serif;
-}
-
-
-.nav button.active{
-  color:#493bd8;
-
-  font-weight:800;
-}
-
-
-.nav span{
-  display:block;
-
-  font-size:23px;
-
-  margin-bottom:3px;
-}
-
-
-.nav-label{
-  font-size:11px;
-}
-
-
-/* =========================================================
-   MODAL
-   ========================================================= */
-
-.modal{
-  display:none;
-
-  position:fixed;
-
-  inset:0;
-
-  background:
-    rgba(0,0,0,.55);
-
-  z-index:2000;
-
-  align-items:center;
-
-  justify-content:center;
-
-  padding:20px;
-}
-
-
-.modal.show{
-  display:flex;
-}
-
-
-.modal-box{
-  width:100%;
-
-  max-width:390px;
-
-  background:#fff;
-
-  border-radius:20px;
-
-  padding:25px;
-
-  box-shadow:
-    0 20px 60px
-    rgba(0,0,0,.25);
-
-  text-align:center;
-}
-
-
-.modal-box h2{
-  margin:
-    0
-    0
-    10px;
-
-  color:#29335a;
-}
-
-
-.modal-box p{
-  color:#70798b;
-
-  line-height:1.5;
-
-  font-size:14px;
-}
-
-
-.modal-btn{
-  width:100%;
-
-  border:0;
-
-  padding:13px;
-
-  margin-top:10px;
-
-  border-radius:11px;
-
-  background:#493bd8;
-
-  color:#fff;
-
-  font-size:16px;
-
-  font-weight:800;
-
-  cursor:pointer;
-}
-
-
-.modal-close{
-  background:#eef0f5;
-
-  color:#303746;
-}
-
-
-/* =========================================================
-   NOTICE
-   ========================================================= */
-
-.notice{
-  font-size:12px;
-
-  color:#7c8495;
+.nav{
 
   text-align:center;
 
   padding:
-    8px
-    20px
-    20px;
+    9px
+    2px
+    5px;
 
-  line-height:1.5;
+  font-size:11px;
+
+  color:#777;
+
+  cursor:pointer;
+
+  user-select:none;
+
+}
+
+.nav .ni{
+
+  font-size:25px;
+
+  display:block;
+
+  margin-bottom:4px;
+
+  line-height:1;
+
+}
+
+.nav.active{
+
+  color:#5140d1;
+
+  font-weight:900;
+
+}
+
+.nav.active .ni{
+
+  font-weight:900;
+
 }
 
 
-/* =========================================================
-   LOADING
-   ========================================================= */
+/* =====================================================
+   MOBILE
+===================================================== */
 
-.loading{
-  text-align:center;
+@media(max-width:600px){
 
-  padding:40px 20px;
+  .top{
 
-  color:#6f7788;
-}
+    padding:
+      18px
+      14px
+      86px;
 
+  }
 
-.error-message{
-  text-align:center;
+  .logo{
 
-  color:#c62828;
+    width:54px;
+    height:54px;
 
-  padding:25px 15px;
+  }
 
-  line-height:1.5;
-}
+  .id{
 
+    font-size:16px;
 
-/* =========================================================
-   RESPONSIVE
-   ========================================================= */
+  }
 
-@media(min-width:700px){
+  .name{
 
-  body{
-    max-width:520px;
+    font-size:18px;
 
-    margin:auto;
+  }
+
+  .date-line{
+
+    font-size:11px;
+
+  }
+
+  .gridicon{
+
+    font-size:28px;
+
+  }
+
+  .main{
+
+    margin:
+      -58px
+      10px
+      100px;
+
+  }
+
+  .summary{
+
+    padding:
+      20px
+      8px;
+
+  }
+
+  .amount{
+
+    font-size:22px;
+
+  }
+
+  .three > div{
+
+    padding:
+      16px
+      3px;
+
+  }
+
+  .purple{
+
+    font-size:13px;
+
+  }
+
+  .smallamount{
+
+    font-size:18px;
+
+  }
+
+  .tiles{
+
+    grid-template-columns:
+      repeat(3,1fr);
+
+  }
+
+  .tile{
+
+    min-height:118px;
+
+    padding:
+      14px
+      4px;
+
+  }
+
+  .icon{
+
+    font-size:27px;
+
+  }
+
+  .tile .money{
+
+    font-size:14px;
+
+  }
+
+  .tile b{
+
+    font-size:11px;
+
+  }
+
+  .wallet-card .wallet-money{
+
+    font-size:21px;
+
   }
 
   .nav{
-    max-width:520px;
 
-    margin:auto;
+    font-size:10px;
+
+  }
+
+  .nav .ni{
+
+    font-size:23px;
+
+  }
+
+}
+
+@media(min-width:700px){
+
+  .main{
+
+    max-width:800px;
+
   }
 
   .top{
+
+    max-width:850px;
+
+    margin:auto;
+
+  }
+
+  .bottom{
+
+    max-width:850px;
+
+    left:50%;
+
+    right:auto;
+
+    transform:
+      translateX(-50%);
+
     border-radius:
+      18px
+      18px
       0
-      0
-      30px
-      30px;
+      0;
+
   }
 
 }
-
-
-@media(max-width:380px){
-
-  .brand{
-    font-size:19px;
-  }
-
-  .stats{
-    gap:6px;
-  }
-
-  .stat{
-    padding:
-      10px
-      5px;
-  }
-
-  .stat-title{
-    font-size:12px;
-  }
-
-  .stat b{
-    font-size:15px;
-  }
-
-  .retop-title{
-    font-size:12px;
-  }
-
-  .nav span{
-    font-size:21px;
-  }
-
-  .nav-label{
-    font-size:10px;
-  }
-
-}
-
 
 </style>
 
@@ -908,59 +1326,71 @@ body{
 <body>
 
 
-<!-- =========================================================
-     HEADER
-     ========================================================= -->
+<!-- =====================================================
+     TOP HEADER
+===================================================== -->
 
 <header class="top">
 
-  <div class="topbar">
+  <div class="toprow">
 
-    <div class="brand">
+    <div class="logo">
+      HM
+    </div>
 
-      <div class="hm">
-        HM
+    <div class="info">
+
+      <div class="id">
+
+        <span id="memberId">
+          HM000001
+        </span>
+
+        —
+
+        <span
+          id="status"
+          class="status-active"
+        >
+          Active
+        </span>
+
       </div>
 
-      <div>
-        Hamara Market
+
+      <div
+        class="date-line"
+        id="activeDate"
+      >
+        Active Date: —
+      </div>
+
+
+      <div
+        class="date-line"
+        id="renewalDate"
+      >
+        Renewal Date: —
+      </div>
+
+
+      <div
+        class="name"
+        id="userName"
+      >
+        SOMANATH MISHRA
       </div>
 
     </div>
 
 
-    <div class="menu">
-      ⋮
-    </div>
-
-  </div>
-
-
-  <div class="member">
-
-    Member ID:
-
-    <strong id="memberId">
-      Loading...
-    </strong>
-
-    <span id="statusText">
-    </span>
-
-    <br>
-
-    Welcome,
-
-    <strong id="userName">
-      User
-    </strong>
-
-
-    <div
-      class="member-extra"
-      id="memberDates"
+    <button
+      class="menu-button"
+      onclick="toggleMenu()"
+      aria-label="Menu"
     >
-    </div>
+      ⋮
+    </button>
 
   </div>
 
@@ -968,1535 +1398,1145 @@ body{
 
 
 
-<!-- =========================================================
-     MAIN BALANCE CARD
-     ========================================================= -->
+<!-- =====================================================
+     MENU
+===================================================== -->
 
-<section class="card">
+<div
+  class="menu-box"
+  id="menuBox"
+>
+
+  <button onclick="showPage('home')">
+    🏠 Home
+  </button>
+
+  <button onclick="showPage('pin')">
+    ◷ Pin
+  </button>
+
+  <button onclick="showPage('withdrawal')">
+    ₹ Withdrawal
+  </button>
+
+  <button onclick="showPage('report')">
+    ☆ Report
+  </button>
+
+  <button onclick="showPage('profile')">
+    ◯ Profile
+  </button>
+
+  <button
+    class="logout"
+    onclick="logout()"
+  >
+    🚪 Logout
+  </button>
+
+</div>
 
 
-  <!-- BALANCE -->
 
-  <div class="balance">
+<!-- =====================================================
+     MAIN
+===================================================== -->
 
-    <div>
+<main class="main">
 
-      <div class="label">
-        Total Income
+
+<!-- =====================================================
+     HOME PAGE
+===================================================== -->
+
+<section
+  id="homePage"
+  class="page-section active"
+>
+
+
+<div class="white">
+
+
+<!-- SUMMARY -->
+
+<div class="summary">
+
+
+  <div class="summary-box">
+
+    <div class="label">
+      Total Income
+    </div>
+
+    <div
+      class="amount"
+      id="totalIncome"
+    >
+      ₹0.00
+    </div>
+
+
+    <div class="sub">
+      Re-top-up Wallet
+    </div>
+
+    <div
+      class="amount"
+      id="retopWallet"
+    >
+      ₹0.00
+    </div>
+
+  </div>
+
+
+
+  <div class="summary-box">
+
+    <div class="label">
+      Wallet Balance
+    </div>
+
+    <div
+      class="amount"
+      id="walletBalance"
+    >
+      ₹0.00
+    </div>
+
+
+    <div class="sub">
+      Daily Allocation
+    </div>
+
+    <div
+      class="amount"
+      id="dailyWallet"
+    >
+      ₹20.00
+    </div>
+
+  </div>
+
+</div>
+
+
+
+<!-- THREE -->
+
+<div class="three">
+
+
+  <div>
+
+    <div class="purple">
+      Today's Income
+    </div>
+
+    <div
+      class="smallamount"
+      id="todayIncome"
+    >
+      ₹50.00
+    </div>
+
+  </div>
+
+
+
+  <div>
+
+    <div class="purple">
+      Re-top-up<br>
+      Daily
+    </div>
+
+    <div class="smallamount">
+      ₹30.00
+    </div>
+
+  </div>
+
+
+
+  <div>
+
+    <div class="purple">
+      Wallet<br>
+      Daily
+    </div>
+
+    <div class="smallamount">
+      ₹20.00
+    </div>
+
+  </div>
+
+
+</div>
+
+
+
+<!-- WALLET ALLOCATION -->
+
+<div class="wallet-section">
+
+  <div class="wallet-title">
+    💰 Daily ₹50 Wallet Distribution
+  </div>
+
+
+  <div class="wallet-grid">
+
+
+    <div class="wallet-card retop">
+
+      <div class="wallet-icon">
+        🔄
+      </div>
+
+      <div class="wallet-name">
+        Re-top-up Wallet
       </div>
 
       <div
-        class="amount"
-        id="total"
+        class="wallet-money"
+        id="retopDailyDisplay"
       >
-        ₹0.00
+        ₹30.00
+      </div>
+
+      <div class="daily">
+        Daily addition
       </div>
 
     </div>
 
 
-    <div>
 
-      <div class="label">
+    <div class="wallet-card balance">
+
+      <div class="wallet-icon">
+        🎁
+      </div>
+
+      <div class="wallet-name">
         Wallet Balance
       </div>
 
       <div
-        class="amount"
-        id="wallet"
+        class="wallet-money"
+        id="walletDailyDisplay"
       >
-        ₹0.00
+        ₹20.00
+      </div>
+
+      <div class="daily">
+        Daily addition
       </div>
 
     </div>
+
+
+  </div>
+
+</div>
+
+
+
+<!-- RETOPUP -->
+
+<div class="retopup-main">
+
+  <div class="big-icon">
+    💰
+  </div>
+
+  <h3>
+    Re-top-up Wallet
+  </h3>
+
+  <p>
+    Your daily Re-top-up allocation
+  </p>
+
+  <div class="retopup-amount">
+    ₹30.00 / Day
+  </div>
+
+</div>
+
+
+
+<!-- TILES -->
+
+<div class="tiles">
+
+
+  <div class="tile">
+
+    <div class="icon">
+      ▦
+    </div>
+
+    <div class="money">
+      ₹0.00
+    </div>
+
+    <b>
+      Direct Income
+    </b>
 
   </div>
 
 
 
-  <!-- =====================================================
-       THREE BOXES
-       Today's Videos REMOVED
-       Re-top-up Wallet ADDED
-       ===================================================== -->
+  <div class="tile">
 
-  <div class="stats">
+    <div class="icon">
+      ☆
+    </div>
+
+    <div class="money">
+      ₹0.00
+    </div>
+
+    <b>
+      Task Income
+    </b>
+
+  </div>
 
 
-    <!-- RE TOPUP -->
+
+  <div class="tile">
+
+    <div class="icon">
+      ▥
+    </div>
+
+    <div class="money">
+      ₹0.00
+    </div>
+
+    <b>
+      Level Amount
+    </b>
+
+  </div>
+
+
+
+  <div class="tile">
+
+    <div class="icon">
+      ♙
+    </div>
+
+    <div class="money">
+      ₹0.00
+    </div>
+
+    <b>
+      Daily Income
+    </b>
+
+  </div>
+
+
+
+  <div class="tile">
+
+    <div class="icon">
+      🛒
+    </div>
+
+    <div class="money">
+      ₹0.00
+    </div>
+
+    <b>
+      Hamara Market
+    </b>
+
+  </div>
+
+
+
+  <div class="tile">
+
+    <div class="icon">
+      ⇩
+    </div>
+
+    <div class="money">
+      ₹0.00
+    </div>
+
+    <b>
+      Withdrawal
+    </b>
+
+  </div>
+
+
+
+  <div class="tile">
+
+    <div class="icon">
+      ♧
+    </div>
 
     <div
-      class="retop-card"
-      id="retopCard"
-      onclick="handleRetopup()"
+      class="money"
+      id="directMembers"
     >
-
-      <div class="retop-icon">
-        💰
-      </div>
-
-      <div class="retop-title">
-        Re-top-up<br>Wallet
-      </div>
-
-      <div
-        class="retop-date-small"
-        id="retopDateSmall"
-      >
-        Loading...
-      </div>
-
-      <button
-        class="retop-button"
-        id="retopButton"
-        type="button"
-        onclick="event.stopPropagation();handleRetopup();"
-        disabled
-      >
-        Loading...
-      </button>
-
+      0
     </div>
 
-
-
-    <!-- PER VIDEO -->
-
-    <div class="stat">
-
-      <span class="stat-title">
-        Per Video
-      </span>
-
-      <b>
-        ₹5
-      </b>
-
-    </div>
-
-
-
-    <!-- TODAY INCOME -->
-
-    <div class="stat">
-
-      <span class="stat-title">
-        Today's<br>Income
-      </span>
-
-      <b id="today">
-        ₹0.00
-      </b>
-
-    </div>
-
+    <b>
+      Direct Members
+    </b>
 
   </div>
 
 
 
-  <!-- INFO -->
+  <div class="tile">
 
-  <div
-    class="info-box"
-    id="accountInfo"
-  >
-    Checking your account status...
+    <div class="icon">
+      🔗
+    </div>
+
+    <div class="money">
+      ₹0.00
+    </div>
+
+    <b>
+      Single Leg Income
+    </b>
+
   </div>
+
+
+
+  <div class="tile">
+
+    <div class="icon">
+      ◉
+    </div>
+
+    <div
+      class="money"
+      id="activeMembers"
+    >
+      0
+    </div>
+
+    <b>
+      Active Members
+    </b>
+
+  </div>
+
+
+</div>
+
+
+</div>
+
+
+<div class="notice">
+
+Daily income allocation:
+<strong>₹50</strong> =
+<strong>₹30 Re-top-up Wallet</strong> +
+<strong>₹20 Wallet Balance</strong>.
+
+Actual wallet credit should be performed by the secure backend.
+
+</div>
 
 
 </section>
 
 
 
-<!-- =========================================================
-     SPONSORED VIDEOS
-     ========================================================= -->
+<!-- =====================================================
+     PIN PAGE
+===================================================== -->
 
-<div
-  class="section"
-  id="videosSection"
+<section
+  id="pinPage"
+  class="page-section"
 >
 
-  <div class="title">
-    Today's Sponsored Videos
+  <div class="section-title">
+    Pin
   </div>
 
 
-  <div id="videos">
+  <div class="panel">
 
-    <div class="loading">
-      Loading sponsored videos...
+    <div class="pin-icon">
+      ◷
+    </div>
+
+    <div class="pin-title">
+      Member PIN
+    </div>
+
+    <p class="pin-text">
+
+      Your transaction/security PIN
+      will be managed securely here.
+
+      <br><br>
+
+      For security, never share your
+      PIN with another person.
+
+    </p>
+
+
+    <button
+      class="pin-button"
+      onclick="pinMessage()"
+    >
+      Manage PIN
+    </button>
+
+  </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     WITHDRAWAL PAGE
+===================================================== -->
+
+<section
+  id="withdrawalPage"
+  class="page-section"
+>
+
+  <div class="section-title">
+    Withdrawal
+  </div>
+
+
+  <div class="action-card">
+
+    <div class="big">
+      ₹
+    </div>
+
+    <h3>
+      Wallet Withdrawal
+    </h3>
+
+    <p>
+      Your available Wallet Balance
+      is shown on the Home page.
+    </p>
+
+    <p>
+      Withdrawal requests will be
+      processed after the secure
+      payment system is connected.
+    </p>
+
+
+    <button
+      class="action-button"
+      onclick="withdrawMessage()"
+    >
+      Request Withdrawal
+    </button>
+
+  </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     REPORT PAGE
+===================================================== -->
+
+<section
+  id="reportPage"
+  class="page-section"
+>
+
+  <div class="section-title">
+    Income Report
+  </div>
+
+
+  <div class="report-row">
+
+    <div class="report-label">
+      Total Income
+    </div>
+
+    <div
+      class="report-value"
+      id="reportTotal"
+    >
+      ₹0.00
     </div>
 
   </div>
 
-</div>
 
+  <div class="report-row">
 
+    <div class="report-label">
+      Today's Income
+    </div>
 
-<!-- =========================================================
-     QUICK ACTIONS
-     ========================================================= -->
+    <div
+      class="report-value"
+    >
+      ₹50.00
+    </div>
 
-<div class="section">
-
-  <div class="title">
-    Quick Actions
   </div>
 
 
-  <div class="actions">
+  <div class="report-row">
+
+    <div class="report-label">
+      Re-top-up Wallet
+    </div>
+
+    <div
+      class="report-value"
+      id="reportRetop"
+    >
+      ₹0.00
+    </div>
+
+  </div>
+
+
+  <div class="report-row">
+
+    <div class="report-label">
+      Wallet Balance
+    </div>
+
+    <div
+      class="report-value"
+      id="reportWallet"
+    >
+      ₹0.00
+    </div>
+
+  </div>
+
+
+  <div class="report-row">
+
+    <div class="report-label">
+      Direct Members
+    </div>
+
+    <div
+      class="report-value"
+      id="reportDirect"
+    >
+      0
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     PROFILE PAGE
+===================================================== -->
+
+<section
+  id="profilePage"
+  class="page-section"
+>
+
+  <div class="section-title">
+    Member Profile
+  </div>
+
+
+  <div class="profile-card">
+
+
+    <div class="profile-head">
+
+      <div
+        class="profile-avatar"
+        id="profileAvatar"
+      >
+        HM
+      </div>
+
+
+      <h2 id="profileName">
+        SOMANATH MISHRA
+      </h2>
+
+
+      <p id="profileMemberId">
+        HM000001
+      </p>
+
+    </div>
+
+
+
+    <div class="profile-details">
+
+
+      <div class="profile-row">
+
+        <div class="left">
+          Member ID
+        </div>
+
+        <div
+          class="right"
+          id="pMemberId"
+        >
+          —
+        </div>
+
+      </div>
+
+
+
+      <div class="profile-row">
+
+        <div class="left">
+          Full Name
+        </div>
+
+        <div
+          class="right"
+          id="pName"
+        >
+          —
+        </div>
+
+      </div>
+
+
+
+      <div class="profile-row">
+
+        <div class="left">
+          Address
+        </div>
+
+        <div
+          class="right"
+          id="pAddress"
+        >
+          —
+        </div>
+
+      </div>
+
+
+
+      <div class="profile-row">
+
+        <div class="left">
+          Mobile
+        </div>
+
+        <div
+          class="right"
+          id="pMobile"
+        >
+          —
+        </div>
+
+      </div>
+
+
+
+      <div class="profile-row">
+
+        <div class="left">
+          Email
+        </div>
+
+        <div
+          class="right"
+          id="pEmail"
+        >
+          —
+        </div>
+
+      </div>
+
+
+
+      <div class="profile-row">
+
+        <div class="left">
+          Sponsor ID
+        </div>
+
+        <div
+          class="right"
+          id="pSponsor"
+        >
+          —
+        </div>
+
+      </div>
+
+
+
+      <div class="profile-row">
+
+        <div class="left">
+          Status
+        </div>
+
+        <div
+          class="right"
+          id="pStatus"
+        >
+          —
+        </div>
+
+      </div>
+
+
+
+      <div class="profile-row">
+
+        <div class="left">
+          Active Date
+        </div>
+
+        <div
+          class="right"
+          id="pActiveDate"
+        >
+          —
+        </div>
+
+      </div>
+
+
+
+      <div class="profile-row">
+
+        <div class="left">
+          Renewal Date
+        </div>
+
+        <div
+          class="right"
+          id="pRenewal"
+        >
+          —
+        </div>
+
+      </div>
+
+
+
+      <div class="profile-row">
+
+        <div class="left">
+          Account Created
+        </div>
+
+        <div
+          class="right"
+          id="pCreated"
+        >
+          —
+        </div>
+
+      </div>
+
+
+    </div>
+
 
 
     <button
-      class="action"
-      onclick="goWithdrawal()"
+      class="profile-logout"
+      onclick="logout()"
     >
-
-      <span class="icon">
-        💰
-      </span>
-
-      Withdrawal
-
-    </button>
-
-
-    <button
-      class="action"
-      onclick="goReport()"
-    >
-
-      <span class="icon">
-        ☆
-      </span>
-
-      Report
-
-    </button>
-
-
-    <button
-      class="action"
-      onclick="goProfile()"
-    >
-
-      <span class="icon">
-        ♙
-      </span>
-
-      Profile
-
+      🚪 Logout
     </button>
 
 
   </div>
 
-</div>
+</section>
 
 
 
-<!-- =========================================================
-     NOTICE
-     ========================================================= -->
-
-<p class="notice">
-
-  Daily viewing window:
-  12:00 AM – 11:59 PM.
-
-  <br>
-
-  Sponsored video rewards are available
-  according to account eligibility.
-
-</p>
+</main>
 
 
 
-<!-- =========================================================
-     5 TAB BOTTOM NAVIGATION
-     ========================================================= -->
+<!-- =====================================================
+     BOTTOM NAVIGATION
+===================================================== -->
 
-<nav class="nav">
+<nav class="bottom">
 
 
-  <!-- HOME -->
-
-  <button
-    class="active"
+  <div
+    class="nav active"
     id="navHome"
-    onclick="navHome()"
+    onclick="showPage('home')"
   >
 
-    <span>
+    <span class="ni">
       ⌂
     </span>
 
-    <div class="nav-label">
-      Home
-    </div>
+    Home
 
-  </button>
+  </div>
 
 
 
-  <!-- PIN -->
-
-  <button
+  <div
+    class="nav"
     id="navPin"
-    onclick="navPin()"
+    onclick="showPage('pin')"
   >
 
-    <span>
+    <span class="ni">
       ◷
     </span>
 
-    <div class="nav-label">
-      Pin
-    </div>
+    Pin
 
-  </button>
+  </div>
 
 
 
-  <!-- WITHDRAWAL -->
-
-  <button
+  <div
+    class="nav"
     id="navWithdrawal"
-    onclick="goWithdrawal()"
+    onclick="showPage('withdrawal')"
   >
 
-    <span>
+    <span class="ni">
       ₹
     </span>
 
-    <div class="nav-label">
-      Withdrawal
-    </div>
+    Withdrawal
 
-  </button>
+  </div>
 
 
 
-  <!-- REPORT -->
-
-  <button
+  <div
+    class="nav"
     id="navReport"
-    onclick="goReport()"
+    onclick="showPage('report')"
   >
 
-    <span>
+    <span class="ni">
       ☆
     </span>
 
-    <div class="nav-label">
-      Report
-    </div>
+    Report
 
-  </button>
+  </div>
 
 
 
-  <!-- PROFILE -->
-
-  <button
+  <div
+    class="nav"
     id="navProfile"
-    onclick="goProfile()"
+    onclick="showPage('profile')"
   >
 
-    <span>
-      ♙
+    <span class="ni">
+      ◯
     </span>
 
-    <div class="nav-label">
-      Profile
-    </div>
+    Profile
 
-  </button>
+  </div>
 
 
 </nav>
 
 
 
-<!-- =========================================================
-     MODAL
-     ========================================================= -->
-
-<div
-  class="modal"
-  id="modal"
-  onclick="closeModalOutside(event)"
->
-
-  <div class="modal-box">
-
-    <h2 id="modalTitle">
-      Hamara Market
-    </h2>
-
-    <p id="modalText">
-      Loading...
-    </p>
-
-    <button
-      class="modal-btn"
-      id="modalAction"
-      onclick="modalActionClick()"
-    >
-      OK
-    </button>
-
-    <button
-      class="modal-btn modal-close"
-      onclick="closeModal()"
-    >
-      Close
-    </button>
-
-  </div>
-
-</div>
-
-
-
 <script>
 
-/* =========================================================
+/* =====================================================
    SUPABASE CONFIGURATION
-   ========================================================= */
+===================================================== */
 
 const SUPABASE_URL =
-  "https://yaxingstvkaqfmvtyuis.supabase.co";
-
+"https://yaxingstvkaqfmvtyuis.supabase.co";
 
 const SUPABASE_ANON_KEY =
-  "sb_publishable_3dA1_NPBVCHCzcrf155Qtw_16IUxNDt";
-
+"sb_publishable_3dA1_NPBVCHCzcrf155Qtw_16IUxNd";
 
 const supabaseClient =
-  supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_ANON_KEY
-  );
+window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY
+);
 
 
+/*
+  DAILY INCOME CONFIGURATION
 
-/* =========================================================
-   GLOBAL MEMBER DATA
-   ========================================================= */
+  Total = ₹50
 
-let currentUser = null;
+  Re-top-up = ₹30
 
-let currentProfile = null;
+  Wallet Balance = ₹20
+*/
 
-let activationDate = null;
+const DAILY_TOTAL = 50;
 
-let retopDate = null;
+const DAILY_RETOPUP = 30;
 
-let daysLeft = 0;
+const DAILY_WALLET = 20;
 
-let isActive = false;
 
-let modalAction = null;
+/* =====================================================
+   MENU
+===================================================== */
 
+function toggleMenu(){
 
-
-/* =========================================================
-   ELEMENTS
-   ========================================================= */
-
-const memberIdEl =
-  document.getElementById(
-    "memberId"
-  );
-
-
-const userNameEl =
-  document.getElementById(
-    "userName"
-  );
-
-
-const statusTextEl =
-  document.getElementById(
-    "statusText"
-  );
-
-
-const memberDatesEl =
-  document.getElementById(
-    "memberDates"
-  );
-
-
-const accountInfoEl =
-  document.getElementById(
-    "accountInfo"
-  );
-
-
-const retopDateSmallEl =
-  document.getElementById(
-    "retopDateSmall"
-  );
-
-
-const retopButtonEl =
-  document.getElementById(
-    "retopButton"
-  );
-
-
-const retopCardEl =
-  document.getElementById(
-    "retopCard"
-  );
-
-
-
-/* =========================================================
-   DATE FORMAT
-   ========================================================= */
-
-function formatDate(
-  date
-){
-
-  if(!date){
-
-    return "-";
-
-  }
-
-
-  const d =
-    new Date(date);
-
-
-  if(
-    Number.isNaN(
-      d.getTime()
-    )
-  ){
-
-    return "-";
-
-  }
-
-
-  const day =
-    String(
-      d.getDate()
-    ).padStart(
-      2,
-      "0"
-    );
-
-
-  const month =
-    String(
-      d.getMonth()+1
-    ).padStart(
-      2,
-      "0"
-    );
-
-
-  const year =
-    d.getFullYear();
-
-
-  return (
-    day +
-    "/" +
-    month +
-    "/" +
-    year
-  );
-
-}
-
-
-
-/* =========================================================
-   DATE ONLY
-   ========================================================= */
-
-function localDateOnly(
-  value
-){
-
-  const d =
-    new Date(value);
-
-
-  return new Date(
-    d.getFullYear(),
-    d.getMonth(),
-    d.getDate()
-  );
-
-}
-
-
-
-/* =========================================================
-   CALCULATE RETOP DATE
-   ========================================================= */
-
-function calculateRetopDate(
-  activeDate
-){
-
-  const d =
-    localDateOnly(
-      activeDate
-    );
-
-
-  /*
-    30 days after activation.
-
-    Example:
-
-    Activation:
-    15/07/2026
-
-    Re-top-up:
-    14/08/2026
-  */
-
-  d.setDate(
-    d.getDate()+30
-  );
-
-
-  return d;
-
-}
-
-
-
-/* =========================================================
-   CALCULATE DAYS LEFT
-   ========================================================= */
-
-function calculateDaysLeft(
-  activeDate
-){
-
-  const today =
-    new Date();
-
-
-  const todayOnly =
-    new Date(
-      today.getFullYear(),
-      today.getMonth(),
-      today.getDate()
-    );
-
-
-  const expiry =
-    calculateRetopDate(
-      activeDate
-    );
-
-
-  const difference =
-    expiry.getTime() -
-    todayOnly.getTime();
-
-
-  const days =
-    Math.ceil(
-      difference /
-      (1000*60*60*24)
-    );
-
-
-  return Math.max(
-    0,
-    days
-  );
-
-}
-
-
-
-/* =========================================================
-   UPDATE ACTIVE STATUS DISPLAY
-   ========================================================= */
-
-function updateStatusDisplay(){
-
-  const memberId =
-    currentProfile?.member_id ||
-    "-";
-
-
-  const name =
-    currentProfile?.name ||
-    "Member";
-
-
-  memberIdEl.textContent =
-    memberId;
-
-
-  userNameEl.textContent =
-    name;
-
-
-  if(
-    isActive &&
-    activationDate
-  ){
-
-    statusTextEl.innerHTML =
-      ' - <span class="status-active">[Active-' +
-      formatDate(activationDate) +
-      ']</span>';
-
-
-    retopDate =
-      calculateRetopDate(
-        activationDate
-      );
-
-
-    daysLeft =
-      calculateDaysLeft(
-        activationDate
-      );
-
-
-    memberDatesEl.innerHTML =
-      'Retop-Date: <span class="retop-date">' +
-      formatDate(retopDate) +
-      '</span> - ' +
-      '<span class="expire ' +
-      (
-        daysLeft === 0
-          ? "expired"
-          : ""
-      ) +
-      '">Expires In : ' +
-      daysLeft +
-      ' Days.</span>';
-
-
-    retopDateSmallEl.textContent =
-      "Date: " +
-      formatDate(
-        retopDate
-      );
-
-
-    accountInfoEl.className =
-      "info-box";
-
-
-    if(
-      daysLeft > 0
-    ){
-
-      accountInfoEl.innerHTML =
-        "Your account is Active. " +
-        "Re-top-up date is " +
-        "<strong>" +
-        formatDate(retopDate) +
-        "</strong>." +
-        "<br>" +
-        "Your subscription expires in " +
-        "<strong>" +
-        daysLeft +
-        " days</strong>.";
-
-      retopButtonEl.disabled =
-        true;
-
-      retopButtonEl.textContent =
-        "Re-top-up on " +
-        formatDate(retopDate);
-
-    }else{
-
-      accountInfoEl.innerHTML =
-        "Your 30-day activation period has expired. " +
-        "<strong>Please re-top-up your account.</strong>";
-
-      retopButtonEl.disabled =
-        false;
-
-      retopButtonEl.textContent =
-        "Re-top-up Now";
-
-      retopButtonEl.style.background =
-        "#493bd8";
-
-    }
-
-
-  }else{
-
-
-    statusTextEl.innerHTML =
-      ' - <span class="status-inactive">[In-Active]</span>';
-
-
-    memberDatesEl.innerHTML =
-      '<span class="status-inactive">' +
-      'Package not activated' +
-      '</span>';
-
-
-    retopDateSmallEl.textContent =
-      "Not Active";
-
-
-    accountInfoEl.className =
-      "info-box inactive-box";
-
-
-    accountInfoEl.innerHTML =
-      "<strong>Account Inactive.</strong>" +
-      "<br>" +
-      "Your account is registered but the ₹899 activation package has not been activated yet.";
-
-
-    retopButtonEl.disabled =
-      true;
-
-    retopButtonEl.textContent =
-      "Activate First";
-
-  }
-
-}
-
-
-
-/* =========================================================
-   LOAD MEMBER PROFILE
-   ========================================================= */
-
-async function loadMemberProfile(){
-
-  try{
-
-
-    const sessionResult =
-      await supabaseClient
-        .auth
-        .getSession();
-
-
-    if(
-      sessionResult.error
-    ){
-
-      throw sessionResult.error;
-
-    }
-
-
-    const session =
-      sessionResult
-        .data
-        ?.session;
-
-
-    if(
-      !session ||
-      !session.user
-    ){
-
-      window.location.href =
-        "login.html";
-
-      return false;
-
-    }
-
-
-    currentUser =
-      session.user;
-
-
-    /*
-      Get member profile.
-
-      activation_date is already used
-      by the Admin Dashboard when a member
-      is activated.
-    */
-
-    const profileResult =
-      await supabaseClient
-        .from("profiles")
-        .select(
-          [
-            "id",
-            "member_id",
-            "name",
-            "email",
-            "mobile",
-            "role",
-            "active",
-            "activation_date",
-            "wallet_balance",
-            "total_income"
-          ].join(",")
-        )
-        .eq(
-          "id",
-          currentUser.id
-        )
-        .maybeSingle();
-
-
-    if(
-      profileResult.error
-    ){
-
-      throw profileResult.error;
-
-    }
-
-
-    if(
-      !profileResult.data
-    ){
-
-      throw new Error(
-        "Member profile not found."
-      );
-
-    }
-
-
-    currentProfile =
-      profileResult.data;
-
-
-    isActive =
-      currentProfile.active !== false;
-
-
-    activationDate =
-      currentProfile.activation_date
-        ? new Date(
-            currentProfile.activation_date
-          )
-        : null;
-
-
-    /*
-      If active=true but activation_date
-      is missing, do not invent an
-      activation date.
-
-      Show active status but tell the
-      user activation date is pending.
-    */
-
-    if(
-      isActive &&
-      !activationDate
-    ){
-
-      statusTextEl.innerHTML =
-        ' - <span class="status-active">[Active]</span>';
-
-
-      memberDatesEl.innerHTML =
-        '<span class="status-active">' +
-        'Activation date pending' +
-        '</span>';
-
-
-      retopDateSmallEl.textContent =
-        "Date pending";
-
-
-      accountInfoEl.innerHTML =
-        "Your account is Active. " +
-        "Activation date is not available yet.";
-
-
-      retopButtonEl.disabled =
-        true;
-
-      retopButtonEl.textContent =
-        "Date Pending";
-
-    }else{
-
-      updateStatusDisplay();
-
-    }
-
-
-    /*
-      Load wallet information
-    */
-
+  const menu =
     document.getElementById(
-      "total"
-    ).textContent =
-      money(
-        currentProfile.total_income
-      );
-
-
-    document.getElementById(
-      "wallet"
-    ).textContent =
-      money(
-        currentProfile.wallet_balance
-      );
-
-
-    return true;
-
-
-  }catch(error){
-
-    console.error(
-      "Profile loading error:",
-      error
+      "menuBox"
     );
 
-
-    document.getElementById(
-      "videos"
-    ).innerHTML =
-      '<div class="error-message">' +
-      escapeHtml(
-        error.message ||
-        "Unable to load member profile."
-      ) +
-      '</div>';
-
-
-    return false;
-
-  }
-
-}
-
-
-
-/* =========================================================
-   MONEY FORMAT
-   ========================================================= */
-
-function money(
-  value
-){
-
-  const number =
-    Number(
-      value || 0
-    );
-
-
-  return (
-    "₹" +
-    number.toFixed(2)
-  );
-
-}
-
-
-
-/* =========================================================
-   ESCAPE HTML
-   ========================================================= */
-
-function escapeHtml(
-  value
-){
-
-  return String(
-    value ?? ""
-  )
-  .replace(
-    /&/g,
-    "&amp;"
-  )
-  .replace(
-    /</g,
-    "&lt;"
-  )
-  .replace(
-    />/g,
-    "&gt;"
-  )
-  .replace(
-    /"/g,
-    "&quot;"
-  )
-  .replace(
-    /'/g,
-    "&#039;"
-  );
-
-}
-
-
-
-/* =========================================================
-   LOAD VIDEOS
-   ========================================================= */
-
-const videos =
-  document.getElementById(
-    "videos"
-  );
-
-
-let watched =
-  0;
-
-
-const videoNames = [
-
-  "Sponsored Video 01",
-
-  "Sponsored Video 02",
-
-  "Sponsored Video 03",
-
-  "Sponsored Video 04",
-
-  "Sponsored Video 05",
-
-  "Sponsored Video 06",
-
-  "Sponsored Video 07",
-
-  "Sponsored Video 08",
-
-  "Sponsored Video 09",
-
-  "Sponsored Video 10"
-
-];
-
-
-
-function loadVideos(){
-
-  videos.innerHTML =
-    "";
-
-
-  watched =
-    0;
-
-
-  videoNames.forEach(
-    (
-      name,
-      i
-    )=>{
-
-
-      const el =
-        document.createElement(
-          "div"
-        );
-
-
-      el.className =
-        "video";
-
-
-      el.innerHTML =
-
-        '<div class="play">▶</div>' +
-
-        '<div class="vtext">' +
-
-          '<b>' +
-          escapeHtml(name) +
-          '</b>' +
-
-          '<small>' +
-          'Eligible reward: ₹5' +
-          '</small>' +
-
-        '</div>' +
-
-        '<button ' +
-
-          'class="watch" ' +
-
-          'id="w' +
-          i +
-          '">' +
-
-          'Watch' +
-
-        '</button>';
-
-
-      videos.appendChild(
-        el
-      );
-
-
-      const watchButton =
-        document.getElementById(
-          "w" + i
-        );
-
-
-      watchButton.onclick =
-        function(){
-
-
-          /*
-            Inactive members cannot
-            earn video rewards.
-          */
-
-          if(
-            !isActive
-          ){
-
-            showModal(
-              "Account Inactive",
-              "Your account is currently inactive. Please activate your ₹899 package before watching sponsored videos.",
-              null
-            );
-
-            return;
-
-          }
-
-
-          /*
-            Expired members need
-            re-top-up.
-          */
-
-          if(
-            daysLeft === 0
-          ){
-
-            showModal(
-              "Re-top-up Required",
-              "Your 30-day activation period has expired. Please re-top-up your account before watching videos.",
-              "retopup"
-            );
-
-            return;
-
-          }
-
-
-          if(
-            el.dataset.done
-          ){
-
-            return;
-
-          }
-
-
-          el.dataset.done =
-            "1";
-
-
-          watched++;
-
-
-          watchButton.textContent =
-            "Completed";
-
-
-          watchButton.classList.add(
-            "completed"
-          );
-
-
-          updateVideoProgress();
-
-        };
-
-    }
-
-  );
-
-
-
-  updateVideoProgress();
-
-}
-
-
-
-/* =========================================================
-   VIDEO PROGRESS
-   ========================================================= */
-
-function updateVideoProgress(){
-
-  const todayIncome =
-    watched * 5;
-
-
-  document.getElementById(
-    "today"
-  ).textContent =
-    money(
-      todayIncome
-    );
-
-
-  const percentage =
-    watched * 10;
-
-
-  /*
-    Progress bar kept for the
-    sponsored video section.
-  */
-
-}
-
-
-
-/* =========================================================
-   RE-TOPUP HANDLER
-   ========================================================= */
-
-function handleRetopup(){
-
-  if(
-    !isActive
-  ){
-
-    showModal(
-      "Account Inactive",
-      "Your account is registered but not activated. Please complete the ₹899 activation package first.",
-      null
-    );
-
-    return;
-
-  }
-
-
-  if(
-    !retopDate
-  ){
-
-    showModal(
-      "Date Not Available",
-      "Your activation date is not available yet.",
-      null
-    );
-
-    return;
-
-  }
-
-
-  if(
-    daysLeft > 0
-  ){
-
-    showModal(
-      "Re-top-up Date",
-      "Your re-top-up date is " +
-      formatDate(retopDate) +
-      ". Please re-top-up on or after this date.",
-      null
-    );
-
-    return;
-
-  }
-
-
-  /*
-    IMPORTANT:
-
-    This button does not directly
-    change the member's activation
-    status.
-
-    Actual payment/re-top-up should
-    be verified by Admin/backend.
-  */
-
-  showModal(
-    "Re-top-up Wallet",
-    "Your 30-day activation period has expired. Please proceed with the ₹899 re-top-up process. After payment verification, Admin will activate your account for the next 30 days.",
-    "retopup"
-  );
-
-}
-
-
-
-/* =========================================================
-   MODAL
-   ========================================================= */
-
-function showModal(
-  title,
-  text,
-  action
-){
-
-  document.getElementById(
-    "modalTitle"
-  ).textContent =
-    title;
-
-
-  document.getElementById(
-    "modalText"
-  ).textContent =
-    text;
-
-
-  modalAction =
-    action;
-
-
-  const actionButton =
-    document.getElementById(
-      "modalAction"
-    );
-
-
-  if(
-    action
-  ){
-
-    actionButton.style.display =
-      "block";
-
-    actionButton.textContent =
-      action === "retopup"
-        ? "Re-top-up"
-        : "Continue";
-
-  }else{
-
-    actionButton.style.display =
-      "none";
-
-  }
-
-
-  document.getElementById(
-    "modal"
-  ).classList.add(
+  menu.classList.toggle(
     "show"
   );
 
 }
 
 
+/* Close menu when clicking elsewhere */
 
-function closeModal(){
+document.addEventListener(
+  "click",
+  function(event){
 
-  document.getElementById(
-    "modal"
-  ).classList.remove(
-    "show"
-  );
+    const menu =
+      document.getElementById(
+        "menuBox"
+      );
 
-}
+    const button =
+      document.querySelector(
+        ".menu-button"
+      );
 
+    if(
+      menu &&
+      !menu.contains(event.target) &&
+      !button.contains(event.target)
+    ){
 
-function closeModalOutside(
-  event
-){
+      menu.classList.remove(
+        "show"
+      );
 
-  if(
-    event.target.id ===
-    "modal"
-  ){
-
-    closeModal();
-
-  }
-
-}
-
-
-function modalActionClick(){
-
-  if(
-    modalAction ===
-    "retopup"
-  ){
-
-    /*
-      Change this later to your
-      actual re-top-up payment page.
-    */
-
-    window.location.href =
-      "retopup.html";
-
-    return;
+    }
 
   }
+);
 
 
-  closeModal();
+/* =====================================================
+   PAGE NAVIGATION
+===================================================== */
 
-}
-
-
-
-/* =========================================================
-   NAVIGATION HELPERS
-   ========================================================= */
-
-function removeActiveNav(){
+function showPage(page){
 
   document
     .querySelectorAll(
-      ".nav button"
+      ".page-section"
     )
     .forEach(
-      btn =>
-        btn.classList.remove(
+      section =>
+        section.classList.remove(
           "active"
         )
     );
 
-}
+
+  document
+    .querySelectorAll(
+      ".nav"
+    )
+    .forEach(
+      nav =>
+        nav.classList.remove(
+          "active"
+        )
+    );
 
 
-
-/* =========================================================
-   HOME TAB
-   ========================================================= */
-
-function navHome(){
-
-  removeActiveNav();
+  const pageElement =
+    document.getElementById(
+      page + "Page"
+    );
 
 
-  document.getElementById(
-    "navHome"
-  ).classList.add(
-    "active"
-  );
+  if(pageElement){
+
+    pageElement.classList.add(
+      "active"
+    );
+
+  }
+
+
+  const navElement =
+    document.getElementById(
+      "nav" +
+      page.charAt(0).toUpperCase() +
+      page.slice(1)
+    );
+
+
+  if(navElement){
+
+    navElement.classList.add(
+      "active"
+    );
+
+  }
+
+
+  document
+    .getElementById(
+      "menuBox"
+    )
+    .classList.remove(
+      "show"
+    );
 
 
   window.scrollTo({
@@ -2507,122 +2547,692 @@ function navHome(){
 }
 
 
+/* =====================================================
+   FORMAT MONEY
+===================================================== */
 
-/* =========================================================
-   PIN TAB
-   ========================================================= */
+function money(value){
 
-function navPin(){
+  const number =
+    Number(value || 0);
 
-  removeActiveNav();
+  return "₹" +
+    number.toFixed(2);
 
-
-  document.getElementById(
-    "navPin"
-  ).classList.add(
-    "active"
-  );
+}
 
 
-  showModal(
-    "Pin",
-    "Your PIN section will be available here. This area can be connected to your member PIN/security system.",
-    null
+/* =====================================================
+   FORMAT DATE
+===================================================== */
+
+function formatDate(value){
+
+  if(!value){
+
+    return "—";
+
+  }
+
+  const date =
+    new Date(value);
+
+  if(
+    Number.isNaN(
+      date.getTime()
+    )
+  ){
+
+    return value;
+
+  }
+
+  return date.toLocaleDateString(
+    "en-IN",
+    {
+      day:"2-digit",
+      month:"2-digit",
+      year:"numeric"
+    }
   );
 
 }
 
 
+/* =====================================================
+   GET LOGGED-IN USER
+===================================================== */
 
-/* =========================================================
-   WITHDRAWAL TAB
-   ========================================================= */
+async function getCurrentUser(){
 
-function goWithdrawal(){
+  try{
 
-  removeActiveNav();
-
-
-  document.getElementById(
-    "navWithdrawal"
-  ).classList.add(
-    "active"
-  );
+    const {
+      data,
+      error
+    } =
+      await supabaseClient
+        .auth
+        .getUser();
 
 
-  showModal(
-    "Withdrawal",
-    "Withdrawal section will be connected to the secure payment system.",
-    null
+    if(error){
+
+      console.error(
+        "Auth error:",
+        error
+      );
+
+      return null;
+
+    }
+
+
+    return data.user || null;
+
+  }catch(error){
+
+    console.error(
+      error
+    );
+
+    return null;
+
+  }
+
+}
+
+
+/* =====================================================
+   LOAD MEMBER PROFILE
+===================================================== */
+
+async function loadMemberProfile(){
+
+  const user =
+    await getCurrentUser();
+
+
+  /*
+    If there is no Supabase session,
+    keep the page usable as a demo.
+  */
+
+  if(!user){
+
+    setDemoMember();
+
+    return;
+
+  }
+
+
+  try{
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient
+        .from("profiles")
+        .select("*")
+        .eq("id",user.id)
+        .single();
+
+
+    if(error){
+
+      console.error(
+        "Profile loading error:",
+        error
+      );
+
+      setDemoMember();
+
+      return;
+
+    }
+
+
+    if(data){
+
+      renderMember(
+        data
+      );
+
+    }else{
+
+      setDemoMember();
+
+    }
+
+
+  }catch(error){
+
+    console.error(
+      error
+    );
+
+    setDemoMember();
+
+  }
+
+}
+
+
+/* =====================================================
+   RENDER MEMBER
+===================================================== */
+
+function renderMember(member){
+
+  const memberId =
+    member.member_id ||
+    "HM000001";
+
+  const name =
+    member.name ||
+    "Member";
+
+  const address =
+    member.address ||
+    "—";
+
+  const mobile =
+    member.mobile ||
+    "—";
+
+  const email =
+    member.email ||
+    "—";
+
+  const sponsor =
+    member.sponsor_id ||
+    "HM000001";
+
+  const active =
+    member.active === true;
+
+
+  /* HEADER */
+
+  document
+    .getElementById(
+      "memberId"
+    )
+    .textContent =
+      memberId;
+
+
+  document
+    .getElementById(
+      "userName"
+    )
+    .textContent =
+      name;
+
+
+  const status =
+    document.getElementById(
+      "status"
+    );
+
+
+  status.textContent =
+    active
+      ? "Active"
+      : "Inactive";
+
+
+  status.className =
+    active
+      ? "status-active"
+      : "status-inactive";
+
+
+  document
+    .getElementById(
+      "activeDate"
+    )
+    .textContent =
+      "Active Date: " +
+      formatDate(
+        member.activation_date
+      );
+
+
+  document
+    .getElementById(
+      "renewalDate"
+    )
+    .textContent =
+      "Renewal Date: " +
+      formatDate(
+        member.validity_end
+      );
+
+
+  /* PROFILE */
+
+  document
+    .getElementById(
+      "profileName"
+    )
+    .textContent =
+      name;
+
+
+  document
+    .getElementById(
+      "profileMemberId"
+    )
+    .textContent =
+      memberId;
+
+
+  document
+    .getElementById(
+      "profileAvatar"
+    )
+    .textContent =
+      getInitials(name);
+
+
+  document
+    .getElementById(
+      "pMemberId"
+    )
+    .textContent =
+      memberId;
+
+
+  document
+    .getElementById(
+      "pName"
+    )
+    .textContent =
+      name;
+
+
+  document
+    .getElementById(
+      "pAddress"
+    )
+    .textContent =
+      address;
+
+
+  document
+    .getElementById(
+      "pMobile"
+    )
+    .textContent =
+      mobile;
+
+
+  document
+    .getElementById(
+      "pEmail"
+    )
+    .textContent =
+      email;
+
+
+  document
+    .getElementById(
+      "pSponsor"
+    )
+    .textContent =
+      sponsor;
+
+
+  document
+    .getElementById(
+      "pStatus"
+    )
+    .textContent =
+      active
+        ? "Active"
+        : "Inactive";
+
+
+  document
+    .getElementById(
+      "pActiveDate"
+    )
+    .textContent =
+      formatDate(
+        member.activation_date
+      );
+
+
+  document
+    .getElementById(
+      "pRenewal"
+    )
+    .textContent =
+      formatDate(
+        member.validity_end
+      );
+
+
+  document
+    .getElementById(
+      "pCreated"
+    )
+    .textContent =
+      formatDate(
+        member.created_at
+      );
+
+
+  /* BALANCES */
+
+  const retop =
+    Number(
+      member.retop_wallet || 0
+    );
+
+
+  const wallet =
+    Number(
+      member.wallet_balance || 0
+    );
+
+
+  const total =
+    Number(
+      member.total_income || 0
+    );
+
+
+  const today =
+    Number(
+      member.today_income || DAILY_TOTAL
+    );
+
+
+  document
+    .getElementById(
+      "retopWallet"
+    )
+    .textContent =
+      money(retop);
+
+
+  document
+    .getElementById(
+      "walletBalance"
+    )
+    .textContent =
+      money(wallet);
+
+
+  document
+    .getElementById(
+      "totalIncome"
+    )
+    .textContent =
+      money(total);
+
+
+  /*
+    The dashboard always displays
+    today's planned allocation as ₹50.
+  */
+
+  document
+    .getElementById(
+      "todayIncome"
+    )
+    .textContent =
+      money(
+        today || DAILY_TOTAL
+      );
+
+
+  document
+    .getElementById(
+      "directMembers"
+    )
+    .textContent =
+      member.direct_count || 0;
+
+
+  document
+    .getElementById(
+      "activeMembers"
+    )
+    .textContent =
+      member.active_count || 0;
+
+
+  /* REPORT */
+
+  document
+    .getElementById(
+      "reportTotal"
+    )
+    .textContent =
+      money(total);
+
+
+  document
+    .getElementById(
+      "reportRetop"
+    )
+    .textContent =
+      money(retop);
+
+
+  document
+    .getElementById(
+      "reportWallet"
+    )
+    .textContent =
+      money(wallet);
+
+
+  document
+    .getElementById(
+      "reportDirect"
+    )
+    .textContent =
+      member.direct_count || 0;
+
+}
+
+
+/* =====================================================
+   INITIALS
+===================================================== */
+
+function getInitials(name){
+
+  const words =
+    String(name)
+      .trim()
+      .split(/\s+/)
+      .filter(Boolean);
+
+
+  if(!words.length){
+
+    return "HM";
+
+  }
+
+
+  if(words.length === 1){
+
+    return words[0]
+      .substring(0,2)
+      .toUpperCase();
+
+  }
+
+
+  return (
+    words[0][0] +
+    words[words.length-1][0]
+  ).toUpperCase();
+
+}
+
+
+/* =====================================================
+   DEMO MEMBER
+===================================================== */
+
+function setDemoMember(){
+
+  renderMember({
+
+    member_id:
+      "HM000008",
+
+    name:
+      "SOMANATH MISHRA",
+
+    address:
+      "—",
+
+    mobile:
+      "—",
+
+    email:
+      "—",
+
+    sponsor_id:
+      "HM000001",
+
+    active:
+      false,
+
+    activation_date:
+      null,
+
+    validity_end:
+      null,
+
+    retop_wallet:
+      0,
+
+    wallet_balance:
+      0,
+
+    total_income:
+      0,
+
+    today_income:
+      DAILY_TOTAL,
+
+    direct_count:
+      0,
+
+    active_count:
+      0,
+
+    created_at:
+      null
+
+  });
+
+}
+
+
+/* =====================================================
+   PIN MESSAGE
+===================================================== */
+
+function pinMessage(){
+
+  alert(
+    "PIN management will be connected to the secure PIN system."
   );
 
 }
 
 
+/* =====================================================
+   WITHDRAWAL MESSAGE
+===================================================== */
 
-/* =========================================================
-   REPORT TAB
-   ========================================================= */
+function withdrawMessage(){
 
-function goReport(){
-
-  removeActiveNav();
-
-
-  document.getElementById(
-    "navReport"
-  ).classList.add(
-    "active"
-  );
-
-
-  showModal(
-    "Report",
-    "Your income and transaction report will be available here.",
-    null
+  alert(
+    "Withdrawal system will be connected after secure payment verification."
   );
 
 }
 
 
+/* =====================================================
+   LOGOUT
+===================================================== */
 
-/* =========================================================
-   PROFILE TAB
-   ========================================================= */
+async function logout(){
 
-function goProfile(){
-
-  removeActiveNav();
-
-
-  document.getElementById(
-    "navProfile"
-  ).classList.add(
-    "active"
-  );
+  const confirmLogout =
+    confirm(
+      "Are you sure you want to logout?"
+    );
 
 
-  showModal(
-    "Profile",
-    "Profile section will be connected here.",
-    null
-  );
+  if(!confirmLogout){
+
+    return;
+
+  }
+
+
+  try{
+
+    await supabaseClient
+      .auth
+      .signOut();
+
+  }catch(error){
+
+    console.error(
+      "Logout error:",
+      error
+    );
+
+  }
+
+
+  /*
+    Clear only dashboard/session
+    related local values.
+  */
+
+  try{
+
+    localStorage.removeItem(
+      "hamara_market_member"
+    );
+
+  }catch(error){}
+
+
+  window.location.href =
+    "login.html";
 
 }
 
 
-
-/* =========================================================
+/* =====================================================
    AUTH STATE
-   ========================================================= */
+===================================================== */
 
 supabaseClient
   .auth
   .onAuthStateChange(
-    (
+    function(
       event,
       session
-    )=>{
+    ){
 
       if(
         event ===
@@ -2638,38 +3248,18 @@ supabaseClient
   );
 
 
+/* =====================================================
+   INITIAL LOAD
+===================================================== */
 
-/* =========================================================
-   INITIALIZE DASHBOARD
-   ========================================================= */
+document.addEventListener(
+  "DOMContentLoaded",
+  function(){
 
-async function initDashboard(){
-
-  const ok =
-    await loadMemberProfile();
-
-
-  if(
-    !ok
-  ){
-
-    return;
+    loadMemberProfile();
 
   }
-
-
-  loadVideos();
-
-}
-
-
-
-/* =========================================================
-   START
-   ========================================================= */
-
-initDashboard();
-
+);
 
 </script>
 
