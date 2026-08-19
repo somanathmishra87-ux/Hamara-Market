@@ -31,7 +31,7 @@ body{
     font-family:Arial,Helvetica,sans-serif;
     background:#f5f7fb;
     color:#202538;
-    padding-bottom:82px;
+    padding-bottom:95px;
 }
 
 
@@ -355,7 +355,7 @@ body{
 
 
 /* =========================================================
-   BOTTOM NAVIGATION
+   BOTTOM NAVIGATION - 5 TABS
    ========================================================= */
 
 .nav{
@@ -363,20 +363,24 @@ body{
     bottom:0;
     left:0;
     right:0;
-    height:70px;
+    height:82px;
     background:#fff;
     border-top:1px solid #e4e6ed;
     display:grid;
-    grid-template-columns:repeat(4,1fr);
+    grid-template-columns:repeat(5,1fr);
     z-index:50;
+    box-shadow:0 -4px 18px rgba(38,55,107,.06);
 }
 
 .nav a{
     text-decoration:none;
     color:#6d7484;
     text-align:center;
-    padding-top:10px;
-    font-size:12px;
+    padding-top:9px;
+    font-size:11px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
 }
 
 .nav a.active{
@@ -384,10 +388,39 @@ body{
     font-weight:800;
 }
 
-.nav span{
-    display:block;
-    font-size:22px;
+.nav-icon{
+    height:31px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:24px;
     margin-bottom:3px;
+}
+
+.nav-label{
+    font-size:11px;
+    white-space:nowrap;
+}
+
+.home-icon{
+    color:#493bd8;
+}
+
+.pin-icon{
+    font-size:25px;
+}
+
+.withdraw-icon{
+    font-size:27px;
+    font-weight:700;
+}
+
+.report-icon{
+    font-size:28px;
+}
+
+.profile-icon{
+    font-size:26px;
 }
 
 
@@ -442,6 +475,10 @@ body{
         padding:10px 11px;
     }
 
+    .nav-label{
+        font-size:10.5px;
+    }
+
 }
 
 
@@ -479,9 +516,7 @@ body{
      LOADING
      ===================================================== -->
 
-<div
-    id="loading"
-    class="loading">
+<div id="loading" class="loading">
 
     <div class="spinner"></div>
 
@@ -512,17 +547,13 @@ body{
         </div>
 
 
-        <!-- MENU -->
-
         <div class="menu">
 
             <button
                 class="menu-btn"
                 id="menuBtn"
                 type="button">
-
                 ⋮
-
             </button>
 
 
@@ -556,8 +587,6 @@ body{
 
     </div>
 
-
-    <!-- MEMBER DETAILS -->
 
     <div class="member">
 
@@ -595,12 +624,8 @@ body{
                 Total Income
             </div>
 
-            <div
-                class="amount"
-                id="total">
-
+            <div class="amount" id="total">
                 ₹0.00
-
             </div>
 
         </div>
@@ -612,12 +637,8 @@ body{
                 Wallet Balance
             </div>
 
-            <div
-                class="amount"
-                id="wallet">
-
+            <div class="amount" id="wallet">
                 ₹0.00
-
             </div>
 
         </div>
@@ -673,7 +694,6 @@ body{
         <div
             class="bar"
             id="bar">
-
         </div>
 
     </div>
@@ -700,14 +720,10 @@ body{
     id="videosSection">
 
     <div class="title">
-
         Today's Sponsored Videos
-
     </div>
 
-
     <div id="videos">
-
     </div>
 
 </div>
@@ -721,9 +737,7 @@ body{
 <div class="section">
 
     <div class="title">
-
         Quick Actions
-
     </div>
 
 
@@ -795,60 +809,94 @@ body{
 
 
 <!-- =====================================================
-     BOTTOM NAV
+     BOTTOM NAVIGATION
+     HOME | PIN | WITHDRAWAL | REPORT | PROFILE
      ===================================================== -->
 
 <nav class="nav">
 
 
+    <!-- HOME -->
+
     <a
         class="active"
         href="dashboard.html">
 
-        <span>
+        <span class="nav-icon home-icon">
             ⌂
         </span>
 
-        Home
+        <span class="nav-label">
+            Home
+        </span>
 
     </a>
 
 
+    <!-- PIN -->
+
     <a
         href="#"
-        onclick="scrollToVideos();return false">
+        onclick="showPin();return false;">
 
-        <span>
+        <span class="nav-icon pin-icon">
             ◷
         </span>
 
-        Videos
+        <span class="nav-label">
+            Pin
+        </span>
 
     </a>
 
 
+    <!-- WITHDRAWAL -->
+
     <a
         href="#"
-        onclick="showWithdrawal();return false">
+        onclick="showWithdrawal();return false;">
 
-        <span>
+        <span class="nav-icon withdraw-icon">
             ₹
         </span>
 
-        Withdraw
+        <span class="nav-label">
+            Withdrawal
+        </span>
 
     </a>
 
 
+    <!-- REPORT -->
+
     <a
         href="#"
-        onclick="showProfile();return false">
+        onclick="showReport();return false;">
 
-        <span>
+        <span class="nav-icon report-icon">
+            ☆
+        </span>
+
+        <span class="nav-label">
+            Report
+        </span>
+
+    </a>
+
+
+    <!-- PROFILE -->
+
+    <a
+        href="#"
+        onclick="showProfile();return false;">
+
+        <span class="nav-icon profile-icon">
             ♙
         </span>
 
-        Profile
+        <span class="nav-label">
+            Profile
+        </span>
 
     </a>
 
@@ -928,10 +976,6 @@ async function loadMemberAccount(){
 
     try{
 
-        /* -----------------------------------------------
-           GET CURRENT SESSION
-           ----------------------------------------------- */
-
         const {
             data,
             error
@@ -951,13 +995,8 @@ async function loadMemberAccount(){
             goToLogin();
 
             return;
-
         }
 
-
-        /* -----------------------------------------------
-           NO LOGIN SESSION
-           ----------------------------------------------- */
 
         if(
             !data ||
@@ -968,7 +1007,6 @@ async function loadMemberAccount(){
             goToLogin();
 
             return;
-
         }
 
 
@@ -981,10 +1019,6 @@ async function loadMemberAccount(){
             currentUser.id
         );
 
-
-        /* -----------------------------------------------
-           LOAD PROFILE OF EXACT LOGGED-IN USER
-           ----------------------------------------------- */
 
         const {
             data:profile,
@@ -1020,13 +1054,8 @@ async function loadMemberAccount(){
             goToLogin();
 
             return;
-
         }
 
-
-        /* -----------------------------------------------
-           PROFILE NOT FOUND
-           ----------------------------------------------- */
 
         if(!profile){
 
@@ -1041,7 +1070,6 @@ async function loadMemberAccount(){
             goToLogin();
 
             return;
-
         }
 
 
@@ -1054,10 +1082,6 @@ async function loadMemberAccount(){
             currentProfile
         );
 
-
-        /* -----------------------------------------------
-           ADMIN PROTECTION
-           ----------------------------------------------- */
 
         const role =
             String(
@@ -1073,13 +1097,8 @@ async function loadMemberAccount(){
                 "admin-dashboard.html";
 
             return;
-
         }
 
-
-        /* -----------------------------------------------
-           ONLY MEMBER CAN USE THIS DASHBOARD
-           ----------------------------------------------- */
 
         if(role !== "member"){
 
@@ -1094,13 +1113,8 @@ async function loadMemberAccount(){
             goToLogin();
 
             return;
-
         }
 
-
-        /* -----------------------------------------------
-           DISPLAY ACTUAL MEMBER DATA
-           ----------------------------------------------- */
 
         const actualMemberId =
             currentProfile.member_id ||
@@ -1130,22 +1144,13 @@ async function loadMemberAccount(){
             actualMemberId;
 
 
-        /* -----------------------------------------------
-           HIDE LOADING SCREEN
-           ----------------------------------------------- */
-
         document.getElementById(
             "loading"
         ).style.display =
             "none";
 
 
-        /* -----------------------------------------------
-           CREATE VIDEOS
-           ----------------------------------------------- */
-
         createVideos();
-
 
         updateDashboard();
 
@@ -1267,7 +1272,6 @@ function completeVideo(
     ){
 
         return;
-
     }
 
 
@@ -1351,6 +1355,75 @@ function updateDashboard(){
 
 
 /* =========================================================
+   PIN
+   ========================================================= */
+
+function showPin(){
+
+    alert(
+        "PIN section will be available here."
+    );
+
+}
+
+
+/* =========================================================
+   WITHDRAWAL
+   ========================================================= */
+
+function showWithdrawal(){
+
+    alert(
+        "Withdrawal section will be connected to the secure payment system."
+    );
+
+}
+
+
+/* =========================================================
+   REPORT
+   ========================================================= */
+
+function showReport(){
+
+    alert(
+        "Income report section will be available here."
+    );
+
+}
+
+
+/* =========================================================
+   PROFILE
+   ========================================================= */
+
+function showProfile(){
+
+    if(!currentProfile){
+
+        alert(
+            "Profile is loading..."
+        );
+
+        return;
+    }
+
+
+    alert(
+        "Member ID: " +
+        (currentProfile.member_id || "") +
+        "\n\nName: " +
+        (currentProfile.name || "") +
+        "\n\nMobile: " +
+        (currentProfile.mobile || "") +
+        "\n\nEmail: " +
+        (currentProfile.email || "")
+    );
+
+}
+
+
+/* =========================================================
    LOGOUT
    ========================================================= */
 
@@ -1365,7 +1438,6 @@ async function logoutMember(){
     if(!confirmLogout){
 
         return;
-
     }
 
 
@@ -1414,13 +1486,8 @@ async function logoutMember(){
 
 
             return;
-
         }
 
-
-        /* -----------------------------------------------
-           REMOVE LOCAL SESSION DATA
-           ----------------------------------------------- */
 
         try{
 
@@ -1545,80 +1612,6 @@ function goToLogin(){
 
     window.location.replace(
         "login.html"
-    );
-
-}
-
-
-/* =========================================================
-   VIDEOS NAVIGATION
-   ========================================================= */
-
-function scrollToVideos(){
-
-    document
-    .getElementById(
-        "videosSection"
-    )
-    .scrollIntoView({
-        behavior:"smooth"
-    });
-
-}
-
-
-/* =========================================================
-   WITHDRAWAL
-   ========================================================= */
-
-function showWithdrawal(){
-
-    alert(
-        "Withdrawal section will be connected to the secure payment system."
-    );
-
-}
-
-
-/* =========================================================
-   REPORT
-   ========================================================= */
-
-function showReport(){
-
-    alert(
-        "Income report section will be available here."
-    );
-
-}
-
-
-/* =========================================================
-   PROFILE
-   ========================================================= */
-
-function showProfile(){
-
-    if(!currentProfile){
-
-        alert(
-            "Profile is loading..."
-        );
-
-        return;
-
-    }
-
-
-    alert(
-        "Member ID: " +
-        (currentProfile.member_id || "") +
-        "\n\nName: " +
-        (currentProfile.name || "") +
-        "\n\nMobile: " +
-        (currentProfile.mobile || "") +
-        "\n\nEmail: " +
-        (currentProfile.email || "")
     );
 
 }
