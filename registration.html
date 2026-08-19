@@ -9,8 +9,6 @@
 
 <title>Hamara Market - Member Registration</title>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <style>
 
 *{
@@ -124,7 +122,7 @@ input:focus{
 }
 
 .status{
-  min-height:18px;
+  min-height:20px;
   margin-top:6px;
   font-size:13px;
   font-weight:600;
@@ -174,6 +172,12 @@ button:disabled{
   display:block;
   background:#fff0f0;
   color:#c62828;
+}
+
+.info{
+  display:block;
+  background:#eef5ff;
+  color:#2456b8;
 }
 
 .note{
@@ -233,7 +237,6 @@ button:disabled{
 
 </head>
 
-
 <body>
 
 
@@ -251,7 +254,6 @@ button:disabled{
 
   </div>
 
-
   <a
     href="login.html"
     class="login-btn">
@@ -261,7 +263,6 @@ button:disabled{
   </a>
 
 </header>
-
 
 
 <div class="wrap">
@@ -279,7 +280,6 @@ Register your Hamara Market member account
 </div>
 
 
-
 <form id="registrationForm">
 
 
@@ -291,7 +291,6 @@ Register your Hamara Market member account
 Sponsor ID
 </label>
 
-
 <input
   type="text"
   id="sponsorId"
@@ -300,7 +299,6 @@ Sponsor ID
   autocomplete="off"
   required
 >
-
 
 <div
   id="sponsorStatus"
@@ -312,7 +310,6 @@ Sponsor ID
 </div>
 
 
-
 <!-- =====================================================
      SPONSOR NAME
      ===================================================== -->
@@ -320,7 +317,6 @@ Sponsor ID
 <label for="sponsorName">
 Sponsor Name
 </label>
-
 
 <input
   type="text"
@@ -332,7 +328,6 @@ Sponsor Name
 >
 
 
-
 <!-- =====================================================
      FULL NAME
      ===================================================== -->
@@ -340,7 +335,6 @@ Sponsor Name
 <label for="name">
 Full Name
 </label>
-
 
 <input
   type="text"
@@ -351,7 +345,6 @@ Full Name
 >
 
 
-
 <!-- =====================================================
      ADDRESS
      ===================================================== -->
@@ -359,7 +352,6 @@ Full Name
 <label for="address">
 Address
 </label>
-
 
 <input
   type="text"
@@ -370,7 +362,6 @@ Address
 >
 
 
-
 <!-- =====================================================
      MOBILE
      ===================================================== -->
@@ -378,7 +369,6 @@ Address
 <label for="mobile">
 Mobile Number
 </label>
-
 
 <input
   type="tel"
@@ -391,9 +381,8 @@ Mobile Number
 >
 
 
-
 <!-- =====================================================
-     EMAIL OPTIONAL
+     EMAIL
      ===================================================== -->
 
 <label for="email">
@@ -406,14 +395,12 @@ Email ID
 
 </label>
 
-
 <input
   type="email"
   id="email"
   placeholder="Enter Email ID (Optional)"
   autocomplete="email"
 >
-
 
 
 <!-- =====================================================
@@ -423,7 +410,6 @@ Email ID
 <label for="password">
 Password
 </label>
-
 
 <div class="password-wrap">
 
@@ -436,7 +422,6 @@ Password
   required
 >
 
-
 <span
   class="eye"
   onclick="togglePassword('password',this)">
@@ -448,7 +433,6 @@ Password
 </div>
 
 
-
 <!-- =====================================================
      CONFIRM PASSWORD
      ===================================================== -->
@@ -456,7 +440,6 @@ Password
 <label for="confirmPassword">
 Confirm Password
 </label>
-
 
 <div class="password-wrap">
 
@@ -469,7 +452,6 @@ Confirm Password
   required
 >
 
-
 <span
   class="eye"
   onclick="togglePassword('confirmPassword',this)">
@@ -479,7 +461,6 @@ Confirm Password
 </span>
 
 </div>
-
 
 
 <!-- =====================================================
@@ -494,9 +475,7 @@ Create Member Account
 
 </button>
 
-
 </form>
-
 
 
 <div
@@ -504,7 +483,6 @@ Create Member Account
   class="message">
 
 </div>
-
 
 
 <div class="note">
@@ -542,7 +520,6 @@ Create Member Account
 </div>
 
 
-
 <div class="footer">
 
 © Hamara Market
@@ -555,9 +532,7 @@ Create Member Account
 </div>
 
 
-
 <script>
-
 
 /* =========================================================
    CONFIGURATION
@@ -566,19 +541,15 @@ Create Member Account
 const SUPABASE_URL =
 "https://yaxingstvkaqfmvtyuis.supabase.co";
 
-
 const SUPABASE_ANON_KEY =
 "sb_publishable_3dA1_NPBVCHCzcrf155Qtw_16IUxNDt";
-
 
 const EDGE_FUNCTION_URL =
 SUPABASE_URL +
 "/functions/v1/rapid-action";
 
-
 const COMPANY_ID =
 "HM000001";
-
 
 const COMPANY_NAME =
 "Hamara Market";
@@ -604,12 +575,10 @@ document.getElementById(
   "sponsorId"
 );
 
-
 const sponsorNameInput =
 document.getElementById(
   "sponsorName"
 );
-
 
 const sponsorStatus =
 document.getElementById(
@@ -639,40 +608,7 @@ function setCompany(){
 
 
 /* =========================================================
-   CLEAR SPONSOR
-   ========================================================= */
-
-function clearSponsor(){
-
-  sponsorNameInput.value =
-    "";
-
-  sponsorStatus.textContent =
-    "";
-
-}
-
-
-/* =========================================================
-   URL REFERRAL
-   ========================================================= */
-
-const params =
-new URLSearchParams(
-  window.location.search
-);
-
-
-const urlSponsor =
-(
-  params.get("ref") || ""
-)
-.trim()
-.toUpperCase();
-
-
-/* =========================================================
-   CHECK SPONSOR
+   SPONSOR LOOKUP
    ========================================================= */
 
 async function checkSponsor(){
@@ -682,18 +618,15 @@ async function checkSponsor(){
       .trim()
       .toUpperCase();
 
-
   sponsorIdInput.value =
     id;
 
 
-  /* -----------------------------------------------
+  /* -----------------------------------------------------
      COMPANY SPONSOR
-     ----------------------------------------------- */
+     ----------------------------------------------------- */
 
-  if(
-    id === COMPANY_ID
-  ){
+  if(id === COMPANY_ID){
 
     setCompany();
 
@@ -702,15 +635,14 @@ async function checkSponsor(){
   }
 
 
-  /* -----------------------------------------------
+  /* -----------------------------------------------------
      EMPTY
-     ----------------------------------------------- */
+     ----------------------------------------------------- */
 
-  if(
-    !id
-  ){
+  if(!id){
 
-    clearSponsor();
+    sponsorNameInput.value =
+      "";
 
     sponsorStatus.textContent =
       "Enter Sponsor ID";
@@ -723,30 +655,24 @@ async function checkSponsor(){
   }
 
 
+  sponsorNameInput.value =
+    "";
+
   sponsorStatus.textContent =
     "Checking Sponsor...";
 
   sponsorStatus.style.color =
     "#666";
 
-  sponsorNameInput.value =
-    "";
-
 
   try{
 
-    /* =================================================
-       IMPORTANT
+    /* ---------------------------------------------------
+       SECURE SPONSOR CHECK
 
-       Directly call the secure SQL function:
-
-       check_sponsor
-
-       This is the same function already used
+       Uses the same SQL function already used
        by the registration Edge Function.
-
-       It returns the verified sponsor record.
-       ================================================= */
+       --------------------------------------------------- */
 
     const {
       data,
@@ -763,9 +689,8 @@ async function checkSponsor(){
 
 
     console.log(
-      "Sponsor lookup:",
-      data,
-      error
+      "Sponsor result:",
+      data
     );
 
 
@@ -790,47 +715,19 @@ async function checkSponsor(){
     }
 
 
-    /* -----------------------------------------------
-       NO SPONSOR FOUND
-       ----------------------------------------------- */
-
-    if(
-      !data ||
-      (
-        Array.isArray(data) &&
-        data.length === 0
-      )
-    ){
-
-      sponsorNameInput.value =
-        "";
-
-      sponsorStatus.textContent =
-        "❌ Invalid Sponsor ID";
-
-      sponsorStatus.style.color =
-        "#c62828";
-
-      return false;
-
-    }
-
-
-    /* -----------------------------------------------
-       GET FIRST ROW
-
-       RPC can return an array or object.
-       ----------------------------------------------- */
+    /* ---------------------------------------------------
+       GET SPONSOR ROW
+       --------------------------------------------------- */
 
     let sponsor = null;
 
 
-    if(
-      Array.isArray(data)
-    ){
+    if(Array.isArray(data)){
 
       sponsor =
-        data[0] || null;
+        data.length > 0
+          ? data[0]
+          : null;
 
     }else if(
       data &&
@@ -843,13 +740,17 @@ async function checkSponsor(){
     }
 
 
+    /* ---------------------------------------------------
+       INVALID
+       --------------------------------------------------- */
+
     if(!sponsor){
 
       sponsorNameInput.value =
         "";
 
       sponsorStatus.textContent =
-        "❌ Invalid Sponsor ID";
+        "❌ Invalid or inactive Sponsor ID";
 
       sponsorStatus.style.color =
         "#c62828";
@@ -859,20 +760,17 @@ async function checkSponsor(){
     }
 
 
-    /* -----------------------------------------------
-       FIND SPONSOR NAME
+    /* ---------------------------------------------------
+       SPONSOR NAME
 
-       The SQL function normally returns name.
-
-       We also support common alternate
-       column names so the page remains
-       compatible with the existing function.
-       ----------------------------------------------- */
+       Support possible column names.
+       --------------------------------------------------- */
 
     const sponsorName =
       sponsor.name ||
       sponsor.full_name ||
       sponsor.member_name ||
+      sponsor.sponsor_name ||
       "";
 
 
@@ -882,24 +780,24 @@ async function checkSponsor(){
         "";
 
       sponsorStatus.textContent =
-        "✓ Sponsor verified, but name is unavailable.";
+        "✓ Sponsor verified";
 
       sponsorStatus.style.color =
-        "#c47b00";
+        "#13753c";
 
-      /*
-        Sponsor is still considered valid because
-        the SQL function returned a sponsor record.
-      */
+      console.warn(
+        "Sponsor found but name column was not returned.",
+        sponsor
+      );
 
       return true;
 
     }
 
 
-    /* -----------------------------------------------
-       DISPLAY SPONSOR NAME
-       ----------------------------------------------- */
+    /* ---------------------------------------------------
+       SHOW NAME
+       --------------------------------------------------- */
 
     sponsorNameInput.value =
       String(
@@ -920,10 +818,9 @@ async function checkSponsor(){
   }catch(error){
 
     console.error(
-      "Sponsor lookup exception:",
+      "Sponsor lookup error:",
       error
     );
-
 
     sponsorNameInput.value =
       "";
@@ -933,7 +830,6 @@ async function checkSponsor(){
 
     sponsorStatus.style.color =
       "#c62828";
-
 
     return false;
 
@@ -946,8 +842,7 @@ async function checkSponsor(){
    SPONSOR INPUT
    ========================================================= */
 
-let sponsorTimer;
-
+let sponsorTimer = null;
 
 sponsorIdInput.addEventListener(
   "input",
@@ -962,19 +857,30 @@ sponsorIdInput.addEventListener(
         );
 
 
+    sponsorNameInput.value =
+      "";
+
+
+    sponsorStatus.textContent =
+      "Typing Sponsor ID...";
+
+    sponsorStatus.style.color =
+      "#666";
+
+
     clearTimeout(
       sponsorTimer
     );
 
 
-    /*
-      Wait 500ms after typing stops.
-    */
-
     sponsorTimer =
       setTimeout(
-        checkSponsor,
-        500
+        function(){
+
+          checkSponsor();
+
+        },
+        600
       );
 
   }
@@ -992,7 +898,6 @@ sponsorIdInput.addEventListener(
     clearTimeout(
       sponsorTimer
     );
-
 
     checkSponsor();
 
@@ -1063,12 +968,6 @@ function showMessage(
       ? "message " + type
       : "message";
 
-
-  box.scrollIntoView({
-    behavior:"smooth",
-    block:"nearest"
-  });
-
 }
 
 
@@ -1093,59 +992,47 @@ document
       );
 
 
-    /* ===============================================
+    /* -----------------------------------------------------
        INPUTS
-       =============================================== */
+       ----------------------------------------------------- */
 
     const name =
       document
-      .getElementById(
-        "name"
-      )
+      .getElementById("name")
       .value
       .trim();
 
 
     const address =
       document
-      .getElementById(
-        "address"
-      )
+      .getElementById("address")
       .value
       .trim();
 
 
     const mobile =
       document
-      .getElementById(
-        "mobile"
-      )
+      .getElementById("mobile")
       .value
       .trim();
 
 
     const email =
       document
-      .getElementById(
-        "email"
-      )
+      .getElementById("email")
       .value
       .trim();
 
 
     const password =
       document
-      .getElementById(
-        "password"
-      )
+      .getElementById("password")
       .value;
 
 
     const confirmPassword =
       document
-      .getElementById(
-        "confirmPassword"
-      )
+      .getElementById("confirmPassword")
       .value;
 
 
@@ -1155,13 +1042,11 @@ document
       .toUpperCase();
 
 
-    /* ===============================================
-       BASIC VALIDATION
-       =============================================== */
+    /* -----------------------------------------------------
+       VALIDATION
+       ----------------------------------------------------- */
 
-    if(
-      name.length < 2
-    ){
+    if(name.length < 2){
 
       showMessage(
         "Please enter your full name.",
@@ -1173,9 +1058,7 @@ document
     }
 
 
-    if(
-      address.length < 2
-    ){
+    if(address.length < 2){
 
       showMessage(
         "Please enter your address.",
@@ -1203,9 +1086,7 @@ document
     }
 
 
-    if(
-      password.length < 8
-    ){
+    if(password.length < 8){
 
       showMessage(
         "Password must contain at least 8 characters.",
@@ -1249,9 +1130,7 @@ document
     }
 
 
-    if(
-      !sponsorId
-    ){
+    if(!sponsorId){
 
       showMessage(
         "Sponsor ID is required.",
@@ -1263,9 +1142,9 @@ document
     }
 
 
-    /* ===============================================
-       FINAL SPONSOR VALIDATION
-       =============================================== */
+    /* -----------------------------------------------------
+       FINAL SPONSOR CHECK
+       ----------------------------------------------------- */
 
     button.disabled =
       true;
@@ -1278,9 +1157,7 @@ document
       await checkSponsor();
 
 
-    if(
-      !sponsorValid
-    ){
+    if(!sponsorValid){
 
       button.disabled =
         false;
@@ -1298,9 +1175,9 @@ document
     }
 
 
-    /* ===============================================
-       START REGISTRATION
-       =============================================== */
+    /* -----------------------------------------------------
+       REGISTER
+       ----------------------------------------------------- */
 
     button.textContent =
       "Creating Account...";
@@ -1308,71 +1185,55 @@ document
 
     showMessage(
       "Please wait. Creating your member account...",
-      "success"
+      "info"
     );
 
 
     try{
 
-      /* =============================================
-         SEND TO EXISTING EDGE FUNCTION
-         ============================================= */
-
       const response =
         await fetch(
           EDGE_FUNCTION_URL,
           {
+            method:"POST",
 
-            method:
-              "POST",
+            headers:{
+              "Content-Type":
+                "application/json",
 
-            headers:
-              {
+              "apikey":
+                SUPABASE_ANON_KEY,
 
-                "Content-Type":
-                  "application/json",
-
-                "apikey":
-                  SUPABASE_ANON_KEY,
-
-                "Authorization":
-                  "Bearer " +
-                  SUPABASE_ANON_KEY
-
-              },
+              "Authorization":
+                "Bearer " +
+                SUPABASE_ANON_KEY
+            },
 
             body:
-              JSON.stringify(
-                {
+              JSON.stringify({
 
-                  name:
-                    name,
+                name:
+                  name,
 
-                  address:
-                    address,
+                address:
+                  address,
 
-                  mobile:
-                    mobile,
+                mobile:
+                  mobile,
 
-                  email:
-                    email,
+                email:
+                  email,
 
-                  password:
-                    password,
+                password:
+                  password,
 
-                  sponsor_id:
-                    sponsorId
+                sponsor_id:
+                  sponsorId
 
-                }
-              )
-
+              })
           }
         );
 
-
-      /* =============================================
-         RESPONSE
-         ============================================= */
 
       let result;
 
@@ -1382,14 +1243,7 @@ document
         result =
           await response.json();
 
-      }catch(
-        parseError
-      ){
-
-        console.error(
-          "Response parse error:",
-          parseError
-        );
+      }catch(error){
 
         throw new Error(
           "Server returned an invalid response."
@@ -1404,10 +1258,6 @@ document
       );
 
 
-      /* =============================================
-         SERVER ERROR
-         ============================================= */
-
       if(
         !response.ok ||
         !result.success
@@ -1421,9 +1271,9 @@ document
       }
 
 
-      /* =============================================
+      /* ---------------------------------------------------
          SUCCESS
-         ============================================= */
+         --------------------------------------------------- */
 
       const memberId =
         result.member_id ||
@@ -1434,9 +1284,7 @@ document
         "Registration successful!";
 
 
-      if(
-        memberId
-      ){
+      if(memberId){
 
         successText +=
           " Your Member ID is " +
@@ -1456,10 +1304,6 @@ document
       );
 
 
-      /* =============================================
-         CLEAR FORM
-         ============================================= */
-
       document
       .getElementById(
         "registrationForm"
@@ -1472,12 +1316,6 @@ document
 
       button.textContent =
         "Registration Complete";
-
-
-      /*
-        Keep disabled so the same registration
-        is not accidentally submitted twice.
-      */
 
 
     }catch(error){
@@ -1522,26 +1360,37 @@ document
 
     this.value =
       this.value
-      .replace(
-        /\D/g,
-        ""
-      )
-      .slice(
-        0,
-        10
-      );
+        .replace(
+          /\D/g,
+          ""
+        )
+        .slice(
+          0,
+          10
+        );
 
   }
 );
 
 
 /* =========================================================
-   INITIAL SPONSOR
+   INITIAL COMPANY SPONSOR
    ========================================================= */
 
-if(
-  urlSponsor
-){
+const params =
+new URLSearchParams(
+  window.location.search
+);
+
+const urlSponsor =
+(
+  params.get("ref") || ""
+)
+.trim()
+.toUpperCase();
+
+
+if(urlSponsor){
 
   sponsorIdInput.value =
     urlSponsor;
@@ -1554,7 +1403,6 @@ if(
 
   sponsorStatus.style.color =
     "#666";
-
 
   checkSponsor();
 
