@@ -216,6 +216,47 @@ body{
 
 
 /* =========================================================
+   RE-TOP-UP WALLET CARD
+   ========================================================= */
+
+.topup-card{
+    cursor:pointer;
+    user-select:none;
+    transition:
+        transform .15s ease,
+        box-shadow .15s ease;
+}
+
+.topup-card:active{
+    transform:scale(.96);
+    box-shadow:
+        0 3px 10px rgba(38,55,107,.12);
+}
+
+.topup-icon{
+    font-size:26px;
+    line-height:1;
+    margin-bottom:6px;
+}
+
+.topup-title{
+    display:block;
+    color:#202538;
+    font-size:16px;
+    font-weight:800;
+    line-height:1.25;
+}
+
+.topup-subtitle{
+    display:block;
+    color:#493bd8;
+    font-size:15px;
+    font-weight:800;
+    margin-top:3px;
+}
+
+
+/* =========================================================
    PROGRESS
    ========================================================= */
 
@@ -356,6 +397,7 @@ body{
 
 /* =========================================================
    BOTTOM NAVIGATION - 5 TABS
+   HOME | PIN | WITHDRAWAL | REPORT | PROFILE
    ========================================================= */
 
 .nav{
@@ -455,9 +497,11 @@ body{
 }
 
 @keyframes spin{
+
     to{
         transform:rotate(360deg);
     }
+
 }
 
 
@@ -477,6 +521,14 @@ body{
 
     .nav-label{
         font-size:10.5px;
+    }
+
+    .topup-title{
+        font-size:15px;
+    }
+
+    .topup-subtitle{
+        font-size:14px;
     }
 
 }
@@ -516,7 +568,9 @@ body{
      LOADING
      ===================================================== -->
 
-<div id="loading" class="loading">
+<div
+    id="loading"
+    class="loading">
 
     <div class="spinner"></div>
 
@@ -553,7 +607,9 @@ body{
                 class="menu-btn"
                 id="menuBtn"
                 type="button">
+
                 ⋮
+
             </button>
 
 
@@ -616,6 +672,9 @@ body{
 
 <section class="card">
 
+
+    <!-- BALANCE -->
+
     <div class="balance">
 
         <div>
@@ -624,8 +683,12 @@ body{
                 Total Income
             </div>
 
-            <div class="amount" id="total">
+            <div
+                class="amount"
+                id="total">
+
                 ₹0.00
+
             </div>
 
         </div>
@@ -637,8 +700,12 @@ body{
                 Wallet Balance
             </div>
 
-            <div class="amount" id="wallet">
+            <div
+                class="amount"
+                id="wallet">
+
                 ₹0.00
+
             </div>
 
         </div>
@@ -646,20 +713,38 @@ body{
     </div>
 
 
+
+    <!-- =================================================
+         STATISTICS
+         ================================================= -->
+
     <div class="stats">
 
-        <div class="stat">
 
-            <span class="label">
-                Today's Videos
+        <!-- RE-TOP-UP WALLET -->
+
+        <div
+            class="stat topup-card"
+            id="topupWalletCard"
+            onclick="reTopupWallet()">
+
+            <div class="topup-icon">
+                💰
+            </div>
+
+            <span class="topup-title">
+                Re-top-up
             </span>
 
-            <b id="watched">
-                0 / 10
-            </b>
+            <span class="topup-subtitle">
+                Wallet
+            </span>
 
         </div>
 
+
+
+        <!-- PER VIDEO -->
 
         <div class="stat">
 
@@ -674,6 +759,9 @@ body{
         </div>
 
 
+
+        <!-- TODAY'S INCOME -->
+
         <div class="stat">
 
             <span class="label">
@@ -686,8 +774,14 @@ body{
 
         </div>
 
+
     </div>
 
+
+
+    <!-- =================================================
+         VIDEO PROGRESS
+         ================================================= -->
 
     <div class="progress">
 
@@ -706,6 +800,7 @@ body{
         0 of 10 eligible videos completed today
 
     </div>
+
 
 </section>
 
@@ -744,6 +839,8 @@ body{
     <div class="actions">
 
 
+        <!-- WITHDRAWAL -->
+
         <button
             class="action"
             type="button"
@@ -758,6 +855,9 @@ body{
         </button>
 
 
+
+        <!-- REPORT -->
+
         <button
             class="action"
             type="button"
@@ -771,6 +871,9 @@ body{
 
         </button>
 
+
+
+        <!-- PROFILE -->
 
         <button
             class="action"
@@ -833,6 +936,7 @@ body{
     </a>
 
 
+
     <!-- PIN -->
 
     <a
@@ -848,6 +952,7 @@ body{
         </span>
 
     </a>
+
 
 
     <!-- WITHDRAWAL -->
@@ -867,6 +972,7 @@ body{
     </a>
 
 
+
     <!-- REPORT -->
 
     <a
@@ -882,6 +988,7 @@ body{
         </span>
 
     </a>
+
 
 
     <!-- PROFILE -->
@@ -995,6 +1102,7 @@ async function loadMemberAccount(){
             goToLogin();
 
             return;
+
         }
 
 
@@ -1007,6 +1115,7 @@ async function loadMemberAccount(){
             goToLogin();
 
             return;
+
         }
 
 
@@ -1054,6 +1163,7 @@ async function loadMemberAccount(){
             goToLogin();
 
             return;
+
         }
 
 
@@ -1070,6 +1180,7 @@ async function loadMemberAccount(){
             goToLogin();
 
             return;
+
         }
 
 
@@ -1097,6 +1208,7 @@ async function loadMemberAccount(){
                 "admin-dashboard.html";
 
             return;
+
         }
 
 
@@ -1113,6 +1225,7 @@ async function loadMemberAccount(){
             goToLogin();
 
             return;
+
         }
 
 
@@ -1272,6 +1385,7 @@ function completeVideo(
     ){
 
         return;
+
     }
 
 
@@ -1312,10 +1426,11 @@ function updateDashboard(){
         watched * 5;
 
 
-    document.getElementById(
-        "watched"
-    ).textContent =
-        watched + " / 10";
+    /*
+       Today's Videos card ab hata diya gaya hai.
+       Isliye watched value sirf progress section
+       mein use ho rahi hai.
+    */
 
 
     document.getElementById(
@@ -1350,6 +1465,29 @@ function updateDashboard(){
     ).textContent =
         watched +
         " of 10 eligible videos completed today";
+
+}
+
+
+/* =========================================================
+   RE-TOP-UP WALLET
+   ========================================================= */
+
+function reTopupWallet(){
+
+    const balance =
+        document.getElementById(
+            "wallet"
+        ).textContent;
+
+
+    alert(
+        "Re-top-up Wallet\n\n" +
+        "Current Wallet Balance: " +
+        balance +
+        "\n\n" +
+        "Wallet top-up option will be connected here."
+    );
 
 }
 
@@ -1406,16 +1544,20 @@ function showProfile(){
         );
 
         return;
+
     }
 
 
     alert(
         "Member ID: " +
         (currentProfile.member_id || "") +
+
         "\n\nName: " +
         (currentProfile.name || "") +
+
         "\n\nMobile: " +
         (currentProfile.mobile || "") +
+
         "\n\nEmail: " +
         (currentProfile.email || "")
     );
@@ -1438,6 +1580,7 @@ async function logoutMember(){
     if(!confirmLogout){
 
         return;
+
     }
 
 
@@ -1486,6 +1629,7 @@ async function logoutMember(){
 
 
             return;
+
         }
 
 
