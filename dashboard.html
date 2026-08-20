@@ -171,7 +171,6 @@ button{
 .menu-button{
 
   width:44px;
-
   height:44px;
 
   border:0;
@@ -211,7 +210,7 @@ button{
 
   padding:8px;
 
-  z-index:100;
+  z-index:1000;
 
   display:none;
 
@@ -620,6 +619,22 @@ button{
   border-right:
     1px solid #eee;
 
+  cursor:pointer;
+
+  transition:.15s;
+
+}
+
+.tile:hover{
+
+  background:#faf9ff;
+
+}
+
+.tile:active{
+
+  transform:scale(.97);
+
 }
 
 .tile:nth-child(3n){
@@ -658,6 +673,34 @@ button{
 
 
 /* =====================================================
+   VIDEO TILE
+===================================================== */
+
+.video-tile{
+
+  background:
+    linear-gradient(
+      135deg,
+      #f0edff,
+      #ffffff
+    );
+
+}
+
+.video-tile .icon{
+
+  color:#5140d1;
+
+}
+
+.video-count{
+
+  color:#5140d1;
+
+}
+
+
+/* =====================================================
    PAGE SECTIONS
 ===================================================== */
 
@@ -687,6 +730,293 @@ button{
     13px;
 
   color:#24293b;
+
+}
+
+
+/* =====================================================
+   VIDEO PAGE
+===================================================== */
+
+.video-page-head{
+
+  background:
+    linear-gradient(
+      135deg,
+      #4637bd,
+      #6253d8
+    );
+
+  color:#fff;
+
+  border-radius:22px;
+
+  padding:22px 18px;
+
+  text-align:center;
+
+  margin-bottom:15px;
+
+}
+
+.video-page-head .video-big-icon{
+
+  font-size:42px;
+
+}
+
+.video-page-head h2{
+
+  margin:5px 0;
+
+  font-size:23px;
+
+}
+
+.video-page-head p{
+
+  margin:5px 0 0;
+
+  opacity:.9;
+
+  font-size:14px;
+
+}
+
+
+/* =====================================================
+   VIDEO CARD
+===================================================== */
+
+.video-list{
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:12px;
+
+}
+
+.video-card{
+
+  background:#fff;
+
+  border-radius:20px;
+
+  padding:12px;
+
+  display:flex;
+
+  align-items:center;
+
+  gap:12px;
+
+  box-shadow:
+    0 5px 18px
+    rgba(0,0,0,.07);
+
+}
+
+.video-play-icon{
+
+  width:72px;
+
+  height:72px;
+
+  flex-shrink:0;
+
+  border-radius:17px;
+
+  background:#eeeaff;
+
+  display:grid;
+
+  place-items:center;
+
+  color:#5140d1;
+
+  font-size:31px;
+
+}
+
+.video-info{
+
+  flex:1;
+
+  min-width:0;
+
+}
+
+.video-title{
+
+  font-size:17px;
+
+  font-weight:900;
+
+  color:#24293b;
+
+  margin-bottom:5px;
+
+}
+
+.video-reward{
+
+  font-size:14px;
+
+  color:#777;
+
+}
+
+.video-reward strong{
+
+  color:#5140d1;
+
+}
+
+.watch-button{
+
+  border:0;
+
+  background:#5140d1;
+
+  color:#fff;
+
+  border-radius:12px;
+
+  padding:12px 18px;
+
+  font-size:15px;
+
+  font-weight:900;
+
+  cursor:pointer;
+
+  flex-shrink:0;
+
+}
+
+.watch-button:hover{
+
+  background:#4030b8;
+
+}
+
+.watch-button.watched{
+
+  background:#168a45;
+
+}
+
+
+/* =====================================================
+   VIDEO MODAL
+===================================================== */
+
+.video-modal{
+
+  position:fixed;
+
+  inset:0;
+
+  background:
+    rgba(0,0,0,.72);
+
+  z-index:5000;
+
+  display:none;
+
+  align-items:center;
+
+  justify-content:center;
+
+  padding:15px;
+
+}
+
+.video-modal.show{
+
+  display:flex;
+
+}
+
+.video-modal-box{
+
+  width:100%;
+
+  max-width:720px;
+
+  background:#fff;
+
+  border-radius:20px;
+
+  overflow:hidden;
+
+  box-shadow:
+    0 15px 50px
+    rgba(0,0,0,.35);
+
+}
+
+.video-modal-header{
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:space-between;
+
+  padding:13px 16px;
+
+}
+
+.video-modal-title{
+
+  font-size:17px;
+
+  font-weight:900;
+
+}
+
+.video-close{
+
+  width:36px;
+
+  height:36px;
+
+  border:0;
+
+  border-radius:50%;
+
+  background:#f0f0f4;
+
+  font-size:22px;
+
+  cursor:pointer;
+
+}
+
+.video-player{
+
+  width:100%;
+
+  max-height:70vh;
+
+  background:#000;
+
+  display:block;
+
+}
+
+.video-modal-footer{
+
+  padding:14px 16px;
+
+  text-align:center;
+
+  font-size:13px;
+
+  color:#777;
 
 }
 
@@ -1058,7 +1388,7 @@ button{
 
 
 /* =====================================================
-   BOTTOM NAVIGATION - 5 TABS
+   BOTTOM NAVIGATION
 ===================================================== */
 
 .bottom{
@@ -1130,12 +1460,6 @@ button{
 
 }
 
-.nav.active .ni{
-
-  font-weight:900;
-
-}
-
 
 /* =====================================================
    MOBILE
@@ -1174,12 +1498,6 @@ button{
   .date-line{
 
     font-size:11px;
-
-  }
-
-  .gridicon{
-
-    font-size:28px;
 
   }
 
@@ -1223,13 +1541,6 @@ button{
   .smallamount{
 
     font-size:18px;
-
-  }
-
-  .tiles{
-
-    grid-template-columns:
-      repeat(3,1fr);
 
   }
 
@@ -1279,6 +1590,46 @@ button{
 
   }
 
+  .video-card{
+
+    padding:10px;
+
+    gap:9px;
+
+  }
+
+  .video-play-icon{
+
+    width:62px;
+
+    height:62px;
+
+    font-size:27px;
+
+  }
+
+  .video-title{
+
+    font-size:14px;
+
+  }
+
+  .video-reward{
+
+    font-size:12px;
+
+  }
+
+  .watch-button{
+
+    padding:
+      10px
+      13px;
+
+    font-size:13px;
+
+  }
+
 }
 
 @media(min-width:700px){
@@ -1313,6 +1664,30 @@ button{
       18px
       0
       0;
+
+  }
+
+}
+
+
+/* =====================================================
+   SMALL MOBILE FIX
+===================================================== */
+
+@media(max-width:380px){
+
+  .video-play-icon{
+
+    width:55px;
+    height:55px;
+
+  }
+
+  .watch-button{
+
+    padding:
+      9px
+      10px;
 
   }
 
@@ -1357,7 +1732,6 @@ button{
 
       </div>
 
-
       <div
         class="date-line"
         id="activeDate"
@@ -1365,14 +1739,12 @@ button{
         Active Date: —
       </div>
 
-
       <div
         class="date-line"
         id="renewalDate"
       >
         Renewal Date: —
       </div>
-
 
       <div
         class="name"
@@ -1382,7 +1754,6 @@ button{
       </div>
 
     </div>
-
 
     <button
       class="menu-button"
@@ -1409,6 +1780,10 @@ button{
 
   <button onclick="showPage('home')">
     🏠 Home
+  </button>
+
+  <button onclick="showPage('videos')">
+    ▶ Videos
   </button>
 
   <button onclick="showPage('pin')">
@@ -1462,7 +1837,6 @@ button{
 
 <div class="summary">
 
-
   <div class="summary-box">
 
     <div class="label">
@@ -1475,7 +1849,6 @@ button{
     >
       ₹0.00
     </div>
-
 
     <div class="sub">
       Re-top-up Wallet
@@ -1491,7 +1864,6 @@ button{
   </div>
 
 
-
   <div class="summary-box">
 
     <div class="label">
@@ -1504,7 +1876,6 @@ button{
     >
       ₹0.00
     </div>
-
 
     <div class="sub">
       Daily Allocation
@@ -1527,7 +1898,6 @@ button{
 
 <div class="three">
 
-
   <div>
 
     <div class="purple">
@@ -1544,7 +1914,6 @@ button{
   </div>
 
 
-
   <div>
 
     <div class="purple">
@@ -1552,12 +1921,14 @@ button{
       Daily
     </div>
 
-    <div class="smallamount">
+    <div
+      class="smallamount"
+      id="retopDailyTop"
+    >
       ₹30.00
     </div>
 
   </div>
-
 
 
   <div>
@@ -1567,12 +1938,14 @@ button{
       Daily
     </div>
 
-    <div class="smallamount">
+    <div
+      class="smallamount"
+      id="walletDailyTop"
+    >
       ₹20.00
     </div>
 
   </div>
-
 
 </div>
 
@@ -1586,9 +1959,7 @@ button{
     💰 Daily ₹50 Wallet Distribution
   </div>
 
-
   <div class="wallet-grid">
-
 
     <div class="wallet-card retop">
 
@@ -1614,7 +1985,6 @@ button{
     </div>
 
 
-
     <div class="wallet-card balance">
 
       <div class="wallet-icon">
@@ -1637,7 +2007,6 @@ button{
       </div>
 
     </div>
-
 
   </div>
 
@@ -1669,7 +2038,11 @@ button{
 
 
 
-<!-- TILES -->
+<!-- =====================================================
+     TILES
+     VIDEO TILE IS THE 9TH TILE
+     AND APPEARS BESIDE ACTIVE MEMBERS
+===================================================== -->
 
 <div class="tiles">
 
@@ -1823,10 +2196,36 @@ button{
   </div>
 
 
+
+  <!-- =================================================
+       VIDEO TILE
+  ================================================== -->
+
+  <div
+    class="tile video-tile"
+    onclick="showPage('videos')"
+  >
+
+    <div class="icon">
+      ▶
+    </div>
+
+    <div class="money video-count">
+      10
+    </div>
+
+    <b>
+      Videos
+    </b>
+
+  </div>
+
+
 </div>
 
 
 </div>
+
 
 
 <div class="notice">
@@ -1836,10 +2235,72 @@ Daily income allocation:
 <strong>₹30 Re-top-up Wallet</strong> +
 <strong>₹20 Wallet Balance</strong>.
 
+<br>
+
+Video reward:
+<strong>₹5 per eligible video</strong>.
+
+<br>
+
 Actual wallet credit should be performed by the secure backend.
 
 </div>
 
+
+</section>
+
+
+
+<!-- =====================================================
+     VIDEOS PAGE
+===================================================== -->
+
+<section
+  id="videosPage"
+  class="page-section"
+>
+
+  <div class="section-title">
+    Sponsored Videos
+  </div>
+
+
+  <div class="video-page-head">
+
+    <div class="video-big-icon">
+      ▶
+    </div>
+
+    <h2>
+      Sponsored Video Tasks
+    </h2>
+
+    <p>
+      Watch the available videos and complete
+      the viewing task.
+    </p>
+
+  </div>
+
+
+  <div
+    class="video-list"
+    id="videoList"
+  >
+  </div>
+
+
+  <div class="notice">
+
+    Each eligible video shows a reward of
+    <strong>₹5</strong>.
+
+    <br>
+
+    Reward credit should be verified and
+    processed by the secure backend.
+
+  </div>
 
 </section>
 
@@ -1982,6 +2443,7 @@ Actual wallet credit should be performed by the secure backend.
 
     <div
       class="report-value"
+      id="reportToday"
     >
       ₹50.00
     </div>
@@ -2364,6 +2826,63 @@ Actual wallet credit should be performed by the secure backend.
 
 
 
+<!-- =====================================================
+     VIDEO PLAYER MODAL
+===================================================== -->
+
+<div
+  class="video-modal"
+  id="videoModal"
+  onclick="closeVideoOutside(event)"
+>
+
+  <div
+    class="video-modal-box"
+  >
+
+    <div class="video-modal-header">
+
+      <div
+        class="video-modal-title"
+        id="videoModalTitle"
+      >
+        Sponsored Video
+      </div>
+
+      <button
+        class="video-close"
+        onclick="closeVideo()"
+      >
+        ×
+      </button>
+
+    </div>
+
+
+    <video
+      id="videoPlayer"
+      class="video-player"
+      controls
+      playsinline
+      preload="metadata"
+    >
+      Your browser does not support HTML5 video.
+    </video>
+
+
+    <div
+      class="video-modal-footer"
+      id="videoModalFooter"
+    >
+      Eligible reward: ₹5
+    </div>
+
+  </div>
+
+</div>
+
+
+
 <script>
 
 /* =====================================================
@@ -2383,21 +2902,132 @@ window.supabase.createClient(
 );
 
 
-/*
-  DAILY INCOME CONFIGURATION
-
-  Total = ₹50
-
-  Re-top-up = ₹30
-
-  Wallet Balance = ₹20
-*/
+/* =====================================================
+   DAILY INCOME
+===================================================== */
 
 const DAILY_TOTAL = 50;
 
 const DAILY_RETOPUP = 30;
 
 const DAILY_WALLET = 20;
+
+
+/* =====================================================
+   VIDEO CONFIGURATION
+=====================================================
+
+   IMPORTANT:
+
+   Current dashboard code did not contain the original
+   10 video URLs.
+
+   This is a WORKING demo video URL.
+
+   Replace the videoUrl values below with your actual
+   10 sponsored video URLs.
+
+===================================================== */
+
+const DEMO_VIDEO_URL =
+"https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4";
+
+
+const VIDEO_LIST = [
+
+  {
+    id:"video01",
+    title:"Sponsored Video 01",
+    reward:5,
+    videoUrl:DEMO_VIDEO_URL
+  },
+
+  {
+    id:"video02",
+    title:"Sponsored Video 02",
+    reward:5,
+    videoUrl:DEMO_VIDEO_URL
+  },
+
+  {
+    id:"video03",
+    title:"Sponsored Video 03",
+    reward:5,
+    videoUrl:DEMO_VIDEO_URL
+  },
+
+  {
+    id:"video04",
+    title:"Sponsored Video 04",
+    reward:5,
+    videoUrl:DEMO_VIDEO_URL
+  },
+
+  {
+    id:"video05",
+    title:"Sponsored Video 05",
+    reward:5,
+    videoUrl:DEMO_VIDEO_URL
+  },
+
+  {
+    id:"video06",
+    title:"Sponsored Video 06",
+    reward:5,
+    videoUrl:DEMO_VIDEO_URL
+  },
+
+  {
+    id:"video07",
+    title:"Sponsored Video 07",
+    reward:5,
+    videoUrl:DEMO_VIDEO_URL
+  },
+
+  {
+    id:"video08",
+    title:"Sponsored Video 08",
+    reward:5,
+    videoUrl:DEMO_VIDEO_URL
+  },
+
+  {
+    id:"video09",
+    title:"Sponsored Video 09",
+    reward:5,
+    videoUrl:DEMO_VIDEO_URL
+  },
+
+  {
+    id:"video10",
+    title:"Sponsored Video 10",
+    reward:5,
+    videoUrl:DEMO_VIDEO_URL
+  }
+
+];
+
+
+/* =====================================================
+   WATCHED VIDEO STORAGE
+===================================================== */
+
+let watchedVideos = {};
+
+try{
+
+  watchedVideos =
+    JSON.parse(
+      localStorage.getItem(
+        "hamara_market_watched_videos"
+      ) || "{}"
+    );
+
+}catch(error){
+
+  watchedVideos = {};
+
+}
 
 
 /* =====================================================
@@ -2417,8 +3047,6 @@ function toggleMenu(){
 
 }
 
-
-/* Close menu when clicking elsewhere */
 
 document.addEventListener(
   "click",
@@ -2521,9 +3149,19 @@ function showPage(page){
     );
 
 
+  if(page === "videos"){
+
+    renderVideos();
+
+  }
+
+
   window.scrollTo({
+
     top:0,
+
     behavior:"smooth"
+
   });
 
 }
@@ -2635,11 +3273,6 @@ async function loadMemberProfile(){
     await getCurrentUser();
 
 
-  /*
-    If there is no Supabase session,
-    keep the page usable as a demo.
-  */
-
   if(!user){
 
     setDemoMember();
@@ -2735,8 +3368,6 @@ function renderMember(member){
   const active =
     member.active === true;
 
-
-  /* HEADER */
 
   document
     .getElementById(
@@ -2930,7 +3561,8 @@ function renderMember(member){
 
   const today =
     Number(
-      member.today_income || DAILY_TOTAL
+      member.today_income ||
+      DAILY_TOTAL
     );
 
 
@@ -2958,18 +3590,64 @@ function renderMember(member){
       money(total);
 
 
-  /*
-    The dashboard always displays
-    today's planned allocation as ₹50.
-  */
-
   document
     .getElementById(
       "todayIncome"
     )
     .textContent =
       money(
-        today || DAILY_TOTAL
+        today ||
+        DAILY_TOTAL
+      );
+
+
+  document
+    .getElementById(
+      "retopDailyTop"
+    )
+    .textContent =
+      money(
+        DAILY_RETOPUP
+      );
+
+
+  document
+    .getElementById(
+      "walletDailyTop"
+    )
+    .textContent =
+      money(
+        DAILY_WALLET
+      );
+
+
+  document
+    .getElementById(
+      "retopDailyDisplay"
+    )
+    .textContent =
+      money(
+        DAILY_RETOPUP
+      );
+
+
+  document
+    .getElementById(
+      "walletDailyDisplay"
+    )
+    .textContent =
+      money(
+        DAILY_WALLET
+      );
+
+
+  document
+    .getElementById(
+      "dailyWallet"
+    )
+    .textContent =
+      money(
+        DAILY_WALLET
       );
 
 
@@ -2997,6 +3675,17 @@ function renderMember(member){
     )
     .textContent =
       money(total);
+
+
+  document
+    .getElementById(
+      "reportToday"
+    )
+    .textContent =
+      money(
+        today ||
+        DAILY_TOTAL
+      );
 
 
   document
@@ -3124,7 +3813,294 @@ function setDemoMember(){
 
 
 /* =====================================================
-   PIN MESSAGE
+   RENDER 10 VIDEOS
+===================================================== */
+
+function renderVideos(){
+
+  const container =
+    document.getElementById(
+      "videoList"
+    );
+
+
+  if(!container){
+
+    return;
+
+  }
+
+
+  container.innerHTML = "";
+
+
+  VIDEO_LIST.forEach(
+    function(video){
+
+      const card =
+        document.createElement(
+          "div"
+        );
+
+
+      card.className =
+        "video-card";
+
+
+      const watched =
+        watchedVideos[
+          video.id
+        ] === true;
+
+
+      card.innerHTML = `
+
+        <div class="video-play-icon">
+          ▶
+        </div>
+
+        <div class="video-info">
+
+          <div class="video-title">
+            ${escapeHtml(video.title)}
+          </div>
+
+          <div class="video-reward">
+            Eligible reward:
+            <strong>₹${video.reward}</strong>
+          </div>
+
+        </div>
+
+        <button
+          class="watch-button ${watched ? "watched" : ""}"
+          onclick="openVideo('${video.id}')"
+        >
+          ${watched ? "Watched" : "Watch"}
+        </button>
+
+      `;
+
+
+      container.appendChild(
+        card
+      );
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHtml(text){
+
+  return String(text)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+/* =====================================================
+   OPEN VIDEO
+===================================================== */
+
+function openVideo(videoId){
+
+  const video =
+    VIDEO_LIST.find(
+      item =>
+        item.id === videoId
+    );
+
+
+  if(!video){
+
+    return;
+
+  }
+
+
+  const modal =
+    document.getElementById(
+      "videoModal"
+    );
+
+  const player =
+    document.getElementById(
+      "videoPlayer"
+    );
+
+  const title =
+    document.getElementById(
+      "videoModalTitle"
+    );
+
+  const footer =
+    document.getElementById(
+      "videoModalFooter"
+    );
+
+
+  title.textContent =
+    video.title;
+
+
+  footer.textContent =
+    "Eligible reward: ₹" +
+    video.reward;
+
+
+  player.pause();
+
+  player.src =
+    video.videoUrl;
+
+  player.load();
+
+
+  modal.classList.add(
+    "show"
+  );
+
+
+  /* Automatically start video */
+
+  const playPromise =
+    player.play();
+
+
+  if(
+    playPromise !== undefined
+  ){
+
+    playPromise.catch(
+      function(error){
+
+        console.log(
+          "Autoplay blocked:",
+          error
+        );
+
+      }
+    );
+
+  }
+
+
+  /* Mark as watched after video ends */
+
+  player.onended =
+    function(){
+
+      markVideoWatched(
+        video.id
+      );
+
+    };
+
+}
+
+
+/* =====================================================
+   MARK VIDEO WATCHED
+===================================================== */
+
+function markVideoWatched(videoId){
+
+  watchedVideos[
+    videoId
+  ] = true;
+
+
+  try{
+
+    localStorage.setItem(
+      "hamara_market_watched_videos",
+      JSON.stringify(
+        watchedVideos
+      )
+    );
+
+  }catch(error){}
+
+
+  renderVideos();
+
+
+  /*
+    IMPORTANT:
+
+    This only marks the video as watched
+    on the browser.
+
+    Real ₹5 reward credit MUST be handled
+    by a secure backend after verification.
+  */
+
+}
+
+
+/* =====================================================
+   CLOSE VIDEO
+===================================================== */
+
+function closeVideo(){
+
+  const modal =
+    document.getElementById(
+      "videoModal"
+    );
+
+  const player =
+    document.getElementById(
+      "videoPlayer"
+    );
+
+
+  player.pause();
+
+  player.removeAttribute(
+    "src"
+  );
+
+  player.load();
+
+
+  modal.classList.remove(
+    "show"
+  );
+
+}
+
+
+/* =====================================================
+   CLOSE WHEN OUTSIDE VIDEO BOX CLICKED
+===================================================== */
+
+function closeVideoOutside(event){
+
+  if(
+    event.target.id ===
+    "videoModal"
+  ){
+
+    closeVideo();
+
+  }
+
+}
+
+
+/* =====================================================
+   PIN
 ===================================================== */
 
 function pinMessage(){
@@ -3137,7 +4113,7 @@ function pinMessage(){
 
 
 /* =====================================================
-   WITHDRAWAL MESSAGE
+   WITHDRAWAL
 ===================================================== */
 
 function withdrawMessage(){
@@ -3183,11 +4159,6 @@ async function logout(){
 
   }
 
-
-  /*
-    Clear only dashboard/session
-    related local values.
-  */
 
   try{
 
@@ -3239,6 +4210,8 @@ document.addEventListener(
   function(){
 
     loadMemberProfile();
+
+    renderVideos();
 
   }
 );
